@@ -86,4 +86,17 @@ public class Logica implements LogicaLocal {
         }
         return false;
     }
+
+    @Override
+    public ArrayList<String> listarAtivos() {
+        ArrayList<String> utilizadoresAtivos = new ArrayList<>();
+        for(int i=0;i<users.size();i++){
+            if(users.get(i).isAtivo()==true){
+                utilizadoresAtivos.add(users.get(i).getUsename());
+            }
+        }
+        return utilizadoresAtivos;
+    }
+    
+    
 }

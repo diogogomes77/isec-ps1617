@@ -8,17 +8,18 @@ package logica;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
+import java.util.ArrayList;
 import javax.ejb.EJB;
 
-/**
- *
- * @author João
- */
+
 @Named(value = "login")
 @SessionScoped
 public class Login implements Serializable{
     @EJB
     SessaoLocal sessao;
+    
+    @EJB
+    LogicaLocal logica;
     
     String username;
     String password;
@@ -53,5 +54,9 @@ public class Login implements Serializable{
             return "escolherJogo";
         }
         return "login";
+    }
+    
+    public ArrayList<String> listaAtivos(){
+        return logica.listarAtivos();
     }
 }
