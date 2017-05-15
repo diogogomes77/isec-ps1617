@@ -24,5 +24,9 @@ public interface LogicaLocal {
     void IniciarJogo(int idJogo, String participante);
 
     ArrayList<Jogo> listarJogos();
+
+    boolean fazJogada(int idJogo, String por, String jogada);
+
+    boolean terminaJogo(int idJogo);
     
 }

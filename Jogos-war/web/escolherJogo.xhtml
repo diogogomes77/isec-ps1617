@@ -12,17 +12,22 @@
 	<ui:composition template="/resources/TemplateMenu.xhtml">
             <ui:define name="top">
                 <h:form>
-                    
+                    <h:outputText value="Bem-vindo" />
                 </h:form>
             </ui:define>
             <ui:define name="content">
                 <h:form>
-                    <h:commandButton value="CriarJogo" />
+                    <h:commandButton value="Criar Jogo" /><br/><br/>
+                    <h:commandButton value="Unir a Jogo" />
                 </h:form>
             </ui:define>
             <ui:define name="bottom">
                 <h:form>
-                    
+                    <h:outputText value="Criado por:"/><br/>
+                    <h:outputText value="João Bizarro"/><br/>
+                    <h:outputText value="Diogo Gomes"/><br/>
+                    <h:outputText value="Pedro Correia"/><br/>
+                    <h:outputText value="João Lucas"/><br/>
                 </h:form>
             </ui:define>
     	</ui:composition>

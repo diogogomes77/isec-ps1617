@@ -75,4 +75,24 @@ public class Logica implements LogicaLocal {
         }
         return jogosEmEspera;
     }
+
+    @Override
+    public boolean fazJogada(int idJogo, String por, String jogada) {
+        for(int i=0;i<jogos.size();i++){
+            if(jogos.get(i).getId()==idJogo){
+                return jogos.get(i).avaliaJogada(por, jogada);
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public boolean terminaJogo(int idJogo) {
+        for(int i=0;i<jogos.size();i++){
+            if(jogos.get(i).getId()==idJogo){
+                return jogos.get(i).terminaJogo();
+            }
+        }
+        return false;
+    }
 }

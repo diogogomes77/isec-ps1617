@@ -23,7 +23,7 @@ public class Sessao implements SessaoRemote {
         username=null;
         password=null;
     }
-
+    
     @Override
     public void Login(String username, String password) {
         if(username==null){
@@ -60,6 +60,14 @@ public class Sessao implements SessaoRemote {
     public ArrayList<Jogo> listaJogos(ArrayList<Jogo> jogos) {
         return jogos;
     }
-    
-    
+
+    @Override
+    public boolean fazJogada(int idJogo,String jogada) {
+        return lo.fazJogada(idJogo, username, jogada);
+    }
+
+    @Override
+    public boolean terminaJogo(int idJogo) {
+        return lo.terminaJogo(idJogo);
+    }
 }

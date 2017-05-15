@@ -14,7 +14,7 @@ import javax.ejb.Remote;
  */
 @Remote
 public interface SessaoRemote {
-
+    
     void Login(String username, String password);
 
     void Logout();
@@ -24,5 +24,9 @@ public interface SessaoRemote {
     void iniciaJogo(int id);
 
     ArrayList<Jogo> listaJogos(ArrayList<Jogo> jogos);
+
+    boolean fazJogada(int idJogo,String jogada);
+
+    boolean terminaJogo(int idJogo);
     
 }
