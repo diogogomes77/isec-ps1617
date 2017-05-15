@@ -22,7 +22,17 @@
         </div>
 
         <div id="bottom">
-            <ui:insert name="bottom"></ui:insert>
+            <ui:insert name="bottom">
+            </ui:insert>
+                    <h:outputText value="Logados" />
+                    <ui:repeat var="item" value="#{login.listaAtivos()}"> <h1>#{item}</h1> </ui:repeat>  
+                    <br/>
+                    <h:outputText value="Criado por:"/><br/>
+                    <h:outputText value="João Bizarro"/><br/>
+                    <h:outputText value="Diogo Gomes"/><br/>
+                    <h:outputText value="Pedro Correia"/><br/>
+                    <h:outputText value="João Lucas"/><br/>
+
         </div>
 
     </h:body>
