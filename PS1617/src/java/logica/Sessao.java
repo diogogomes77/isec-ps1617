@@ -2,6 +2,7 @@
 package logica;
 
 import java.util.ArrayList;
+import javax.ejb.EJB;
 import javax.ejb.Stateful;
 
 
@@ -10,6 +11,7 @@ public class Sessao implements SessaoLocal {
 
     String username;
     String password;
+    @EJB
     LogicaLocal lo;
 
     public Sessao() {
