@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+          
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+    <head>
+	
+    </head>
+    <body>
+	<ui:composition template="/resources/TemplateMenu.xhtml">
+            <ui:define name="top">
+                <h:form>
+                    <h:outputText value="Bem-vindo" />
+                </h:form>
+            </ui:define>
+            <ui:define name="content">
+                <h:form>
+                    <h:commandButton value="Criar Jogo" /><br/><br/>
+                    <h:commandButton value="Unir a Jogo" />
+                </h:form>
+            </ui:define>
+            <ui:define name="bottom">
+                <h:form>
+                    <h:outputText value="Criado por:"/><br/>
+                    <h:outputText value="João Bizarro"/><br/>
+                    <h:outputText value="Diogo Gomes"/><br/>
+                    <h:outputText value="Pedro Correia"/><br/>
+                    <h:outputText value="João Lucas"/><br/>
+                </h:form>
+            </ui:define>
+    	</ui:composition>
+    </body>
+</html>
