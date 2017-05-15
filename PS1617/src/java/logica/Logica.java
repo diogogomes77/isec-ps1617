@@ -1,22 +1,13 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package logica;
 
 import java.util.ArrayList;
 import javax.ejb.Singleton;
 
-/**
- *
- * @author João
- */
 @Singleton
 public class Logica implements LogicaLocal {
 
-    private ArrayList<jogos.Users> users;
-    private ArrayList<jogos.Jogo> jogos;
+    private ArrayList<Users> users;
+    private ArrayList<Jogo> jogos;
 
     public Logica() {
         users = new ArrayList<>();
@@ -37,7 +28,7 @@ public class Logica implements LogicaLocal {
             }
         }
         //Caso o utilizador ainda não exista
-        users.add(new jogos.Users(username, password, true));
+        users.add(new Users(username, password, true));
     }
     
     @Override
@@ -52,7 +43,7 @@ public class Logica implements LogicaLocal {
 
     @Override
     public void criarJogo(String criador) {
-        jogos.add(new jogos.Jogo(criador));
+        jogos.add(new Jogo(criador));
     }
 
     @Override
@@ -66,8 +57,8 @@ public class Logica implements LogicaLocal {
     }
 
     @Override
-    public ArrayList<jogos.Jogo> listarJogos() {
-        ArrayList<jogos.Jogo> jogosEmEspera = new ArrayList<>();
+    public ArrayList<Jogo> listarJogos() {
+        ArrayList<Jogo> jogosEmEspera = new ArrayList<>();
         for(int i=0;i<jogos.size();i++){
             if(jogos.get(i).isEmEspera()==true){
                 jogosEmEspera.add(jogos.get(i));

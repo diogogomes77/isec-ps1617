@@ -1,14 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package jogos;
+package logica;
 
-/**
- *
- * @author João
- */
 public class Jogo {
     //Variáveis que vão ser comuns a todos os jogos
     static int idProg=0;

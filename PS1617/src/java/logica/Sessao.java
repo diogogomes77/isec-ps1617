@@ -1,17 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package logica;
 
 import java.util.ArrayList;
 import javax.ejb.Stateful;
 
-/**
- *
- * @author João
- */
+
 @Stateful
 public class Sessao implements SessaoLocal {
 
@@ -57,7 +50,7 @@ public class Sessao implements SessaoLocal {
     }
 
     @Override
-    public ArrayList<jogos.Jogo> listaJogos(ArrayList<jogos.Jogo> jogos) {
+    public ArrayList<Jogo> listaJogos(ArrayList<Jogo> jogos) {
         return jogos;
     }
 

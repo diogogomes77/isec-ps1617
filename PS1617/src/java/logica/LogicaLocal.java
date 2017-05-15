@@ -1,17 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package logica;
 
 import java.util.ArrayList;
 import javax.ejb.Local;
 
-/**
- *
- * @author João
- */
 @Local
 public interface LogicaLocal {
     void Login(String username, String password);
@@ -22,7 +14,7 @@ public interface LogicaLocal {
 
     void IniciarJogo(int idJogo, String participante);
 
-    ArrayList<jogos.Jogo> listarJogos();
+    ArrayList<Jogo> listarJogos();
 
     boolean fazJogada(int idJogo, String por, String jogada);
 
