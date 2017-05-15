@@ -1,23 +1,23 @@
 
 package logica;
 
-public class Users {
-    String usename;
+public class User {
+    String username;
     String password;
     boolean ativo;
 
-    public Users(String usename, String password, boolean ativo) {
-        this.usename = usename;
+    public User(String usename, String password, boolean ativo) {
+        this.username = usename;
         this.password = password;
         this.ativo = ativo;
     }
 
-    public String getUsename() {
-        return usename;
+    public String getUsername() {
+        return username;
     }
 
     public void setUsename(String usename) {
-        this.usename = usename;
+        this.username = usename;
     }
 
     public String getPassword() {
@@ -35,7 +35,4 @@ public class Users {
     public void setAtivo(boolean ativo) {
         this.ativo = ativo;
     }
-    
-    
-    
 }

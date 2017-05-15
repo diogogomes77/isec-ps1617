@@ -6,7 +6,7 @@ import javax.ejb.Singleton;
 @Singleton
 public class Logica implements LogicaLocal {
 
-    private ArrayList<Users> users;
+    private ArrayList<User> users;
     private ArrayList<Jogo> jogos;
 
     public Logica() {
@@ -16,34 +16,29 @@ public class Logica implements LogicaLocal {
     
     @Override
     public boolean verificaLogin(String username, String password){
-        for(int i=0;i<users.size();i++){
-            if(username.equals(users.get(i).getUsename())){
-                if(password.equals(users.get(i).getPassword())){
-                    if(users.get(i).isAtivo()){
-                        //Caso o utilizador já exista e tenha uma sessão ativa
-                        return false;
-                    }
-                    else{
-                        //Caso o utilizador já exista e não tenha ainda uma sessão ativa
-                        users.get(i).setAtivo(true);
-                        return true;
-                    }
-                }
-                else{
+        for (User user : users) {
+            if (username.equals(user.getUsername())) {
+                if (user.isAtivo()) {
+                    //Caso o utilizador já exista e tenha uma sessão ativa
                     return false;
+                } else {
+                    //Caso o utilizador já exista e não tenha ainda uma sessão ativa
+                    user.setAtivo(true);
+                    return true;
                 }
             }
         }
+        
         //Caso o utilizador ainda não exista
-        users.add(new Users(username, password, true));
+        users.add(new User(username, password, true));
         return true;
     }
     
     @Override
     public void Logout(String username){
-        for(int i=0;i<users.size();i++){
-            if(!username.equals(users.get(i).getUsename())){
-                users.get(i).setAtivo(false);
+        for (User user : users) {
+            if (username.equals(user.getUsername())) {
+                user.setAtivo(false);
                 return;
             }
         }
@@ -56,10 +51,11 @@ public class Logica implements LogicaLocal {
 
     @Override
     public void IniciarJogo(int idJogo, String participante) {
-        for(int i=0;i<jogos.size();i++){
-            if(jogos.get(i).getId()==idJogo){
-                jogos.get(i).setParticipante(participante);
-                jogos.get(i).setEmEspera(false);
+        for (Jogo jogo : jogos) {
+            if (idJogo == jogo.getId()) {
+                jogo.setParticipante(participante);
+                jogo.setEmEspera(false);
+                return;
             }
         }
     }
@@ -67,42 +63,46 @@ public class Logica implements LogicaLocal {
     @Override
     public ArrayList<Jogo> listarJogos() {
         ArrayList<Jogo> jogosEmEspera = new ArrayList<>();
-        for(int i=0;i<jogos.size();i++){
-            if(jogos.get(i).isEmEspera()==true){
-                jogosEmEspera.add(jogos.get(i));
+        for (Jogo jogo : jogos) {
+            if (jogo.isEmEspera()) {
+                jogosEmEspera.add(jogo);
             }
         }
+        
         return jogosEmEspera;
     }
 
     @Override
     public boolean fazJogada(int idJogo, String por, String jogada) {
-        for(int i=0;i<jogos.size();i++){
-            if(jogos.get(i).getId()==idJogo){
-                return jogos.get(i).avaliaJogada(por, jogada);
+        for (Jogo jogo : jogos) {
+            if (idJogo == jogo.getId()) {
+                return jogo.avaliaJogada(por, jogada);
             }
         }
+        
         return false;
     }
 
     @Override
     public boolean terminaJogo(int idJogo) {
-        for(int i=0;i<jogos.size();i++){
-            if(jogos.get(i).getId()==idJogo){
-                return jogos.get(i).terminaJogo();
+        for (Jogo jogo : jogos) {
+            if (idJogo == jogo.getId()) {
+                return jogo.terminaJogo();
             }
         }
+        
         return false;
     }
 
     @Override
     public ArrayList<String> listarAtivos() {
         ArrayList<String> utilizadoresAtivos = new ArrayList<>();
-        for(int i=0;i<users.size();i++){
-            if(users.get(i).isAtivo()==true){
-                utilizadoresAtivos.add(users.get(i).getUsename());
+        for (User user : users) {
+            if (user.isAtivo()) {
+                utilizadoresAtivos.add(user.getUsername());
             }
         }
+        
         return utilizadoresAtivos;
     }
     
