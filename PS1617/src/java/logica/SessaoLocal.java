@@ -19,4 +19,6 @@ public interface SessaoLocal {
     boolean fazJogada(int idJogo,String jogada);
 
     boolean terminaJogo(int idJogo);
+
+    String getUsername();
 }

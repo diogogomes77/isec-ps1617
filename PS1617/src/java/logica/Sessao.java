@@ -21,34 +21,26 @@ public class Sessao implements SessaoLocal {
     
     @Override
     public void Login(String username, String password) {
-        if(username==null){
-            this.username = username;
-            this.password = password;
-            lo.Login(username, password);
-        }
+        this.username = username;
+        this.password = password;
+        lo.Login(username, password);
     }
 
     @Override
     public void Logout() {
-        if(username!=null){
-            lo.Logout(username);
-            this.username = null;
-            this.password = null;
-        }
+        lo.Logout(username);
+        this.username = null;
+        this.password = null;
     }
 
     @Override
     public void criaJogo() {
-        if(username!=null){
-            lo.criarJogo(password);
-        }
+        lo.criarJogo(password);
     }
 
     @Override
     public void iniciaJogo(int id) {
-        if(username!=null){
-            lo.IniciarJogo(id, username);
-        }
+        lo.IniciarJogo(id, username);
     }
 
     @Override
@@ -64,5 +56,10 @@ public class Sessao implements SessaoLocal {
     @Override
     public boolean terminaJogo(int idJogo) {
         return lo.terminaJogo(idJogo);
+    }
+
+    @Override
+    public String getUsername() {
+        return username;
     }
 }
