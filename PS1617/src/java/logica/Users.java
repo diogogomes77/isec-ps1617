@@ -1,4 +1,6 @@
+
 package logica;
+
 public class Users {
     String usename;
     String password;
