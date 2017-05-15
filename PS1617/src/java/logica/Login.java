@@ -23,6 +23,8 @@ public class Login implements Serializable{
     
     String username;
     String password;
+    
+    String s;
 
     public Login() {
     }
@@ -48,10 +50,16 @@ public class Login implements Serializable{
         this.password = password;
     }
     
+    public String bemvindo(){
+        return sessao.getUsername();
+    }
+    
     public String login(){
         if(!username.equals("") && !password.equals("")){
-            sessao.Login(username, password);
-            return "escolherJogo";
+            if(logica.verificaLogin(username, password)){
+                sessao.login(username, password);
+                return "escolherJogo";
+            }
         }
         return "login";
     }

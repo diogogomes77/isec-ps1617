@@ -6,7 +6,7 @@ import javax.ejb.Local;
 
 @Local
 public interface SessaoLocal {
-    void Login(String username, String password);
+    void login(String username, String password);
 
     void Logout();
 

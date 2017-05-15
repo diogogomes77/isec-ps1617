@@ -6,7 +6,7 @@ import javax.ejb.Local;
 
 @Local
 public interface LogicaLocal {
-    void Login(String username, String password);
+    boolean verificaLogin(String username, String password);
     
     void Logout(String username);
     

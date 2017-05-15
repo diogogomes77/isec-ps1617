@@ -15,20 +15,28 @@ public class Logica implements LogicaLocal {
     }
     
     @Override
-    public void Login(String username, String password){
+    public boolean verificaLogin(String username, String password){
         for(int i=0;i<users.size();i++){
-            if(username.equals(users.get(i).getUsename()) && password.equals(users.get(i).getPassword())){
-                if(users.get(i).isAtivo()){
-                    //Caso o utilizador já exista e tenha uma sessão ativa
+            if(username.equals(users.get(i).getUsename())){
+                if(password.equals(users.get(i).getPassword())){
+                    if(users.get(i).isAtivo()){
+                        //Caso o utilizador já exista e tenha uma sessão ativa
+                        return false;
+                    }
+                    else{
+                        //Caso o utilizador já exista e não tenha ainda uma sessão ativa
+                        users.get(i).setAtivo(true);
+                        return true;
+                    }
                 }
                 else{
-                    //Caso o utilizador já exista e não tenha ainda uma sessão ativa
-                    users.get(i).setAtivo(true);
+                    return false;
                 }
             }
         }
         //Caso o utilizador ainda não exista
         users.add(new Users(username, password, true));
+        return true;
     }
     
     @Override

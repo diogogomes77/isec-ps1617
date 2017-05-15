@@ -20,10 +20,9 @@ public class Sessao implements SessaoLocal {
     }
     
     @Override
-    public void Login(String username, String password) {
+    public void login(String username, String password) {
         this.username = username;
         this.password = password;
-        lo.Login(username, password);
     }
 
     @Override
