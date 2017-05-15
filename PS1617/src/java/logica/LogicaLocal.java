@@ -22,7 +22,7 @@ public interface LogicaLocal {
 
     void IniciarJogo(int idJogo, String participante);
 
-    ArrayList<jogos.Jogo> listarJogos();
+    ArrayList<Jogo> listarJogos();
 
     boolean fazJogada(int idJogo, String por, String jogada);
 

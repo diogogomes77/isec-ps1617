@@ -57,7 +57,7 @@ public class Sessao implements SessaoLocal {
     }
 
     @Override
-    public ArrayList<jogos.Jogo> listaJogos(ArrayList<jogos.Jogo> jogos) {
+    public ArrayList<Jogo> listaJogos(ArrayList<Jogo> jogos) {
         return jogos;
     }
 

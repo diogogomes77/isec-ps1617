@@ -22,7 +22,7 @@ public interface SessaoLocal {
 
     void iniciaJogo(int id);
 
-    ArrayList<jogos.Jogo> listaJogos(ArrayList<jogos.Jogo> jogos);
+    ArrayList<Jogo> listaJogos(ArrayList<Jogo> jogos);
 
     boolean fazJogada(int idJogo,String jogada);
 
