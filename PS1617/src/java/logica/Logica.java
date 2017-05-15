@@ -17,13 +17,13 @@ public class Logica implements LogicaLocal {
     @Override
     public void Login(String username, String password){
         for(int i=0;i<users.size();i++){
-            if(username.equals(users.get(i).getUsename())){
+            if(username.equals(users.get(i).getUsename()) && password.equals(users.get(i).getPassword())){
                 if(users.get(i).isAtivo()){
                     //Caso o utilizador já exista e tenha uma sessão ativa
                 }
                 else{
                     //Caso o utilizador já exista e não tenha ainda uma sessão ativa
-                    users.get(i).isAtivo();
+                    users.get(i).setAtivo(true);
                 }
             }
         }
