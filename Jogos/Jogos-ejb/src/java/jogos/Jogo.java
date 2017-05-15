@@ -11,7 +11,7 @@ package jogos;
  */
 public class Jogo {
     //Variáveis que vão ser comuns a todos os jogos
-    static int idProg;
+    static int idProg=0;
     int id;
     String criador;
     String participante;
