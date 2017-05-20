@@ -3,13 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package logica;
+package beans;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import logica.LogicaLocal;
+import logica.SessaoLocal;
 
 @ManagedBean
 @SessionScoped
@@ -57,7 +59,7 @@ public class Login implements Serializable{
         if(!username.equals("") && !password.equals("")){
             if(logica.verificaLogin(username, password)){
                 sessao.login(username, password);
-                return "escolherJogo";
+                return "gestaojogos";
             }
         }
         return "login";

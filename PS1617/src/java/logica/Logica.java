@@ -45,12 +45,12 @@ public class Logica implements LogicaLocal {
     }
 
     @Override
-    public void criarJogo(String criador) {
+    public void iniciarJogo(String criador) {
         jogos.add(new Jogo(criador));
     }
 
     @Override
-    public void IniciarJogo(int idJogo, String participante) {
+    public void juntarJogo(int idJogo, String participante) {
         for (Jogo jogo : jogos) {
             if (idJogo == jogo.getId()) {
                 jogo.setParticipante(participante);

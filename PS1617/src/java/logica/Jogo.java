@@ -136,4 +136,12 @@ public class Jogo {
                     return false;
         }
     }
+    
+    @Override
+    public String toString(){
+        String result;
+        if (participante==null) result = "Iniciado por "+criador;
+        else result = criador+" vs "+participante;
+        return result;
+    }
 }

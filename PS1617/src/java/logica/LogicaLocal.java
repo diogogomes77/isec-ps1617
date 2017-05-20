@@ -10,9 +10,9 @@ public interface LogicaLocal {
     
     void Logout(String username);
     
-    void criarJogo(String criador);
+    void iniciarJogo(String criador);
 
-    void IniciarJogo(int idJogo, String participante);
+    void juntarJogo(int idJogo, String participante);
 
     ArrayList<Jogo> listarJogos();
 
