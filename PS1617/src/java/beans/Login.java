@@ -10,17 +10,18 @@ import java.util.ArrayList;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import logica.LogicaLocal;
-import logica.SessaoLocal;
+import logica.Logica;
+import logica.Sessao;
+
 
 @ManagedBean
 @SessionScoped
 public class Login implements Serializable{
     @EJB
-    SessaoLocal sessao;
+    Sessao sessao;
     
     @EJB
-    LogicaLocal logica;
+    Logica logica;
     
     String username;
     String password;

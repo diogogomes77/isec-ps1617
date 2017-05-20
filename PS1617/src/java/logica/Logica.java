@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import javax.ejb.Singleton;
 
 @Singleton
-public class Logica implements LogicaLocal {
+public class Logica  {
 
     private ArrayList<User> users;
     private ArrayList<Jogo> jogos;
@@ -13,8 +13,7 @@ public class Logica implements LogicaLocal {
         users = new ArrayList<>();
         jogos = new ArrayList<>();
     }
-    
-    @Override
+   
     public boolean verificaLogin(String username, String password){
         for (User user : users) {
             if (username.equals(user.getUsername())) {
@@ -34,7 +33,7 @@ public class Logica implements LogicaLocal {
         return true;
     }
     
-    @Override
+   
     public void Logout(String username){
         for (User user : users) {
             if (username.equals(user.getUsername())) {
@@ -44,12 +43,12 @@ public class Logica implements LogicaLocal {
         }
     }
 
-    @Override
+  
     public void iniciarJogo(String criador) {
         jogos.add(new Jogo(criador));
     }
 
-    @Override
+   
     public void juntarJogo(int idJogo, String participante) {
         for (Jogo jogo : jogos) {
             if (idJogo == jogo.getId()) {
@@ -60,8 +59,8 @@ public class Logica implements LogicaLocal {
         }
     }
 
-    @Override
-    public ArrayList<Jogo> listarJogos() {
+  
+    public ArrayList<Jogo> listarJogosIniciados() {
         ArrayList<Jogo> jogosEmEspera = new ArrayList<>();
         for (Jogo jogo : jogos) {
             if (jogo.isEmEspera()) {
@@ -72,7 +71,17 @@ public class Logica implements LogicaLocal {
         return jogosEmEspera;
     }
 
-    @Override
+    public ArrayList<Jogo> listarJogosDecorrer() {
+        ArrayList<Jogo> jogosDecorrer = new ArrayList<>();
+        for (Jogo jogo : jogos) {
+            if (!jogo.isEmEspera()) {
+                jogosDecorrer.add(jogo);
+            }
+        }
+        
+        return jogosDecorrer;
+    }
+  
     public boolean fazJogada(int idJogo, String por, String jogada) {
         for (Jogo jogo : jogos) {
             if (idJogo == jogo.getId()) {
@@ -83,7 +92,7 @@ public class Logica implements LogicaLocal {
         return false;
     }
 
-    @Override
+  
     public boolean terminaJogo(int idJogo) {
         for (Jogo jogo : jogos) {
             if (idJogo == jogo.getId()) {
@@ -94,7 +103,7 @@ public class Logica implements LogicaLocal {
         return false;
     }
 
-    @Override
+ 
     public ArrayList<String> listarAtivos() {
         ArrayList<String> utilizadoresAtivos = new ArrayList<>();
         for (User user : users) {

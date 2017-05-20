@@ -6,17 +6,18 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import logica.Jogo;
-import logica.LogicaLocal;
-import logica.SessaoLocal;
+import logica.Logica;
+import logica.Sessao;
+
 
 @ManagedBean
 @SessionScoped
 public class Gestaojogos implements Serializable{
 
     @EJB
-    SessaoLocal sessao;
+    Sessao sessao;
     @EJB
-    LogicaLocal lo;
+    Logica lo;
     private String username;
     
     public Gestaojogos() {
@@ -34,9 +35,13 @@ public class Gestaojogos implements Serializable{
     }
 
     public ArrayList<Jogo> listarJogosIniciados() {
-        return lo.listarJogos();
+        return lo.listarJogosIniciados();
     }
 
+    public ArrayList<Jogo> listarJogosDecorrer() {
+        return lo.listarJogosDecorrer();
+    }
+    
     public boolean fazJogada(int idJogo,String jogada) {
         return lo.fazJogada(idJogo, username, jogada);
     }
