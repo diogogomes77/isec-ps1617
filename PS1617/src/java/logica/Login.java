@@ -5,14 +5,13 @@
  */
 package logica;
 
-import javax.inject.Named;
-import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import java.util.ArrayList;
 import javax.ejb.EJB;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 
-
-@Named(value = "login")
+@ManagedBean
 @SessionScoped
 public class Login implements Serializable{
     @EJB
