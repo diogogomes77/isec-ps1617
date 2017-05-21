@@ -66,6 +66,11 @@ public class Login implements Serializable{
         return "login";
     }
     
+    public String logout(){
+        sessao.logout();
+        return "login";
+    }
+    
     public ArrayList<String> listaAtivos(){
         return logica.listarAtivos();
     }

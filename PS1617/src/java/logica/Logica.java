@@ -34,7 +34,7 @@ public class Logica  {
     }
     
    
-    public void Logout(String username){
+    public void logout(String username){
         for (User user : users) {
             if (username.equals(user.getUsername())) {
                 user.setAtivo(false);

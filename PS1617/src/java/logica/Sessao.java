@@ -36,10 +36,12 @@ public class Sessao {
         this.jogo = jogo;
     }
 
-    public void Logout() {
-        lo.Logout(username);
+    public void logout() {
+        lo.logout(username);
         this.username = null;
         this.password = null;
+        HttpSession session = Util.getSession();
+        session.setAttribute("username", null);
     }
 
     public String getUsername() {
