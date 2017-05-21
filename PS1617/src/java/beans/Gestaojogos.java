@@ -32,7 +32,7 @@ public class Gestaojogos implements Serializable {
         if (username != null) {
             lo.iniciarJogo(username);
         }
-        return "jogo";
+        return "gestaojogos";
     }
 
     public void juntarJogo(int id) {
