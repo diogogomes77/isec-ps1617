@@ -14,6 +14,7 @@
     <h:body>
 
         <div id="top">
+             <h:outputText value="Plataforma de Jogos Online V0.1"/><br/>
             <ui:insert name="top"></ui:insert>
         </div>
 
@@ -24,17 +25,19 @@
         <div id="bottom">
             <ui:insert name="bottom">
             </ui:insert>
-                    <h:outputText value="Logados" />
+                    <h:outputText value="Jogadores ativos" rendered="${not empty login.listaAtivos()}"/>
                     <ui:repeat var="item" value="#{login.listaAtivos()}"> <h1>#{item}</h1> </ui:repeat>  
                     <br/>
-                    <h:outputText value="Criado por:"/><br/>
+        </div>
+        <div id="sig">
+                    <h:outputText value="ISEC - MEIS1617 - Projeto de Software"/><br/>
+                    <h:outputText value="Desenvolvido por:"/><br/>
                     <h:outputText value="João Bizarro"/><br/>
                     <h:outputText value="Diogo Gomes"/><br/>
                     <h:outputText value="Pedro Correia"/><br/>
                     <h:outputText value="João Lucas"/><br/>
-
+                    
         </div>
-
     </h:body>
 
 </html>

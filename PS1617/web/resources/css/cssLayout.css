@@ -13,7 +13,13 @@
     padding: 5px;
     margin: 10px 0px 0px 0px;
 }
-
+#sig {
+    position: relative;
+    background-color: #036fab;
+    padding: 5px;
+    margin: 10px 0px 0px 0px;
+    color: #ffffff;
+}
 #left {
     float: left;
     background-color: #ece3a5;

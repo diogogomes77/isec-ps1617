@@ -59,8 +59,18 @@ public class Logica  {
         }
     }
 
+    public Jogo getJogo(int id){
+         for (Jogo jogo : jogos) {
+            if (jogo.getId()==id) {
+                return jogo;
+            }
+        }
+        return null;
+    }
+    
+
   
-    public ArrayList<Jogo> listarJogosIniciados() {
+    public ArrayList<Jogo> getJogosIniciados() {
         ArrayList<Jogo> jogosEmEspera = new ArrayList<>();
         for (Jogo jogo : jogos) {
             if (jogo.isEmEspera()) {
@@ -71,7 +81,7 @@ public class Logica  {
         return jogosEmEspera;
     }
 
-    public ArrayList<Jogo> listarJogosDecorrer() {
+    public ArrayList<Jogo> getJogosDecorrer() {
         ArrayList<Jogo> jogosDecorrer = new ArrayList<>();
         for (Jogo jogo : jogos) {
             if (!jogo.isEmEspera()) {
