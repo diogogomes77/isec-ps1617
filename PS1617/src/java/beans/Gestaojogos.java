@@ -22,7 +22,7 @@ public class Gestaojogos implements Serializable {
     @EJB
     Logica lo;
     private String username;
-
+    
     public Gestaojogos() {
         // this.username = sessao.getUsername();
         // this.username = "okok";
@@ -32,7 +32,7 @@ public class Gestaojogos implements Serializable {
         if (username != null) {
             lo.iniciarJogo(username);
         }
-        return "gestaojogos";
+        return "jogo";
     }
 
     public void juntarJogo(int id) {
