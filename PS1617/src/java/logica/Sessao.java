@@ -47,6 +47,6 @@ public class Sessao {
     public String getUsername() {
         HttpSession session = Util.getSession();
          return  (String)  session.getAttribute("username");
-        
+         
     }
 }
