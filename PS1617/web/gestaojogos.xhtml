@@ -12,7 +12,7 @@
 	<ui:composition template="/resources/TemplateMenu.xhtml">
             <ui:define name="top">
                 <h:form>
-                    <h:outputText value="Bem-vindo" />
+                    <h:outputText value="Bem-vindo #{login.username}" />
                 </h:form>
             </ui:define>
             <ui:define name="content">
