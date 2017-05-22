@@ -17,13 +17,18 @@ public class Logica  {
     public boolean verificaLogin(String username, String password){
         for (User user : users) {
             if (username.equals(user.getUsername())) {
-                if (user.isAtivo()) {
-                    //Caso o utilizador já exista e tenha uma sessão ativa
+                if(password.equals(user.getPassword())){
+                    if (user.isAtivo()) {
+                        //Caso o utilizador já exista e tenha uma sessão ativa
+                        return false;
+                    } else {
+                        //Caso o utilizador já exista e não tenha ainda uma sessão ativa
+                        user.setAtivo(true);
+                        return true;
+                    }
+                }
+                else{
                     return false;
-                } else {
-                    //Caso o utilizador já exista e não tenha ainda uma sessão ativa
-                    user.setAtivo(true);
-                    return true;
                 }
             }
         }
