@@ -30,7 +30,7 @@ public class Gestaojogos implements Serializable {
 
     public String iniciarJogo() {
         if (username != null) {
-            lo.iniciarJogo(username);
+            sessao.setJogoId(lo.iniciarJogo(username));
         }
         return "gestaojogos";
     }
@@ -38,6 +38,7 @@ public class Gestaojogos implements Serializable {
     public void juntarJogo(int id) {
         if (username != null && !lo.getJogo(id).getCriador().equals(username)) {
             lo.juntarJogo(id, username);
+            sessao.setJogoId(id);
         }
     }
     public boolean possoJuntar(int id){
@@ -48,9 +49,9 @@ public class Gestaojogos implements Serializable {
         }
         return false;
     }
-    public boolean possoJogar(int id){
+    public boolean possoJogar(){
        for (Jogo jogo : lo.getJogosDecorrer()) {
-            if (jogo.getId()==id) {
+            if (jogo.getId()==sessao.getJogoId()) {
                 if (jogo.getCriador().equals(username) || jogo.getParticipante().equals(username))
                     return true;
             }
@@ -64,18 +65,17 @@ public class Gestaojogos implements Serializable {
     public ArrayList<Jogo> listarJogosDecorrer() {
         return lo.getJogosDecorrer();
     }
-
-    public String jogar(int id){
-        sessao.setJogo(id);
-        return "jogo";
-    }
     
-    public boolean fazJogada(int idJogo, String jogada) {
-        return lo.fazJogada(idJogo, username, jogada);
+    public boolean fazJogada(String jogada) {
+        return lo.fazJogada(sessao.getJogoId(),username, jogada);
     }
 
-    public boolean terminaJogo(int idJogo) {
-        return lo.terminaJogo(idJogo);
+    public boolean terminaJogo() {
+        if(lo.terminaJogo(sessao.getJogoId())){
+            sessao.setJogoId(-1);
+            return true;
+        }
+        return false;
     }
 
     @PostConstruct

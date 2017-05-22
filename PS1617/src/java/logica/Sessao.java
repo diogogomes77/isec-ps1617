@@ -12,7 +12,7 @@ public class Sessao {
 
     private String username;
     private String password;
-    private int jogo;
+    private int jogoId;
     @EJB
     Logica lo;
 
@@ -28,12 +28,12 @@ public class Sessao {
             session.setAttribute("username", username);
     }
 
-    public int getJogo() {
-        return jogo;
+    public int getJogoId() {
+        return jogoId;
     }
 
-    public void setJogo(int jogo) {
-        this.jogo = jogo;
+    public void setJogoId(int jogoId) {
+        this.jogoId = jogoId;
     }
 
     public void logout() {

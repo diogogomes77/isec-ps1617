@@ -49,8 +49,10 @@ public class Logica  {
     }
 
   
-    public void iniciarJogo(String criador) {
-        jogos.add(new Jogo(criador));
+    public int iniciarJogo(String criador) {
+        Jogo j = new Jogo(criador);
+        jogos.add(j);
+        return j.getId();
     }
 
    
