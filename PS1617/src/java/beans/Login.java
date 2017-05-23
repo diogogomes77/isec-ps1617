@@ -60,10 +60,23 @@ public class Login implements Serializable{
         if(!username.equals("") && !password.equals("")){
             if(logica.verificaLogin(username, password)){
                 sessao.login(username, password);
-                return "gestaojogos";
+                sessao.setJogoId(logica.getJogoCriadoAtualmente(username));
+                if(redirectQuandoJogoIniciado())
+                    return "jogo";
+                else
+                    return "gestaojogos";
             }
         }
         return "login";
+    }
+    
+    public boolean redirectQuandoJogoIniciado(){
+        if(sessao.getJogoId()==-1)
+            return false;
+        if(!logica.getJogo(sessao.getJogoId()).isEmEspera() && !logica.getJogo(sessao.getJogoId()).isConcluido())
+           return true;
+        else
+            return false;
     }
     
     public String logout(){

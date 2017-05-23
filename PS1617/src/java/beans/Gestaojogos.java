@@ -35,11 +35,13 @@ public class Gestaojogos implements Serializable {
         return "gestaojogos";
     }
 
-    public void juntarJogo(int id) {
+    public String juntarJogo(int id) {
         if (username != null && !lo.getJogo(id).getCriador().equals(username)) {
             lo.juntarJogo(id, username);
             sessao.setJogoId(id);
+            return "jogo";
         }
+        return "gestaojogos";
     }
     public boolean possoJuntar(int id){
        for (Jogo jogo : lo.getJogosIniciados()) {
@@ -49,15 +51,21 @@ public class Gestaojogos implements Serializable {
         }
         return false;
     }
-    public boolean possoJogar(){
+    public boolean possoJogar(int id){
        for (Jogo jogo : lo.getJogosDecorrer()) {
-            if (jogo.getId()==sessao.getJogoId()) {
+            if (jogo.getId()==id) {
                 if (jogo.getCriador().equals(username) || jogo.getParticipante().equals(username))
                     return true;
             }
         }
         return false;
     }
+    
+    public String jogar(int id){
+        sessao.setJogoId(id);
+        return "jogo";
+    }
+    
     public ArrayList<Jogo> listarJogosIniciados() {
         return lo.getJogosIniciados();
     }
@@ -77,7 +85,7 @@ public class Gestaojogos implements Serializable {
         }
         return false;
     }
-
+    
     @PostConstruct
     public void init() {
         HttpSession session = Util.getSession();

@@ -132,5 +132,11 @@ public class Logica  {
         return utilizadoresAtivos;
     }
     
-    
+    public int getJogoCriadoAtualmente(String username){
+        for (Jogo jogo : jogos) {
+            if(jogo.getCriador().equals(username) && !jogo.isConcluido())
+                return  jogo.getId();
+        }
+        return -1;
+    }
 }
