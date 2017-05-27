@@ -7,11 +7,14 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 import javax.websocket.SessionException;
 import logica.Jogo;
 import logica.Logica;
 import logica.Sessao;
+import org.primefaces.context.RequestContext;
 
 @ManagedBean
 @SessionScoped
@@ -43,6 +46,7 @@ public class Gestaojogos implements Serializable {
         }
         return "gestaojogos";
     }
+    
     public boolean possoJuntar(int id){
        for (Jogo jogo : lo.getJogosIniciados()) {
             if (jogo.getId()==id) {
@@ -90,5 +94,16 @@ public class Gestaojogos implements Serializable {
     public void init() {
         HttpSession session = Util.getSession();
         this.username = (String) session.getAttribute("username");
+    }
+    
+
+//----------------------------//--------------------------    
+
+    public void joga(int pos){
+        boolean ok = lo.joga(username, pos);
+        if(!ok){
+            RequestContext r = RequestContext.getCurrentInstance();
+            r.execute("PF('dlg').show();");
+        }
     }
 }

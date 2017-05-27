@@ -139,4 +139,37 @@ public class Logica  {
         }
         return -1;
     }
+    
+     //-------------------------------------//-------------------------------//-----------------------
+    
+    int turno = 0; // 0 -> criador ; 1 -> participante
+    
+    //metodo joga-> recebe nome do jogador que jogou, e posicao 
+    public boolean joga(String username, int pos){
+        for(Jogo jogo : jogos){
+            if(jogo.getCriador().equals(username)){
+                if(turno == 0){
+                    turno = 1;
+                    //guarda jogada e verifica se jogo terminou
+                    //....
+                    return true;
+                }
+                else{
+                    return false;
+                }
+            }
+            else if(jogo.getParticipante().equals(username)){
+                if(turno == 1){
+                    turno = 0;
+                    //guarda jogada e verifica se jogo terminou
+                    //....
+                    return true;
+                }
+                else{
+                    return false;
+                }
+            }
+        }
+        return false;
+    }   
 }

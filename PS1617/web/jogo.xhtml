@@ -5,15 +5,16 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
           
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:p="http://primefaces.org/ui">
     <head>
-	
+         
     </head>
     <body>
 	<ui:composition template="/resources/TemplateMenu.xhtml">
             <ui:define name="top">
                 <h:form>
-                    
+                                            
                 </h:form>
             </ui:define>
             <ui:define name="left">
@@ -23,7 +24,7 @@
             </ui:define>
             <ui:define name="content">
                 <h:form>
-                    <h:panelGrid columns="3" bodyrows="3" width="450px"   border="1">
+                    <h:panelGrid id="table" columns="3" bodyrows="3" width="450px"   border="1"> 
                         <h:commandButton style="width: 150px; height: 150px" />
                         <h:commandButton style="width: 150px; height: 150px" />
                         <h:commandButton style="width: 150px; height: 150px" />
@@ -33,11 +34,18 @@
                         <h:commandButton style="width: 150px; height: 150px" />
                         <h:commandButton style="width: 150px; height: 150px" />
                         <h:commandButton style="width: 150px; height: 150px" />
-                    </h:panelGrid>
-                    <h:commandButton value="Ganhar"></h:commandButton>
-                    <h:commandButton value="Perder"></h:commandButton>
-                    <h:commandButton value="Empatar"></h:commandButton>
-                    <h:commandButton value="Passar"></h:commandButton>
+                    </h:panelGrid>                    
+                    <p:poll interval="2" update="table" /> <!-- atualiza a tabela de 2 em 2 segundos -->
+                    <br/>
+                    
+                    <h:commandButton value="Jogar" action="#{gestaojogos.joga(0)}" />
+                    
+                    <p:dialog id="dialog" widgetVar="dlg" width="150px" height="50px">  
+                        <h:outputText value="Não é a sua vez de jogar !"/>
+                        <br/>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        <h:commandButton value="OK" onclick="PF('dlg').hide()" />
+                    </p:dialog>
                 </h:form>
             </ui:define>
             <ui:define name="right">
