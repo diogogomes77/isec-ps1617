@@ -149,10 +149,10 @@ public class Logica  {
         for(Jogo jogo : jogos){
             if(jogo.getCriador().equals(username)){
                 if(turno == 0){
-                    turno = 1;
-                    //guarda jogada e verifica se jogo terminou
-                    //....
-                    return true;
+                    if(!jogo.isConcluido()){
+                        turno = 1;
+                        return true;
+                    }
                 }
                 else{
                     return false;
@@ -160,9 +160,10 @@ public class Logica  {
             }
             else if(jogo.getParticipante().equals(username)){
                 if(turno == 1){
-                    turno = 0;
-                    //guarda jogada e verifica se jogo terminou
-                    //....
+                    if(!jogo.isConcluido()){
+                        turno = 0;
+                        return true;
+                    }
                     return true;
                 }
                 else{
@@ -172,4 +173,32 @@ public class Logica  {
         }
         return false;
     }   
+    
+    public boolean termina(String username, int pos){
+        for(Jogo jogo : jogos){
+            if(jogo.getCriador().equals(username)){
+                if(turno == 0){
+                    if(!jogo.isConcluido()){
+                        jogo.terminaTemp(username, pos);
+                        return true;
+                    }   
+                }
+                else{
+                    return false;
+                }
+            }
+            else if(jogo.getParticipante().equals(username)){
+                if(turno == 1){
+                    if(!jogo.isConcluido()){
+                        jogo.terminaTemp(username, pos);
+                        return true;
+                    }
+                }
+                else{
+                    return false;
+                }
+            }
+        }
+        return false;
+    }  
 }

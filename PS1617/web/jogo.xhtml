@@ -39,6 +39,9 @@
                     <br/>
                     
                     <h:commandButton value="Jogar" action="#{gestaojogos.joga(0)}" />
+                    <h:commandButton value="Ganhar" action="#{gestaojogos.joga(1)}" />
+                    <h:commandButton value="Perder" action="#{gestaojogos.joga(2)}" />
+                    <h:commandButton value="Empatar" action="#{gestaojogos.joga(3)}" />
                     
                     <p:dialog id="dialog" widgetVar="dlg" width="150px" height="50px">  
                         <h:outputText value="Não é a sua vez de jogar !"/>

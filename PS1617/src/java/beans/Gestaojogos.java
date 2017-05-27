@@ -99,11 +99,36 @@ public class Gestaojogos implements Serializable {
 
 //----------------------------//--------------------------    
 
-    public void joga(int pos){
-        boolean ok = lo.joga(username, pos);
+    public String joga(int pos){
+        boolean ok;
+        boolean t=false;
+        switch (pos) {
+            case 0:
+                ok = lo.joga(username, pos);
+                break;
+            case 1:
+                ok = lo.termina(username, 1);
+                t=true;
+                break;
+            case 2:
+                ok = lo.termina(username, -1);
+                t=true;
+                break;
+            default:
+                ok = lo.termina(username, 0);
+                t=true;
+                break;
+        }
+        
         if(!ok){
             RequestContext r = RequestContext.getCurrentInstance();
             r.execute("PF('dlg').show();");
+        }
+        if(t==true){
+            return "gestaojogos";
+        }
+        else{
+            return "jogo";
         }
     }
 }

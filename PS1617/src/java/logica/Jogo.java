@@ -14,7 +14,7 @@ public class Jogo {
     //Ainda não decidido: -1
     //Empate: 0 
     //Criador: 1
-    //Vencedor: 2
+    //Participante: 2
     int vencedor;
 
     //Variaveis para este jogo em especifico
@@ -135,6 +135,34 @@ public class Jogo {
                     //Jogada não termina
                     return false;
         }
+    }
+    
+    //Função para condizer com o método que o pedro fez de fazer jogada vai ser remvida no futuro
+    public boolean terminaTemp(String username,int i){
+        switch(i){
+            //Jogador Atual Perde
+            case -1:
+                if(username.equals(criador))
+                    vencedor=2;
+                else
+                    vencedor=1;
+                concluido=true;
+                return true;
+            //Empate
+            case 0:
+                vencedor=0;
+                concluido=true;
+                return true;
+            //Jogador Atual Ganha
+            case 1:
+                if(username.equals(criador))
+                    vencedor=1;
+                else
+                    vencedor=2;
+                concluido=true;
+                return true;
+        }
+        return false;
     }
     
     @Override
