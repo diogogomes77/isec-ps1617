@@ -20,11 +20,19 @@
                     <h:commandButton value="Iniciar Jogo" action="#{gestaojogos.iniciarJogo()}"/><br/><br/>
                     <h:commandButton value="Logout" type='button' onclick="PF('dlg').show()" />
                     
-                    <p:dialog id="dialog" widgetVar="dlg" width="150px" height="50px" >  
+                    <p:dialog id="dialog" widgetVar="dlg" header="Sair ?" width="150px" height="50px" >  
                         <h:commandButton value="Yes" action="#{gestaoSessao.logout}" />
                         &nbsp; &nbsp;
                         <h:commandButton value="No" onclick="PF('dlg').hide()" />
-                    </p:dialog> 
+                    </p:dialog>
+                    
+                    <p:dialog id="dialogIni" widgetVar="dlgIni" header="Inicio de jogo falhou !" width="200px" height="100px">  
+                        <h:outputText value="Não pode iniciar novo jogo enquanto tiver partidas por iniciar !"/>
+                        <br/>
+                        <br/>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        <h:commandButton value="OK" onclick="PF('dlgIni').hide()" />
+                    </p:dialog>
                 </h:form>
             </ui:define>
             <ui:define name="bottom">

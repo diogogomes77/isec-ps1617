@@ -37,8 +37,15 @@ public class Gestaojogos implements Serializable {
 
     public String iniciarJogo() {
         if (username != null) {
-            sessao.setJogoId(lo.iniciarJogo(username));
-            return "/area_privada/gestaojogos";
+            if(sessao.getJogoId() < 1){
+                sessao.setJogoId(lo.iniciarJogo(username));
+                return "/area_privada/gestaojogos";
+            }
+            else{
+                RequestContext r = RequestContext.getCurrentInstance();
+                r.execute("PF('dlgIni').show();");                
+                return "/area_privada/gestaojogos";
+            }
         }
         return "login";
     }
