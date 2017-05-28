@@ -25,26 +25,31 @@ public class Gestaojogos implements Serializable {
     @EJB
     Logica lo;
     private String username;
+    private  HttpSession session;
     
     public Gestaojogos() {
         // this.username = sessao.getUsername();
+        // System.out.println("---- Gestao jogos iniciada "+username);
         // this.username = "okok";
+        this.session = Util.getSession();
+        this.username=session.getAttribute("username").toString();
     }
 
     public String iniciarJogo() {
         if (username != null) {
             sessao.setJogoId(lo.iniciarJogo(username));
+            return "/area_privada/gestaojogos";
         }
-        return "gestaojogos";
+        return "login";
     }
 
     public String juntarJogo(int id) {
         if (username != null && !lo.getJogo(id).getCriador().equals(username)) {
             lo.juntarJogo(id, username);
             sessao.setJogoId(id);
-            return "jogo";
+            return "/area_privada/jogo";
         }
-        return "gestaojogos";
+        return "/area_privada/gestaojogos";
     }
     
     public boolean possoJuntar(int id){
@@ -67,7 +72,7 @@ public class Gestaojogos implements Serializable {
     
     public String jogar(int id){
         sessao.setJogoId(id);
-        return "jogo";
+        return "/area_privada/jogo";
     }
     
     public ArrayList<Jogo> listarJogosIniciados() {
@@ -125,10 +130,10 @@ public class Gestaojogos implements Serializable {
             r.execute("PF('dlg').show();");
         }
         if(t==true){
-            return "gestaojogos";
+            return "/area_privada/gestaojogos";
         }
         else{
-            return "jogo";
+            return "/area_privada/jogo";
         }
     }
 }

@@ -20,10 +20,10 @@
                 <h:form>
                     <h3>Login</h3>
                     <h:outputText value="Username:" /><br/>
-                    <h:inputText id="username" value="#{login.username}"/><br/>
+                    <h:inputText id="username" value="#{gestaoSessao.username}"/><br/>
                     <h:outputText value="Password" /><br/>
-                    <h:inputSecret id="password" value="#{login.password}"/><br/><br/>
-                    <h:commandButton value="Login" action="#{login.login()}" />
+                    <h:inputSecret id="password" value="#{gestaoSessao.password}"/><br/><br/>
+                    <h:commandButton value="Login" action="#{gestaoSessao.login()}" />
                 </h:form>
             </ui:define>
             <ui:define name="bottom">

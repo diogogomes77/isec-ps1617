@@ -4,28 +4,26 @@ package logica;
 import autenticacao.Util;
 import javax.ejb.EJB;
 import javax.ejb.Stateful;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 
 @Stateful
 public class Sessao {
 
-    private String username;
-    private String password;
+   //private String username;
+    //private String password;
     private int jogoId;
+    private User user;
     @EJB
     Logica lo;
 
-    public Sessao() {
-        username=null;
-        password=null;
-    }
-    
-    public void login(String username, String password) {
-        this.username = username;
-        this.password = password;
+    public void login(User user) {
+        this.user=user;
         HttpSession session = Util.getSession();
-            session.setAttribute("username", username);
+        session.setAttribute("username", user.getUsername());
+        user.setSession(session);
+        System.out.println("------SESSAO login -----"+session.getAttribute("username"));
     }
 
     public int getJogoId() {
@@ -37,16 +35,25 @@ public class Sessao {
     }
 
     public void logout() {
-        lo.logout(username);
-        this.username = null;
-        this.password = null;
+        user.setAtivo(false);
+        this.user=null;
         HttpSession session = Util.getSession();
-        session.setAttribute("username", null);
+        session.invalidate();
+        user.setSession(session);
     }
 
     public String getUsername() {
         HttpSession session = Util.getSession();
          return  (String)  session.getAttribute("username");
          
+    }
+    
+    public boolean isAtivo(){
+        if (user==null){
+             System.out.println("-----Sessao.isAtivo: user==null ");
+            return false;
+        }
+            
+        return user.isAtivo();
     }
 }

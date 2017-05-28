@@ -5,18 +5,21 @@
  */
 package beans;
 
+import autenticacao.Util;
 import java.io.Serializable;
 import java.util.ArrayList;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.servlet.http.HttpSession;
 import logica.Logica;
 import logica.Sessao;
+import logica.User;
 
 
 @ManagedBean
 @SessionScoped
-public class Login implements Serializable{
+public class GestaoSessao implements Serializable{
     @EJB
     Sessao sessao;
     
@@ -28,10 +31,10 @@ public class Login implements Serializable{
     
     String s;
 
-    public Login() {
+    public GestaoSessao() {
     }
     
-    public Login(String username, String password) {
+    public GestaoSessao(String username, String password) {
         this.username = "";
         this.password = "";
     }
@@ -58,15 +61,21 @@ public class Login implements Serializable{
     
     public String login(){
         if(!username.equals("") && !password.equals("")){
-            if(logica.verificaLogin(username, password)){
-                sessao.login(username, password);
+            System.out.println("-----Tenta reconhecer login --");
+            User user =logica.verificaLogin(username, password);
+            
+            if(user!=null){
+                System.out.println("-----login reconhecido --");
+                sessao.login(user);
+                
                 sessao.setJogoId(logica.getJogoCriadoAtualmente(username));
                 if(redirectQuandoJogoIniciado())
-                    return "jogo";
+                    return "/area_privada/jogo";
                 else
-                    return "gestaojogos";
+                    return "/area_privada/gestaojogos";
             }
         }
+        System.out.println("-----login vazio --");
         return "login";
     }
     

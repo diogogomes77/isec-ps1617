@@ -25,8 +25,8 @@
         <div id="bottom">
             <ui:insert name="bottom">
             </ui:insert>
-                    <h:outputText value="Jogadores ativos" rendered="${not empty login.listaAtivos()}"/>
-                    <ui:repeat var="item" value="#{login.listaAtivos()}"> <h1>#{item}</h1> </ui:repeat>  
+                    <h:outputText value="Jogadores ativos" rendered="${not empty gestaoSessao.listaAtivos()}"/>
+                    <ui:repeat var="item" value="#{gestaoSessao.listaAtivos()}"> <h1>#{item}</h1> </ui:repeat>  
                     <br/>
         </div>
         <div id="sig">

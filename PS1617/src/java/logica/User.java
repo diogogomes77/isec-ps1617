@@ -1,10 +1,13 @@
 
 package logica;
 
+import javax.servlet.http.HttpSession;
+
 public class User {
     String username;
     String password;
     boolean ativo;
+    private HttpSession session;
 
     public User(String usename, String password, boolean ativo) {
         this.username = usename;
@@ -35,4 +38,13 @@ public class User {
     public void setAtivo(boolean ativo) {
         this.ativo = ativo;
     }
+
+    public HttpSession getSession() {
+        return session;
+    }
+
+    public void setSession(HttpSession session) {
+        this.session = session;
+    }
+    
 }
