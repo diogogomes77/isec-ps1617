@@ -141,6 +141,16 @@ public class Logica {
         }
         return -1;
     }
+    
+    public boolean jogoTerminado(int idJogo) {
+        for (Jogo jogo : jogos) {
+            if (idJogo == jogo.getId()) {
+                return jogo.isConcluido();
+            }
+        }
+
+        return false;
+    }
 
     //-------------------------------------//-------------------------------//-----------------------
     int turno = 0; // 0 -> criador ; 1 -> participante

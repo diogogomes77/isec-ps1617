@@ -90,16 +90,25 @@ public class Gestaojogos implements Serializable {
         return lo.getJogosDecorrer();
     }
     
-    public boolean fazJogada(String jogada) {
-        return lo.fazJogada(sessao.getJogoId(),username, jogada);
+    public String fazJogada(String jogada) {
+        if(lo.fazJogada(sessao.getJogoId(),username, jogada)){
+            return verificaTerminaJogo();
+        }if(lo.jogoTerminado(sessao.getJogoId())){
+            sessao.setJogoId(-1);
+            return "/area_privada/gestaojogos";
+        }else{
+            RequestContext r = RequestContext.getCurrentInstance();
+            r.execute("PF('dlg').show();");
+            return "/area_privada/jogo";
+        }
     }
 
-    public boolean terminaJogo() {
+    public String verificaTerminaJogo() {
         if(lo.terminaJogo(sessao.getJogoId())){
             sessao.setJogoId(-1);
-            return true;
+            return "/area_privada/gestaojogos";
         }
-        return false;
+        return "/area_privada/jogo";
     }
     
     @PostConstruct
