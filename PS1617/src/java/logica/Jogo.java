@@ -1,7 +1,10 @@
 
 package logica;
 
-public class Jogo {
+import java.util.ArrayList;
+import java.util.List;
+
+public abstract class Jogo {
     //Variáveis que vão ser comuns a todos os jogos
     static int idProg=0;
     int id;
@@ -20,6 +23,8 @@ public class Jogo {
     //Variaveis para este jogo em especifico
     String comando;
     
+    List<Jogada> jogadas;
+    
     public Jogo(String criador) {
         this.id = idProg;
         idProg++;
@@ -31,6 +36,7 @@ public class Jogo {
         turno = criador;
         
         this.comando = "";
+        this.jogadas = new ArrayList<>();
     }
 
     public int getId() {
@@ -163,6 +169,14 @@ public class Jogo {
                 return true;
         }
         return false;
+    }
+    
+    public void adicionaJogada(Jogada jogada) {
+        this.jogadas.add(jogada);
+    }
+    
+    public int getNumeroJogadas() {
+        return this.jogadas.size();
     }
     
     @Override

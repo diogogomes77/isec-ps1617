@@ -11,11 +11,16 @@ public class Logica {
     private ArrayList<User> users;
     private ArrayList<Jogo> jogos;
 
+    public enum TipoJogo {
+        JOGO_GALO,
+        JOGO_QUATRO_EM_LINHA
+    }
+  
     public Logica() {
         users = new ArrayList<>();
         jogos = new ArrayList<>();
     }
-
+  
     public User verificaLogin(String username, String password) {
         for (User user : users) {
             if (username.equals(user.getUsername())) {
@@ -55,8 +60,17 @@ public class Logica {
         }
     }*/
 
-    public int iniciarJogo(String criador) {
-        Jogo j = new Jogo(criador);
+    public int iniciarJogo(String criador, TipoJogo tipoJogo) {
+        Jogo j;
+        switch (tipoJogo) {
+            case JOGO_GALO:
+               j = new JogoGalo(criador);
+               break;
+            case JOGO_QUATRO_EM_LINHA:
+            default:
+                j = new JogoQuatroEmLinha(criador);
+        }
+        
         jogos.add(j);
         return j.getId();
     }

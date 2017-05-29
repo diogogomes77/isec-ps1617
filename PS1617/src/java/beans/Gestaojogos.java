@@ -7,12 +7,10 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.context.ExternalContext;
-import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
-import javax.websocket.SessionException;
 import logica.Jogo;
 import logica.Logica;
+import logica.Logica.TipoJogo;
 import logica.Sessao;
 import org.primefaces.context.RequestContext;
 
@@ -35,10 +33,10 @@ public class Gestaojogos implements Serializable {
         this.username=session.getAttribute("username").toString();
     }
 
-    public String iniciarJogo() {
+    public String iniciarJogo(TipoJogo tipoJogo) {
         if (username != null) {
             if(sessao.getJogoId() < 1){
-                sessao.setJogoId(lo.iniciarJogo(username));
+                sessao.setJogoId(lo.iniciarJogo(username, tipoJogo));
                 return "/area_privada/gestaojogos";
             }
             else{
