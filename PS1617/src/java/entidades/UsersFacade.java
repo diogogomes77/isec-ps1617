@@ -15,7 +15,7 @@ import javax.persistence.PersistenceContext;
  */
 @Stateless
 public class UsersFacade extends AbstractFacade<Users> {
-
+/*
     @PersistenceContext(unitName = "PS1617PU")
     private EntityManager em;
 
@@ -23,9 +23,11 @@ public class UsersFacade extends AbstractFacade<Users> {
     protected EntityManager getEntityManager() {
         return em;
     }
-
+*/
     public UsersFacade() {
         super(Users.class);
     }
+
+
     
 }

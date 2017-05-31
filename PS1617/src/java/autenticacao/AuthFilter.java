@@ -81,7 +81,7 @@ public class AuthFilter implements Filter {
                             } else {
                                 System.out.println("-----IS NOT LOGGED --");
                                 ses.invalidate();
-                                res.sendRedirect(req.getContextPath() + "/faces/login.xhtml");
+                                res.sendRedirect(req.getContextPath() + "/faces/index.xhtml");
                                 //return;
                             }
                         
@@ -89,9 +89,9 @@ public class AuthFilter implements Filter {
                 }
                 if ((ses == null) || ses.getAttribute("username") == null) {
                     System.out.println("-----SES NULL or NO uSERNAME --");
-                    if (!reqURI.contains("/faces/login.xhtml")) {
+                    if (!reqURI.contains("/faces/index.xhtml")) {
                         System.out.println("-----URI no VISITANTE --");
-                        res.sendRedirect(req.getContextPath() + "/faces/login.xhtml");
+                      //  res.sendRedirect(req.getContextPath() + "/faces/index.xhtml");
                         //return;
                     }
 //                    else {

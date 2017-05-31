@@ -16,13 +16,10 @@ import javax.persistence.PersistenceContext;
 @Stateless
 public class JogosFacade extends AbstractFacade<Jogos> {
 
-    @PersistenceContext(unitName = "PS1617PU")
-    private EntityManager em;
+ //   @PersistenceContext(unitName = "PS1617PU")
+ //   private EntityManager em;
 
-    @Override
-    protected EntityManager getEntityManager() {
-        return em;
-    }
+
 
     public JogosFacade() {
         super(Jogos.class);

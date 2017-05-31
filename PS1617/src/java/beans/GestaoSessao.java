@@ -10,13 +10,15 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.enterprise.context.SessionScoped;
+import javax.inject.Named;
 import javax.servlet.http.HttpSession;
 import logica.Logica;
 import logica.Sessao;
 import logica.User;
 
 
+@Named("gestaoSessao")
 @ManagedBean
 @SessionScoped
 public class GestaoSessao implements Serializable{
@@ -76,7 +78,7 @@ public class GestaoSessao implements Serializable{
             }
         }
         System.out.println("-----login vazio --");
-        return "login";
+        return "index";
     }
     
     public boolean redirectQuandoJogoIniciado(){
@@ -90,7 +92,7 @@ public class GestaoSessao implements Serializable{
     
     public String logout(){
         sessao.logout();
-        return "login";
+        return "index";
     }
     
     public ArrayList<String> listaAtivos(){

@@ -6,7 +6,8 @@ import java.util.ArrayList;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.enterprise.context.SessionScoped;
+import javax.inject.Named;
 import javax.servlet.http.HttpSession;
 import logica.Jogo;
 import logica.Logica;
@@ -14,6 +15,7 @@ import logica.Logica.TipoJogo;
 import logica.Sessao;
 import org.primefaces.context.RequestContext;
 
+@Named("gestaojogos")
 @ManagedBean
 @SessionScoped
 public class Gestaojogos implements Serializable {
@@ -45,7 +47,7 @@ public class Gestaojogos implements Serializable {
                 return "/area_privada/gestaojogos";
             }
         }
-        return "login";
+        return "index";
     }
 
     public String juntarJogo(int id) {
