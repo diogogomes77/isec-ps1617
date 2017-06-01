@@ -10,13 +10,13 @@
 	
     </head>
     <body>
-	<ui:composition template="/resources/TemplateMenu.xhtml">
+	<ui:composition template="/resources/TemplateLogin.xhtml">
             <ui:define name="top">
                 <h:form>
                     
                 </h:form>
             </ui:define>
-            <ui:define name="content">
+            <ui:define name="left">
                 <h:form>
                     <h3>Login</h3>
                     <h:outputText value="Username:" /><br/>
@@ -24,6 +24,26 @@
                     <h:outputText value="Password" /><br/>
                     <h:inputSecret id="password" value="#{gestaoSessao.password}"/><br/><br/>
                     <h:commandButton value="Login" action="#{gestaoSessao.login()}" />
+                </h:form>
+            </ui:define>
+            <ui:define name="content">
+                <h:form>
+                    <h3>Registrar Utilizador</h3>
+                    <h:outputText value="Username"/><br/>
+                    <h:inputText id="cria_username"/><br/><br/><br/>
+                    
+                    <h:outputText value="Password"/><br/>
+                    <h:inputSecret id="cria_password"/><br/><br/>
+                    <h:outputText value="Re-Introduza Password"/><br/>
+                    <h:inputSecret id="re_password"/><br/><br/><br/>
+                    
+                    <h:outputText value="Email"/><br/>
+                    <h:inputText id="cria_email"/><br/><br/><br/>
+                    
+                    <h:outputText value="Morada"/><br/>
+                    <h:inputText id="cria_morada"/><br/><br/><br/>
+                    
+                    <h:commandButton value="Criar"/><br/>
                 </h:form>
             </ui:define>
             <ui:define name="bottom">
