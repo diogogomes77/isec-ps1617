@@ -70,13 +70,13 @@ public class GestaoSessao implements Serializable{
                 
                 sessao.setJogoId(logica.getJogoCriadoAtualmente(username));
                 if(redirectQuandoJogoIniciado())
-                    return "/area_privada/jogo";
+                    return "/area_privada/jogo?faces-redirect=true";
                 else
-                    return "/area_privada/gestaojogos";
+                    return "/area_privada/gestaojogos?faces-redirect=true";
             }
         }
         System.out.println("-----login vazio --");
-        return "login";
+        return "/login?faces-redirect=true";
     }
     
     public boolean redirectQuandoJogoIniciado(){
@@ -90,7 +90,7 @@ public class GestaoSessao implements Serializable{
     
     public String logout(){
         sessao.logout();
-        return "login";
+        return "/login?faces-redirect=true";
     }
     
     public ArrayList<String> listaAtivos(){

@@ -39,7 +39,7 @@ public class Sessao {
         this.user=null;
         HttpSession session = Util.getSession();
         session.invalidate();
-        user.setSession(session);
+       // user.setSession(session);
     }
 
     public String getUsername() {
