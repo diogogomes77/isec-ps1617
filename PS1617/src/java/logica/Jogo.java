@@ -23,7 +23,7 @@ public abstract class Jogo {
     //Variaveis para este jogo em especifico
     String comando;
     
-    List<Jogada> jogadas;
+    public List<Jogada> jogadas;
     
     public Jogo(String criador) {
         this.id = idProg;
