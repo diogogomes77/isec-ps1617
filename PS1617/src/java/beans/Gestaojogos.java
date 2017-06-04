@@ -37,12 +37,12 @@ public class Gestaojogos implements Serializable {
         if (username != null) {
             if(sessao.getJogoId() < 1){
                 sessao.setJogoId(lo.iniciarJogo(username, tipoJogo));
-                return "/area_privada/gestaojogos";
+                return "/area_privada/gestaojogos?faces-redirect=true";
             }
             else{
                 RequestContext r = RequestContext.getCurrentInstance();
                 r.execute("PF('dlgIni').show();");                
-                return "/area_privada/gestaojogos";
+                return "/area_privada/gestaojogos?faces-redirect=true";
             }
         }
         return "login";
@@ -52,9 +52,9 @@ public class Gestaojogos implements Serializable {
         if (username != null && !lo.getJogo(id).getCriador().equals(username)) {
             lo.juntarJogo(id, username);
             sessao.setJogoId(id);
-            return "/area_privada/jogo";
+            return "/area_privada/jogo?faces-redirect=true";
         }
-        return "/area_privada/gestaojogos";
+        return "/area_privada/gestaojogos?faces-redirect=true";
     }
     
     public boolean possoJuntar(int id){
@@ -77,7 +77,7 @@ public class Gestaojogos implements Serializable {
     
     public String jogar(int id){
         sessao.setJogoId(id);
-        return "/area_privada/jogo";
+        return "/area_privada/jogo?faces-redirect=true";
     }
     
     public ArrayList<Jogo> listarJogosIniciados() {
@@ -93,20 +93,20 @@ public class Gestaojogos implements Serializable {
             return verificaTerminaJogo();
         }if(lo.jogoTerminado(sessao.getJogoId())){
             sessao.setJogoId(-1);
-            return "/area_privada/gestaojogos";
+            return "/area_privada/gestaojogos?faces-redirect=true";
         }else{
             RequestContext r = RequestContext.getCurrentInstance();
             r.execute("PF('dlg').show();");
-            return "/area_privada/jogo";
+            return "/area_privada/jogo?faces-redirect=true";
         }
     }
 
     public String verificaTerminaJogo() {
         if(lo.terminaJogo(sessao.getJogoId())){
             sessao.setJogoId(-1);
-            return "/area_privada/gestaojogos";
+            return "/area_privada/gestaojogos?faces-redirect=true";
         }
-        return "/area_privada/jogo";
+        return "/area_privada/jogo?faces-redirect=true";
     }
     
     @PostConstruct
@@ -144,10 +144,10 @@ public class Gestaojogos implements Serializable {
             r.execute("PF('dlg').show();");
         }
         if(t==true){
-            return "/area_privada/gestaojogos";
+            return "/area_privada/gestaojogos?faces-redirect=true";
         }
         else{
-            return "/area_privada/jogo";
+            return "/area_privada/jogo?faces-redirect=true";
         }
     }
 }
