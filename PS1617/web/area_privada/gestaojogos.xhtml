@@ -38,7 +38,7 @@
                 </h:form>
             </ui:define>
             <ui:define name="bottom">
-                <h:form>
+                <h:form id="lista">
                     <h:outputText value="Jogos iniciados" rendered="${not empty gestaojogos.listarJogosIniciados()}"/>
                     <ui:repeat var="item" value="#{gestaojogos.listarJogosIniciados()}"> 
                         <h1>#{item} <h:commandButton value="Juntar ao jogo" action="#{gestaojogos.juntarJogo(item.id)}" rendered="${gestaojogos.possoJuntar(item.id)==true}"/></h1>
