@@ -29,6 +29,8 @@ public class GestaoSessao implements Serializable{
     String username;
     String password;
     
+    String mensagem;
+    
     String s;
 
     public GestaoSessao() {
@@ -37,6 +39,7 @@ public class GestaoSessao implements Serializable{
     public GestaoSessao(String username, String password) {
         this.username = "";
         this.password = "";
+        this.mensagem = "";
     }
 
     public String getUsername() {
@@ -54,6 +57,14 @@ public class GestaoSessao implements Serializable{
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public String getMensagem() {
+        return mensagem;
+    }
+
+    public void setMensagem(String mensagem) {
+        this.mensagem = mensagem;
+    }
     
     public String bemvindo(){
         return sessao.getUsername();
@@ -65,6 +76,7 @@ public class GestaoSessao implements Serializable{
             User user =logica.verificaLogin(username, password);
             
             if(user!=null){
+                mensagem = "";
                 System.out.println("-----login reconhecido --");
                 sessao.login(user);
                 
@@ -74,7 +86,12 @@ public class GestaoSessao implements Serializable{
                 else
                     return "/area_privada/gestaojogos?faces-redirect=true";
             }
+            else{
+                mensagem = "Erro de autentificacao";
+                return "/login?faces-redirect=true";
+            }
         }
+        mensagem = "Campo nao preenchido";
         System.out.println("-----login vazio --");
         return "/login?faces-redirect=true";
     }

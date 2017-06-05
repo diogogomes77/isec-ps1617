@@ -29,12 +29,15 @@ public class GestaoRegisto implements Serializable {
     String email;
     String morada;
     
+    String mensagem;
+    
     public GestaoRegisto() {
         this.username = "";
         this.password = "";
         this.repassword = "";
         this.email = "";
         this.morada = "";
+        this.mensagem = "";
     }
 
     public String getUsername() {
@@ -76,15 +79,33 @@ public class GestaoRegisto implements Serializable {
     public void setMorada(String morada) {
         this.morada = morada;
     }
+
+    public String getMensagem() {
+        return mensagem;
+    }
+
+    public void setMensagem(String mensagem) {
+        this.mensagem = mensagem;
+    }
     
     public void registar(){
-        if(password.equals(repassword) && !logica.verificaJogadorExiste(username)){
-            logica.registaJogador(username,password,email,morada);
-            this.username = "";
-            this.password = "";
-            this.repassword = "";
-            this.email = "";
-            this.morada = "";
+        if(password.equals(repassword)){
+            if(!logica.verificaJogadorExiste(username)){
+                logica.registaJogador(username,password,email,morada);
+                this.username = "";
+                this.password = "";
+                this.repassword = "";
+                this.email = "";
+                this.morada = "";
+                mensagem = "";
+            }
+            else{
+                mensagem = "Utilizador já existe";
+            }
         }
+        else{
+            mensagem = "Password são diferentes";
+        }
+        
     }
 }
