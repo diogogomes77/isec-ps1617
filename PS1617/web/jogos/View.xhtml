@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ViewJogosTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputText value="#{bundle.ViewJogosLabel_jogoId}"/>
+                    <h:outputText value="#{jogosController.selected.jogoId}" title="#{bundle.ViewJogosTitle_jogoId}"/>
+                    <h:outputText value="#{bundle.ViewJogosLabel_estado}"/>
+                    <h:outputText value="#{jogosController.selected.estado}" title="#{bundle.ViewJogosTitle_estado}"/>
+                    <h:outputText value="#{bundle.ViewJogosLabel_tabuleiro}"/>
+                    <h:outputText value="#{jogosController.selected.tabuleiro}" title="#{bundle.ViewJogosTitle_tabuleiro}"/>
+                    <h:outputText value="#{bundle.ViewJogosLabel_turno}"/>
+                    <h:outputText value="#{jogosController.selected.turno}" title="#{bundle.ViewJogosTitle_turno}"/>
+                    <h:outputText value="#{bundle.ViewJogosLabel_criador}"/>
+                    <h:outputText value="#{jogosController.selected.criador}" title="#{bundle.ViewJogosTitle_criador}"/>
+                    <h:outputText value="#{bundle.ViewJogosLabel_participante}"/>
+                    <h:outputText value="#{jogosController.selected.participante}" title="#{bundle.ViewJogosTitle_participante}"/>
+                    <h:outputText value="#{bundle.ViewJogosLabel_vencedor}"/>
+                    <h:outputText value="#{jogosController.selected.vencedor}" title="#{bundle.ViewJogosTitle_vencedor}"/>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{jogosController.destroyAndView}" value="#{bundle.ViewJogosDestroyLink}"/>
+                <br />
+                <br />
+                <h:link outcome="Edit" value="#{bundle.ViewJogosEditLink}"/>
+                <br />
+                <h:commandLink action="#{jogosController.prepareCreate}" value="#{bundle.ViewJogosCreateLink}" />
+                <br />
+                <h:commandLink action="#{jogosController.prepareList}" value="#{bundle.ViewJogosShowAllLink}"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.ViewJogosIndexLink}"/>
+
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>
