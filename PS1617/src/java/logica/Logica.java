@@ -165,6 +165,55 @@ public class Logica {
 
         return false;
     }
+    
+    public boolean verificaJogadorExiste(String username){
+        for (User user : users) {
+            if (username.equals(user.getUsername())) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    public void registaJogador(String username,String password,String email,String morada){
+        users.add(new User(username, password, email, morada, false));
+    }
+    
+    public String getPassword(String username){
+        for (User user : users) {
+            if (username.equals(user.getUsername())) {
+                return user.getPassword();
+            }
+        }
+        return "";
+    }
+    
+    public void alterarPassword(String username, String password){
+        for (User user : users) {
+            if (username.equals(user.getUsername())) {
+                user.setPassword(password);
+                return;
+            }
+        }
+    }
+    
+    public void alterarEmail(String username, String email){
+        for (User user : users) {
+            if (username.equals(user.getUsername())) {
+                user.setEmail(email);
+                return;
+            }
+        }
+    }
+    
+    public void alterarMorada(String username, String morada){
+        for (User user : users) {
+            if (username.equals(user.getUsername())) {
+                user.setMorada(morada);
+                return;
+            }
+        }
+    }
 
     //-------------------------------------//-------------------------------//-----------------------
     int turno = 0; // 0 -> criador ; 1 -> participante

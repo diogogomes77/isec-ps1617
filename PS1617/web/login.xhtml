@@ -30,20 +30,20 @@
                 <h:form>
                     <h3>Registrar Utilizador</h3>
                     <h:outputText value="Username"/><br/>
-                    <h:inputText id="cria_username"/><br/><br/><br/>
+                    <h:inputText id="cria_username" value="#{gestaoRegisto.username}" required="true"/><br/><br/><br/>
                     
                     <h:outputText value="Password"/><br/>
-                    <h:inputSecret id="cria_password"/><br/><br/>
+                    <h:inputSecret id="cria_password" value="#{gestaoRegisto.password}" required="true"/><br/><br/>
                     <h:outputText value="Re-Introduza Password"/><br/>
-                    <h:inputSecret id="re_password"/><br/><br/><br/>
+                    <h:inputSecret id="re_password" value="#{gestaoRegisto.repassword}" required="true"/><br/><br/><br/>
                     
                     <h:outputText value="Email"/><br/>
-                    <h:inputText id="cria_email"/><br/><br/><br/>
+                    <h:inputText id="cria_email" value="#{gestaoRegisto.email}" required="true"/><br/><br/><br/>
                     
                     <h:outputText value="Morada"/><br/>
-                    <h:inputText id="cria_morada"/><br/><br/><br/>
+                    <h:inputText id="cria_morada" value="#{gestaoRegisto.morada}" required="true"/><br/><br/><br/>
                     
-                    <h:commandButton value="Criar"/><br/>
+                    <h:commandButton value="Criar" action="#{gestaoRegisto.registar()}"/><br/>
                 </h:form>
             </ui:define>
             <ui:define name="bottom">

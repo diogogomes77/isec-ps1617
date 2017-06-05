@@ -17,17 +17,21 @@
             <ui:define name="content">
                 <h:form>
                     <h:outputText value="Velha Password"/><br/>
-                    <h:inputSecret id="password_velha"/><br/><br/>
+                    <h:inputSecret id="password_velha" value="#{gestaoAlterar.repassword}"/>
+                    <br/><br/>
                     <h:outputText value="Nova Password"/><br/>
-                    <h:inputSecret id="password_nova"/><br/><br/><br/>
+                    <h:inputSecret id="password_nova" value="#{gestaoAlterar.password}"/>
+                    <br/><br/><br/>
                     
                     <h:outputText value="Novo Email"/><br/>
-                    <h:inputText id="email_novo"/><br/><br/><br/>
+                    <h:inputText id="email_novo" value="#{gestaoAlterar.email}"/>
+                    <br/><br/><br/>
                     
                     <h:outputText value="Nova Morada"/><br/>
-                    <h:inputText id="morada_nova"/><br/><br/><br/>
+                    <h:inputText id="morada_nova" value="#{gestaoAlterar.morada}"/>
+                    <br/><br/><br/>
                     
-                    <h:commandButton value="Confirmar"/><br/>
+                    <h:commandButton value="Confirmar" action="#{gestaoAlterar.alterar()}"/><br/>
                     
                     <h:commandButton value="Voltar" action="gestaojogos"/>
                 </h:form>
