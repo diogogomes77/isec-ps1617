@@ -23,27 +23,34 @@
                     <h:inputText id="username" value="#{gestaoSessao.username}"/><br/>
                     <h:outputText value="Password" /><br/>
                     <h:inputSecret id="password" value="#{gestaoSessao.password}"/><br/><br/>
-                    <h:commandButton value="Login" action="#{gestaoSessao.login()}" />
+                    <h:commandButton value="Login" action="#{gestaoSessao.login()}" /><br/>
+                    <h:outputText value="#{gestaoSessao.mensagem}" />
                 </h:form>
             </ui:define>
             <ui:define name="content">
                 <h:form>
                     <h3>Registrar Utilizador</h3>
                     <h:outputText value="Username"/><br/>
-                    <h:inputText id="cria_username"/><br/><br/><br/>
+                    <h:inputText id="cria_username" value="#{gestaoRegisto.username}"  required="true"/>
+                    <h:message for="cria_username" style="color:red" /><br/><br/><br/>
                     
                     <h:outputText value="Password"/><br/>
-                    <h:inputSecret id="cria_password"/><br/><br/>
+                    <h:inputSecret id="cria_password" value="#{gestaoRegisto.password}" required="true"/>
+                    <h:message for="cria_password" style="color:red" /><br/><br/>
                     <h:outputText value="Re-Introduza Password"/><br/>
-                    <h:inputSecret id="re_password"/><br/><br/><br/>
+                    <h:inputSecret id="re_password" value="#{gestaoRegisto.repassword}" required="true"/>
+                    <h:message for="re_password" style="color:red" /><br/><br/><br/>
                     
                     <h:outputText value="Email"/><br/>
-                    <h:inputText id="cria_email"/><br/><br/><br/>
+                    <h:inputText id="cria_email" value="#{gestaoRegisto.email}" required="true"/>
+                    <h:message for="cria_email" style="color:red" /><br/><br/><br/>
                     
                     <h:outputText value="Morada"/><br/>
-                    <h:inputText id="cria_morada"/><br/><br/><br/>
+                    <h:inputText id="cria_morada" value="#{gestaoRegisto.morada}" required="true"/>
+                    <h:message for="cria_morada" style="color:red" /><br/><br/><br/>
                     
-                    <h:commandButton value="Criar"/><br/>
+                    <h:commandButton value="Criar" action="#{gestaoRegisto.registar()}"/>
+                    <h:outputText value="#{gestaoRegisto.mensagem}"/>
                 </h:form>
             </ui:define>
             <ui:define name="bottom">
