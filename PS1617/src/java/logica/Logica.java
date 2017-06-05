@@ -45,10 +45,7 @@ public class Logica {
         }
 
         //Caso o utilizador ainda não exista
-        User user = new User(username, password, true);
-        users.add(user);
-         user.setAtivo(true);
-        return user;
+        return null;
     }
 
     /*public void logout(String username) {
