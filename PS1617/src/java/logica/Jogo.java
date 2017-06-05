@@ -179,6 +179,8 @@ public abstract class Jogo {
         return this.jogadas.size();
     }
     
+    public abstract int verificaFim(Jogo jogo, String username);
+    
     @Override
     public String toString(){
         String result;
