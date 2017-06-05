@@ -32,11 +32,14 @@ public class GestaoAlterar implements Serializable {
     String email;
     String morada;
     
+    String mensagem;
+    
     public GestaoAlterar() {
         this.password = "";
         this.repassword = "";
         this.email = "";
         this.morada = "";
+        this.mensagem = "";
     }
 
     public String getPassword() {
@@ -70,10 +73,24 @@ public class GestaoAlterar implements Serializable {
     public void setMorada(String morada) {
         this.morada = morada;
     }
+
+    public String getMensagem() {
+        return mensagem;
+    }
+
+    public void setMensagem(String mensagem) {
+        this.mensagem = mensagem;
+    }
     
     public void alterar(){
-        if(!password.equals("") && !repassword.equals("") && repassword.equals(logica.getPassword(session.getUsername()))){
-            logica.alterarPassword(session.getUsername(), password);
+        if(!password.equals("") && !repassword.equals("")){
+            if(repassword.equals(logica.getPassword(session.getUsername()))){
+                logica.alterarPassword(session.getUsername(), password);
+                mensagem = "";
+            }
+            else{
+                mensagem = "Password velha esta errada";
+            }
         }
         
         if(!email.equals("")){
