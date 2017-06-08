@@ -1,6 +1,6 @@
 package logica;
 
-public class JogoQuatroEmLinha extends Jogo {
+public class JogoQuatroEmLinha extends JogoLogica {
     
     public JogoQuatroEmLinha(String criador) {
         super(criador);

@@ -87,89 +87,12 @@ public abstract class Jogo {
         this.vencedor = vencedor;
     }
     
-    public boolean avaliaJogada(String por,String jogada){
-        if(por.equals(turno) && emEspera==false){
-            switch(jogada){
-                case "Ganhar":
-                    comando = jogada;
-                    return true;
-                case "Perder":
-                    comando = jogada;
-                    return true;
-                case "Empate":
-                    comando = jogada;
-                    return true;
-                case "Passou":
-                    if(por.equals(criador))
-                        turno=participante;
-                    else
-                        turno=criador;
-                    comando = jogada;
-                    return true;
-                default:
-                    //Jogada inválida
-                    return false;
-            }
-        }
-        else{
-            //Jogada fora de turno
-            return false;
-        }
-    }
+    public abstract boolean avaliaJogada(String por,String jogada);
     
-    public boolean terminaJogo(){
-        switch(comando){
-                case "Ganhar":
-                    if(turno.equals(criador))
-                        vencedor=1;
-                    else
-                        vencedor=2;
-                    concluido=true;
-                    return true;
-                case "Perder":
-                    if(turno.equals(criador))
-                        vencedor=2;
-                    else
-                        vencedor=1;
-                    concluido=true;
-                    return true;
-                case "Empate":
-                    vencedor=0;
-                    concluido=true;
-                    return true;
-                default:
-                    //Jogada não termina
-                    return false;
-        }
-    }
+    public abstract boolean terminaJogo();
     
     //Função para condizer com o método que o pedro fez de fazer jogada vai ser remvida no futuro
-    public boolean terminaTemp(String username,int i){
-        switch(i){
-            //Jogador Atual Perde
-            case -1:
-                if(username.equals(criador))
-                    vencedor=2;
-                else
-                    vencedor=1;
-                concluido=true;
-                return true;
-            //Empate
-            case 0:
-                vencedor=0;
-                concluido=true;
-                return true;
-            //Jogador Atual Ganha
-            case 1:
-                if(username.equals(criador))
-                    vencedor=1;
-                else
-                    vencedor=2;
-                concluido=true;
-                return true;
-        }
-        return false;
-    }
+    public abstract boolean terminaTemp(String username,int i);
     
     public void adicionaJogada(Jogada jogada) {
         this.jogadas.add(jogada);

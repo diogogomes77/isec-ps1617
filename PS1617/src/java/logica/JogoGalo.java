@@ -3,7 +3,7 @@ package logica;
 import java.util.List;
 import org.primefaces.context.RequestContext;
 
-public class JogoGalo extends Jogo {
+public class JogoGalo extends JogoLogica {
     
     public JogoGalo(String criador) {
         super(criador);
