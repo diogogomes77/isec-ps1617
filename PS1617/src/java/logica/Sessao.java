@@ -2,6 +2,7 @@
 package logica;
 
 import autenticacao.Util;
+import entidades.Users;
 import javax.ejb.EJB;
 import javax.ejb.Stateful;
 import javax.servlet.http.HttpServletRequest;
@@ -14,11 +15,11 @@ public class Sessao {
    //private String username;
     //private String password;
     private int jogoId;
-    private User user;
+    private Users user;
     @EJB
     Logica lo;
 
-    public void login(User user) {
+    public void login(Users user) {
         this.user=user;
         HttpSession session = Util.getSession();
         session.setAttribute("username", user.getUsername());

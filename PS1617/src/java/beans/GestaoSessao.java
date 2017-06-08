@@ -6,6 +6,7 @@
 package beans;
 
 import autenticacao.Util;
+import entidades.Users;
 import java.io.Serializable;
 import java.util.ArrayList;
 import javax.ejb.EJB;
@@ -14,7 +15,6 @@ import javax.faces.bean.SessionScoped;
 import javax.servlet.http.HttpSession;
 import logica.Logica;
 import logica.Sessao;
-import logica.User;
 
 
 @ManagedBean
@@ -73,7 +73,7 @@ public class GestaoSessao implements Serializable{
     public String login(){
         if(!username.equals("") && !password.equals("")){
             System.out.println("-----Tenta reconhecer login --");
-            User user =logica.verificaLogin(username, password);
+            Users user =logica.verificaLogin(username, password);
             
             if(user!=null){
                 mensagem = "";

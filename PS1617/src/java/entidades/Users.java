@@ -15,6 +15,8 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+import javax.servlet.http.HttpSession;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -42,26 +44,29 @@ public class Users implements Serializable {
     @NotNull
     @Size(min = 1, max = 255)
     @Column(name = "username")
-    private String username;
+    protected String username;
     @Column(name = "ativo")
-    private Boolean ativo;
+    protected Boolean ativo;
     // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
     @Size(max = 255)
     @Column(name = "email")
-    private String email;
+    protected String email;
     @Size(max = 255)
     @Column(name = "morada")
-    private String morada;
+    protected String morada;
     @Size(max = 255)
     @Column(name = "password")
-    private String password;
+    protected String password;
     @OneToMany(mappedBy = "criador")
-    private List<Jogos> jogosList;
+    protected List<Jogos> jogosList;
     @OneToMany(mappedBy = "participante")
-    private List<Jogos> jogosList1;
+    protected List<Jogos> jogosList1;
     @OneToMany(mappedBy = "vencedor")
-    private List<Jogos> jogosList2;
+    protected List<Jogos> jogosList2;
 
+    @Transient
+    private HttpSession session;
+    
     public Users() {
     }
 
@@ -69,6 +74,22 @@ public class Users implements Serializable {
         this.username = username;
     }
 
+    public Users(String usename, String password, boolean ativo) {
+   
+        this.username = usename;
+        this.password = password;
+        this.ativo = ativo;
+        
+        
+    }
+    
+    public Users(String usename, String password, String email, String morada, boolean ativo) {
+
+        this.username = usename;
+        this.password = password;
+        this.ativo = ativo;
+ 
+    }
     public String getUsername() {
         return username;
     }
@@ -160,5 +181,20 @@ public class Users implements Serializable {
     public String toString() {
         return "entidades.Users[ username=" + username + " ]";
     }
-    
+        
+    public boolean isAtivo() {
+        return (boolean) ativo;
+    }
+
+    public void setAtivo(boolean ativo) {
+        this.ativo = ativo;
+    }
+
+    public HttpSession getSession() {
+        return session;
+    }
+
+    public void setSession(HttpSession session) {
+        this.session = session;
+    }
 }

@@ -1,14 +1,21 @@
 package logica;
 
 import autenticacao.Util;
+import entidades.Users;
 import java.util.ArrayList;
+import javax.ejb.EJB;
 import javax.ejb.Singleton;
 import javax.servlet.http.HttpSession;
 
 @Singleton
 public class Logica {
 
-    private ArrayList<User> users;
+    @EJB
+    private beans.UsersFacade ejbFacadeUsers;
+    @EJB
+    private beans.JogosFacade ejbFacadeJogos;
+    
+    private ArrayList<Users> users;
     private ArrayList<Jogo> jogos;
 
     public enum TipoJogo {
@@ -21,8 +28,8 @@ public class Logica {
         jogos = new ArrayList<>();
     }
   
-    public User verificaLogin(String username, String password) {
-        for (User user : users) {
+    public Users verificaLogin(String username, String password) {
+        for (Users user : users) {
             if (username.equals(user.getUsername())) {
                 if (password.equals(user.getPassword())) {
                     if (user.isAtivo()) {
@@ -135,7 +142,7 @@ public class Logica {
 
     public ArrayList<String> listarAtivos() {
         ArrayList<String> utilizadoresAtivos = new ArrayList<>();
-        for (User user : users) {
+        for (Users user : users) {
             if (user.isAtivo()) {
                 utilizadoresAtivos.add(user.getUsername());
             }
@@ -164,7 +171,7 @@ public class Logica {
     }
     
     public boolean verificaJogadorExiste(String username){
-        for (User user : users) {
+        for (Users user : users) {
             if (username.equals(user.getUsername())) {
                 return true;
             }
@@ -173,11 +180,18 @@ public class Logica {
     }
     
     public void registaJogador(String username,String password,String email,String morada){
-        users.add(new User(username, password, email, morada, false));
+        Users u = new Users(username, password, email, morada, false);
+        users.add(u);
+        try {
+            ejbFacadeUsers.create(u);
+        }catch(Exception e){
+            System.out.println(e.toString());
+        }
+        
     }
     
     public String getPassword(String username){
-        for (User user : users) {
+        for (Users user : users) {
             if (username.equals(user.getUsername())) {
                 return user.getPassword();
             }
@@ -186,7 +200,7 @@ public class Logica {
     }
     
     public void alterarPassword(String username, String password){
-        for (User user : users) {
+        for (Users user : users) {
             if (username.equals(user.getUsername())) {
                 user.setPassword(password);
                 return;
@@ -195,7 +209,7 @@ public class Logica {
     }
     
     public void alterarEmail(String username, String email){
-        for (User user : users) {
+        for (Users user : users) {
             if (username.equals(user.getUsername())) {
                 user.setEmail(email);
                 return;
@@ -204,7 +218,7 @@ public class Logica {
     }
     
     public void alterarMorada(String username, String morada){
-        for (User user : users) {
+        for (Users user : users) {
             if (username.equals(user.getUsername())) {
                 user.setMorada(morada);
                 return;
@@ -268,7 +282,7 @@ public class Logica {
     }
 
     public boolean isAtivo(String username) {
-        for (User user : users) {
+        for (Users user : users) {
             if (username.equals(user.getUsername())) {
                 if (user.isAtivo()) {
                     return true;
