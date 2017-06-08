@@ -38,6 +38,9 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Users.findByPassword", query = "SELECT u FROM Users u WHERE u.password = :password")})
 public class Users implements Serializable {
 
+    @OneToMany(mappedBy = "username")
+    private List<Jogadas> jogadasList;
+
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -196,5 +199,14 @@ public class Users implements Serializable {
 
     public void setSession(HttpSession session) {
         this.session = session;
+    }
+
+    @XmlTransient
+    public List<Jogadas> getJogadasList() {
+        return jogadasList;
+    }
+
+    public void setJogadasList(List<Jogadas> jogadasList) {
+        this.jogadasList = jogadasList;
     }
 }
