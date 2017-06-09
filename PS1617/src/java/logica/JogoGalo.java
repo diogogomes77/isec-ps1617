@@ -1,24 +1,27 @@
 package logica;
 
+import entidades.Jogadas;
+import entidades.Jogos;
+import entidades.Users;
 import java.util.List;
 import org.primefaces.context.RequestContext;
 
 public class JogoGalo extends JogoLogica {
     
-    public JogoGalo(String criador) {
+    public JogoGalo(Users criador) {
         super(criador);
     }
     
         
     @Override
-    public int verificaFim(Jogo jogo, String username){
-        List<Jogada> jog = jogo.jogadas;        
+    public int verificaFim(Jogos jogo, Users username){
+        List<Jogadas> jog = jogo.jogadasList;        
         int [] jj = new int [10];
         for(int i = 0; i < 10; i++){
             jj[i] = -1;
         }
-        for(Jogada j : jog)
-            if(j.getUserId().equals(username)){
+        for(Jogadas j : jog)
+            if(j.getUsername().equals(username)){
                 jj[j.getPosX()] = 1;
             }
             else{

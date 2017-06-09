@@ -1,6 +1,7 @@
 package logica;
 
 import autenticacao.Util;
+import entidades.Jogos;
 import entidades.Users;
 import java.util.ArrayList;
 import javax.ejb.EJB;
@@ -14,9 +15,9 @@ public class Logica {
     private beans.UsersFacade ejbFacadeUsers;
     @EJB
     private beans.JogosFacade ejbFacadeJogos;
-    
+    private static int jogosId;
     private ArrayList<Users> users;
-    private ArrayList<Jogo> jogos;
+    private ArrayList<JogoLogica> jogos;
 
     public enum TipoJogo {
         JOGO_GALO,
@@ -26,6 +27,7 @@ public class Logica {
     public Logica() {
         users = new ArrayList<>();
         jogos = new ArrayList<>();
+        jogosId=0;
     }
   
     public Users verificaLogin(String username, String password) {
@@ -64,8 +66,8 @@ public class Logica {
         }
     }*/
 
-    public int iniciarJogo(String criador, TipoJogo tipoJogo) {
-        Jogo j;
+    public int iniciarJogo(Users criador, TipoJogo tipoJogo) {
+        JogoLogica j;
         switch (tipoJogo) {
             case JOGO_GALO:
                j = new JogoGalo(criador);
@@ -76,12 +78,16 @@ public class Logica {
         }
         
         jogos.add(j);
-        return j.getId();
+       // ejbFacadeJogos.create((Jogos)j);
+        // TODO user id do objeto criado
+        jogosId++;
+        return jogosId;
+        //return j.getJogoId();
     }
 
-    public void juntarJogo(int idJogo, String participante) {
-        for (Jogo jogo : jogos) {
-            if (idJogo == jogo.getId()) {
+    public void juntarJogo(int idJogo, Users participante) {
+        for (JogoLogica jogo : jogos) {
+            if (idJogo == jogo.getJogoId()) {
                 jogo.setParticipante(participante);
                 jogo.setEmEspera(false);
                 return;
@@ -89,18 +95,18 @@ public class Logica {
         }
     }
 
-    public Jogo getJogo(int id) {
-        for (Jogo jogo : jogos) {
-            if (jogo.getId() == id) {
+    public JogoLogica getJogo(int id) {
+        for (JogoLogica jogo : jogos) {
+            if (jogo.getJogoId() == id) {
                 return jogo;
             }
         }
         return null;
     }
 
-    public ArrayList<Jogo> getJogosIniciados() {
-        ArrayList<Jogo> jogosEmEspera = new ArrayList<>();
-        for (Jogo jogo : jogos) {
+    public ArrayList<JogoLogica> getJogosIniciados() {
+        ArrayList<JogoLogica> jogosEmEspera = new ArrayList<>();
+        for (JogoLogica jogo : jogos) {
             if (jogo.isEmEspera()) {
                 jogosEmEspera.add(jogo);
             }
@@ -109,9 +115,9 @@ public class Logica {
         return jogosEmEspera;
     }
 
-    public ArrayList<Jogo> getJogosDecorrer() {
-        ArrayList<Jogo> jogosDecorrer = new ArrayList<>();
-        for (Jogo jogo : jogos) {
+    public ArrayList<JogoLogica> getJogosDecorrer() {
+        ArrayList<JogoLogica> jogosDecorrer = new ArrayList<>();
+        for (JogoLogica jogo : jogos) {
             if (!jogo.isEmEspera()) {
                 jogosDecorrer.add(jogo);
             }
@@ -120,9 +126,9 @@ public class Logica {
         return jogosDecorrer;
     }
 
-    public boolean fazJogada(int idJogo, String por, String jogada) {
-        for (Jogo jogo : jogos) {
-            if (idJogo == jogo.getId()) {
+    public boolean fazJogada(int idJogo, Users por, String jogada) {
+        for (JogoLogica jogo : jogos) {
+            if (idJogo == jogo.getJogoId()) {
                 return jogo.avaliaJogada(por, jogada);
             }
         }
@@ -131,8 +137,8 @@ public class Logica {
     }
 
     public boolean terminaJogo(int idJogo) {
-        for (Jogo jogo : jogos) {
-            if (idJogo == jogo.getId()) {
+        for (JogoLogica jogo : jogos) {
+            if (idJogo == jogo.getJogoId()) {
                 return jogo.terminaJogo();
             }
         }
@@ -152,17 +158,17 @@ public class Logica {
     }
 
     public int getJogoCriadoAtualmente(String username) {
-        for (Jogo jogo : jogos) {
+        for (JogoLogica jogo : jogos) {
             if (jogo.getCriador().equals(username) && !jogo.isConcluido()) {
-                return jogo.getId();
+                return jogo.getJogoId();
             }
         }
         return -1;
     }
     
     public boolean jogoTerminado(int idJogo) {
-        for (Jogo jogo : jogos) {
-            if (idJogo == jogo.getId()) {
+        for (JogoLogica jogo : jogos) {
+            if (idJogo == jogo.getJogoId()) {
                 return jogo.isConcluido();
             }
         }
@@ -231,7 +237,7 @@ public class Logica {
 
     //metodo joga-> recebe nome do jogador que jogou, e posicao 
     public boolean joga(String username, int pos) {
-        for (Jogo jogo : jogos) {
+        for (JogoLogica jogo : jogos) {
             if (jogo.getCriador().equals(username)) {
                 if (turno == 0) {
                     if (!jogo.isConcluido()) {
@@ -256,8 +262,8 @@ public class Logica {
         return false;
     }
 
-    public boolean termina(String username, int pos) {
-        for (Jogo jogo : jogos) {
+    public boolean termina(Users username, int pos) {
+        for (JogoLogica jogo : jogos) {
             if (jogo.getCriador().equals(username)) {
                 if (turno == 0) {
                     if (!jogo.isConcluido()) {

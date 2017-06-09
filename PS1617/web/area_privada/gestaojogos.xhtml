@@ -41,11 +41,11 @@
                 <h:form id="lista">
                     <h:outputText value="Jogos iniciados" rendered="${not empty gestaojogos.listarJogosIniciados()}"/>
                     <ui:repeat var="item" value="#{gestaojogos.listarJogosIniciados()}"> 
-                        <h1>#{item} <h:commandButton value="Juntar ao jogo" action="#{gestaojogos.juntarJogo(item.id)}" rendered="${gestaojogos.possoJuntar(item.id)==true}"/></h1>
+                        <h1>#{item} <h:commandButton value="Juntar ao jogo" action="#{gestaojogos.juntarJogo(item.jogoId)}" rendered="${gestaojogos.possoJuntar(item.jogoId)==true}"/></h1>
                     </ui:repeat>
                     <h:outputText value="Jogos a decorrer" rendered="${not empty gestaojogos.listarJogosDecorrer()}"/>
                     <ui:repeat var="item" value="#{gestaojogos.listarJogosDecorrer()}"> 
-                        <h1>#{item} <h:commandButton value="Jogar" action="#{gestaojogos.jogar(item.id)}" rendered="${gestaojogos.possoJogar(item.id)==true}"/></h1>
+                        <h1>#{item} <h:commandButton value="Jogar" action="#{gestaojogos.jogar(item.jogoId)}" rendered="${gestaojogos.possoJogar(item.jogoId)==true}"/></h1>
                     </ui:repeat>
                 </h:form>
             </ui:define>

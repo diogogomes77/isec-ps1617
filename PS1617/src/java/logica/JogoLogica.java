@@ -5,19 +5,23 @@
  */
 package logica;
 
+import entidades.Jogadas;
+import entidades.Jogos;
+import entidades.Users;
+
 /**
  *
  * @author diogo
  */
-public abstract class JogoLogica extends Jogo {
+public abstract class JogoLogica extends Jogos {
 
-    protected JogoLogica(String criador) {
+    protected JogoLogica(Users criador) {
         super(criador);
     }
 
-    @Override
-    public boolean avaliaJogada(String por, String jogada) {
-        if (por.equals(turno) && emEspera == false) {
+  //  @Override
+    public boolean avaliaJogada(Users por, String jogada) {
+        if (por.getUsername().equals(turno) && emEspera == false) {
             switch (jogada) {
                 case "Ganhar":
                     comando = jogada;
@@ -30,9 +34,9 @@ public abstract class JogoLogica extends Jogo {
                     return true;
                 case "Passou":
                     if (por.equals(criador)) {
-                        turno = participante;
+                        turno = participante.getUsername();
                     } else {
-                        turno = criador;
+                        turno = criador.getUsername();
                     }
                     comando = jogada;
                     return true;
@@ -46,27 +50,27 @@ public abstract class JogoLogica extends Jogo {
         }
     }
 
-    @Override
+  //  @Override
     public boolean terminaJogo() {
         switch (comando) {
             case "Ganhar":
                 if (turno.equals(criador)) {
-                    vencedor = 1;
+                    vencedor = criador;
                 } else {
-                    vencedor = 2;
+                    vencedor = participante;
                 }
                 concluido = true;
                 return true;
             case "Perder":
                 if (turno.equals(criador)) {
-                    vencedor = 2;
+                    vencedor = participante;
                 } else {
-                    vencedor = 1;
+                    vencedor = criador;
                 }
                 concluido = true;
                 return true;
             case "Empate":
-                vencedor = 0;
+                vencedor = null;
                 concluido = true;
                 return true;
             default:
@@ -76,29 +80,29 @@ public abstract class JogoLogica extends Jogo {
     }
 
     //Função para condizer com o método que o pedro fez de fazer jogada vai ser remvida no futuro
-    @Override
-    public boolean terminaTemp(String username, int i) {
+  //  @Override
+    public boolean terminaTemp(Users username, int i) {
         switch (i) {
             //Jogador Atual Perde
             case -1:
                 if (username.equals(criador)) {
-                    vencedor = 2;
+                    vencedor = participante;
                 } else {
-                    vencedor = 1;
+                    vencedor = criador;
                 }
                 concluido = true;
                 return true;
             //Empate
             case 0:
-                vencedor = 0;
+                vencedor = null;
                 concluido = true;
                 return true;
             //Jogador Atual Ganha
             case 1:
                 if (username.equals(criador)) {
-                    vencedor = 1;
+                    vencedor = criador;
                 } else {
-                    vencedor = 2;
+                    vencedor = participante;
                 }
                 concluido = true;
                 return true;
@@ -107,10 +111,10 @@ public abstract class JogoLogica extends Jogo {
     }
 
     @Override
-    public void adicionaJogada(Jogada jogada) {
-        this.jogadas.add(jogada);
+    public void adicionaJogada(Jogadas jogada) {
+        this.jogadasList.add(jogada);
     }
 
-    @Override
-    public abstract int verificaFim(Jogo jogo, String username);
+ //   @Override
+    public abstract int verificaFim(Jogos jogo, Users username);
 }

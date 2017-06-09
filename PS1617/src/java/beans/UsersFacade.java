@@ -6,6 +6,7 @@
 package beans;
 
 import entidades.Users;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -29,4 +30,5 @@ public class UsersFacade extends AbstractFacade<Users> {
         super(Users.class);
     }
     
+
 }

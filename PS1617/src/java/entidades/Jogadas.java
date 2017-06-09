@@ -51,7 +51,11 @@ public class Jogadas implements Serializable {
 
     public Jogadas() {
     }
-
+    public Jogadas(Users username, int posX, int posY) {
+        this.username = username;
+        this.posX = posX;
+        this.posY = posY;
+    }
     public Jogadas(Integer jogadaId) {
         this.jogadaId = jogadaId;
     }
