@@ -99,6 +99,7 @@ public class NewFilter implements Filter {
      * @exception IOException if an input/output error occurs
      * @exception ServletException if a servlet error occurs
      */
+    @Override
     public void doFilter(ServletRequest request, ServletResponse response,
             FilterChain chain)
             throws IOException, ServletException {
@@ -158,7 +159,7 @@ public class NewFilter implements Filter {
                     System.out.println("-----SES NULL or NO uSERNAME --");
                     if (!reqURI.contains("/faces/login.xhtml")) {
                         System.out.println("-----URI no VISITANTE --");
-                       // res.sendRedirect(req.getContextPath() + "/faces/login.xhtml");
+                        res.sendRedirect(req.getContextPath() + "/faces/login.xhtml");
                        // return;
                     }
 //                    else {

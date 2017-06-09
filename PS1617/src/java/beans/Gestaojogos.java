@@ -49,6 +49,7 @@ public class Gestaojogos implements Serializable {
         // this.username = "okok";
         session = Util.getSession();
         username=session.getAttribute("username").toString();
+        
         System.out.println("---- Gestao jogos iniciada "+username);
         
     }

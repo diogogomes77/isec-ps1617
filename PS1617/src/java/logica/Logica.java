@@ -105,7 +105,8 @@ public class Logica {
         }
         
         jogos.add(j);
-        ejbFacadeJogos.create((Jogos)j);
+        Jogos jj = j;
+       // ejbFacadeJogos.create(jj);
         // TODO user id do objeto criado
         jogosId++;
         return jogosId;
