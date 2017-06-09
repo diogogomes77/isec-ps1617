@@ -31,18 +31,42 @@ public class Logica {
     }
   
     public Users verificaLogin(String username, String password) {
-        for (Users user : users) {
+        // TODO usar facade
+        Users u = (Users) ejbFacadeUsers.find(username);
+        if (u!=null){
+            System.out.println("----verificalogin---"+u.getUsername());
+             if (password.equals(u.getPassword())){
+                 System.out.println("----password---"+u.getPassword());
+                 if (u.isAtivo()) {
+                        //Caso o utilizador já exista e tenha uma sessão ativa
+                        // TODO: terminar outras sessoes do user
+                          HttpSession session = Util.getSession();
+                            u.getSession().invalidate();
+                            u.setSession(session);
+                      
+                    } else {
+                        //Caso o utilizador já exista e não tenha ainda uma sessão ativa
+                        u.setAtivo(true);
+                       
+                    }
+                 return u;
+             } else {
+                    return null;
+                }
+             
+        }
+        
+   /*     for (Users user : users) {
             if (username.equals(user.getUsername())) {
                 if (password.equals(user.getPassword())) {
                     if (user.isAtivo()) {
-                        //Caso o utilizador já exista e tenha uma sessão ativa
-                        // TODO: terminar outras sessoes do user
+
                           HttpSession session = Util.getSession();
                             user.getSession().invalidate();
                             user.setSession(session);
                       
                     } else {
-                        //Caso o utilizador já exista e não tenha ainda uma sessão ativa
+                       
                         user.setAtivo(true);
                        
                     }
@@ -51,7 +75,7 @@ public class Logica {
                     return null;
                 }
             }
-        }
+        }*/
 
         //Caso o utilizador ainda não exista
         return null;

@@ -73,6 +73,7 @@ public class GestaoSessao implements Serializable{
     public String login(){
         if(!username.equals("") && !password.equals("")){
             System.out.println("-----Tenta reconhecer login --");
+            
             Users user =logica.verificaLogin(username, password);
             
             if(user!=null){

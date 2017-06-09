@@ -86,6 +86,7 @@ public class Gestaojogos implements Serializable {
     }
     public boolean possoJogar(int id){
        for (JogoLogica jogo : lo.getJogosDecorrer()) {
+           System.out.println("----JOGO---"+jogo.toString());
             if (jogo.getJogoId()==id) {
                 if (jogo.getCriador().equals(user) || jogo.getParticipante().equals(user))
                     return true;
