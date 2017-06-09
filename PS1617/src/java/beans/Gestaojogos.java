@@ -3,6 +3,7 @@ package beans;
 import autenticacao.Util;
 import com.sun.faces.component.visit.FullVisitContext;
 import entidades.Jogadas;
+import entidades.Jogos;
 import entidades.Users;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -38,23 +39,27 @@ public class Gestaojogos implements Serializable {
     private  Users user;
     private  HttpSession session;
     @EJB
-    private beans.UsersFacade ejbFacade;
+    private beans.UsersFacade ejbFacadeUsers;
+    @EJB
+    private beans.JogosFacade ejbFacadeJogos;
     
     public Gestaojogos() {
         // this.username = sessao.getUsername();
         // System.out.println("---- Gestao jogos iniciada "+username);
         // this.username = "okok";
-        this.session = Util.getSession();
-        this.username=session.getAttribute("username").toString();
+        session = Util.getSession();
+        username=session.getAttribute("username").toString();
         System.out.println("---- Gestao jogos iniciada "+username);
-       
+        
     }
 
     public String iniciarJogo(TipoJogo tipoJogo) {
-        if (username != null) {
+        user = ejbFacadeUsers.find(username);
+        if (user != null) {
+            System.out.println("---- Encontrou "+user.getUsername());
             if(sessao.getJogoId() < 1){
-                this.user = ejbFacade.find(username);
-                System.out.println("---- Encontrou "+user.getUsername());
+                
+                
                 sessao.setJogoId(lo.iniciarJogo(user, tipoJogo));
                 return "/area_privada/gestaojogos";
             }
@@ -77,21 +82,34 @@ public class Gestaojogos implements Serializable {
     }
     
     public boolean possoJuntar(int id){
-       for (JogoLogica jogo : lo.getJogosIniciados()) {
+       Jogos j = ejbFacadeJogos.find(id);
+       if (j!=null){
+            System.out.println("----JOGO---"+j.toString());
+                return !j.getCriador().equals(user);
+       }
+       /*for (JogoLogica jogo : lo.getJogosIniciados()) {
             if (jogo.getJogoId()==id) {
                 return !jogo.getCriador().equals(user);
             }
-        }
+        }*/
         return false;
     }
+    
     public boolean possoJogar(int id){
-       for (JogoLogica jogo : lo.getJogosDecorrer()) {
+       Jogos j = ejbFacadeJogos.find(id);
+       if (j!=null){
+            System.out.println("----JOGO---"+j.toString());
+                if (j.getCriador().equals(user) || j.getParticipante().equals(user))
+                    return true;
+       }
+       
+       /*for (JogoLogica jogo : lo.getJogosDecorrer()) {
            System.out.println("----JOGO---"+jogo.toString());
             if (jogo.getJogoId()==id) {
                 if (jogo.getCriador().equals(user) || jogo.getParticipante().equals(user))
                     return true;
             }
-        }
+        }*/
         return false;
     }
     

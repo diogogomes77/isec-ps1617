@@ -39,9 +39,12 @@ public class Logica {
                  System.out.println("----password---"+u.getPassword());
                  if (u.isAtivo()) {
                         //Caso o utilizador já exista e tenha uma sessão ativa
-                        // TODO: terminar outras sessoes do user
-                          HttpSession session = Util.getSession();
-                            u.getSession().invalidate();
+                        // terminar outras sessoes do user
+                          
+                          if (u.getSession()!=null){
+                              u.getSession().invalidate();
+                          }
+                            HttpSession session = Util.getSession();
                             u.setSession(session);
                       
                     } else {
@@ -102,7 +105,7 @@ public class Logica {
         }
         
         jogos.add(j);
-       // ejbFacadeJogos.create((Jogos)j);
+        ejbFacadeJogos.create((Jogos)j);
         // TODO user id do objeto criado
         jogosId++;
         return jogosId;
