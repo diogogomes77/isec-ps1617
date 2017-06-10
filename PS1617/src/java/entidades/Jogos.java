@@ -25,6 +25,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import logica.JogoInterface;
 
 
 /**
@@ -40,7 +41,7 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Jogos.findByEstado", query = "SELECT j FROM Jogos j WHERE j.estado = :estado")
     , @NamedQuery(name = "Jogos.findByTabuleiro", query = "SELECT j FROM Jogos j WHERE j.tabuleiro = :tabuleiro")
     , @NamedQuery(name = "Jogos.findByTurno", query = "SELECT j FROM Jogos j WHERE j.turno = :turno")})
-public class Jogos implements Serializable {
+public class Jogos implements Serializable , JogoInterface{
 
     @OneToMany(mappedBy = "jogoId")
     public List<Jogadas> jogadasList;
@@ -79,8 +80,8 @@ public class Jogos implements Serializable {
     public Jogos(Integer jogoId) {
         this.jogoId = jogoId;
     }
-
-    public Integer getJogoId() {
+    @Override
+    public int getJogoId() {
         return jogoId;
     }
 
@@ -112,6 +113,7 @@ public class Jogos implements Serializable {
         this.turno = turno;
     }
 
+    @Override
     public Users getCriador() {
         return criador;
     }
@@ -120,10 +122,12 @@ public class Jogos implements Serializable {
         this.criador = criador;
     }
 
+    @Override
     public Users getParticipante() {
         return participante;
     }
 
+    @Override
     public void setParticipante(Users participante) {
         this.participante = participante;
     }
@@ -159,6 +163,7 @@ public class Jogos implements Serializable {
 
 
     @XmlTransient
+    @Override
     public List<Jogadas> getJogadasList() {
         return jogadasList;
     }
@@ -169,6 +174,7 @@ public class Jogos implements Serializable {
         //Função para condizer com o método que o pedro fez de fazer jogada vai ser remvida no futuro
     //public abstract boolean terminaTemp(String username,int i);
     
+    @Override
     public void adicionaJogada(Jogadas jogada) {
         this.jogadasList.add(jogada);
     }
@@ -200,10 +206,12 @@ public class Jogos implements Serializable {
         return emEspera;
     }
 
-    public void setEmEspera(boolean emEspera) {
+    @Override
+    public void setEmEspera(Boolean emEspera) {
         this.emEspera = emEspera;
     }
 
+    @Override
     public boolean isConcluido() {
         return concluido;
     }
@@ -211,4 +219,97 @@ public class Jogos implements Serializable {
     public void setConcluido(boolean concluido) {
         this.concluido = concluido;
     }
+
+@Override
+    public boolean avaliaJogada(Users por, String jogada) {
+        if (por.getUsername().equals(turno) && emEspera == false) {
+            switch (jogada) {
+                case "Ganhar":
+                    comando = jogada;
+                    return true;
+                case "Perder":
+                    comando = jogada;
+                    return true;
+                case "Empate":
+                    comando = jogada;
+                    return true;
+                case "Passou":
+                    if (por.equals(criador)) {
+                        turno = participante.getUsername();
+                    } else {
+                        turno = criador.getUsername();
+                    }
+                    comando = jogada;
+                    return true;
+                default:
+                    //Jogada inválida
+                    return false;
+            }
+        } else {
+            //Jogada fora de turno
+            return false;
+        }
+    }
+
+@Override
+    public boolean terminaJogo() {
+        switch (comando) {
+            case "Ganhar":
+                if (turno.equals(criador)) {
+                    vencedor = criador;
+                } else {
+                    vencedor = participante;
+                }
+                concluido = true;
+                return true;
+            case "Perder":
+                if (turno.equals(criador)) {
+                    vencedor = participante;
+                } else {
+                    vencedor = criador;
+                }
+                concluido = true;
+                return true;
+            case "Empate":
+                vencedor = null;
+                concluido = true;
+                return true;
+            default:
+                //Jogada não termina
+                return false;
+        }
+    }
+
+ @Override
+    public boolean terminaTemp(Users username, int i) {
+        switch (i) {
+            //Jogador Atual Perde
+            case -1:
+                if (username.equals(criador)) {
+                    vencedor = participante;
+                } else {
+                    vencedor = criador;
+                }
+                concluido = true;
+                return true;
+            //Empate
+            case 0:
+                vencedor = null;
+                concluido = true;
+                return true;
+            //Jogador Atual Ganha
+            case 1:
+                if (username.equals(criador)) {
+                    vencedor = criador;
+                } else {
+                    vencedor = participante;
+                }
+                concluido = true;
+                return true;
+        }
+        return false;
+    }
+
+   
+    
 }

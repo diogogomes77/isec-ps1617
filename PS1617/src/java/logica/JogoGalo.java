@@ -6,7 +6,7 @@ import entidades.Users;
 import java.util.List;
 import org.primefaces.context.RequestContext;
 
-public class JogoGalo extends JogoLogica {
+public class JogoGalo extends JogoLogica implements JogoInterface{
     
     public JogoGalo(Users criador) {
         super(criador);

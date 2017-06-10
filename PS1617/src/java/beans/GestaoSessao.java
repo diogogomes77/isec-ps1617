@@ -13,6 +13,7 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.servlet.http.HttpSession;
+import logica.JogoInterface;
 import logica.Logica;
 import logica.Sessao;
 
@@ -81,7 +82,7 @@ public class GestaoSessao implements Serializable{
                 System.out.println("-----login reconhecido --");
                 sessao.login(user);
                 
-                sessao.setJogoId(logica.getJogoCriadoAtualmente(username));
+                sessao.setJogoId(logica.getJogoCriadoAtualmente(user));
                 if(redirectQuandoJogoIniciado())
                     return "/area_privada/jogo?faces-redirect=true";
                 else
@@ -98,12 +99,17 @@ public class GestaoSessao implements Serializable{
     }
     
     public boolean redirectQuandoJogoIniciado(){
-        if(sessao.getJogoId()==-1)
+        int jogoId = sessao.getJogoId();
+        if(jogoId == -1){
             return false;
-        if(!logica.getJogo(sessao.getJogoId()).isEmEspera() && !logica.getJogo(sessao.getJogoId()).isConcluido())
-           return true;
-        else
-            return false;
+        }
+        JogoInterface jogo = logica.getJogo(jogoId);
+        if (jogo!=null){
+            if(!jogo.isEmEspera() && !jogo.isConcluido()){
+                return true;
+            }
+        }
+        return false;
     }
     
     public String logout(){

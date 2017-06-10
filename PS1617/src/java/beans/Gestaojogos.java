@@ -19,6 +19,7 @@ import javax.faces.component.visit.VisitContext;
 import javax.faces.component.visit.VisitResult;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
+import logica.JogoInterface;
 import logica.JogoLogica;
 import logica.Logica;
 import logica.Logica.TipoJogo;
@@ -59,9 +60,9 @@ public class Gestaojogos implements Serializable {
         if (user != null) {
             System.out.println("---- Encontrou "+user.getUsername());
             if(sessao.getJogoId() < 1){
-                
-                
-                sessao.setJogoId(lo.iniciarJogo(user, tipoJogo));
+                System.out.println("---- sessao jogo "+sessao.getJogoId());
+                int jId = lo.iniciarJogo(user, tipoJogo);
+                sessao.setJogoId(jId);
                 return "/area_privada/gestaojogos";
             }
             else{
@@ -84,8 +85,12 @@ public class Gestaojogos implements Serializable {
     
     public boolean possoJuntar(int id){
        Jogos j = ejbFacadeJogos.find(id);
+        System.out.println("----possoJuntar--id-"+id);
+       
        if (j!=null){
             System.out.println("----JOGO---"+j.toString());
+            System.out.println("----CRIADOR---"+j.getCriador().getUsername());
+            System.out.println("----USER---"+user.getUsername());
                 return !j.getCriador().equals(user);
        }
        /*for (JogoLogica jogo : lo.getJogosIniciados()) {
@@ -93,7 +98,7 @@ public class Gestaojogos implements Serializable {
                 return !jogo.getCriador().equals(user);
             }
         }*/
-        return false;
+        return true;
     }
     
     public boolean possoJogar(int id){
@@ -119,11 +124,11 @@ public class Gestaojogos implements Serializable {
         return "/area_privada/jogo";
     }
     
-    public ArrayList<JogoLogica> listarJogosIniciados() {
+    public ArrayList<JogoInterface> listarJogosIniciados() {
         return lo.getJogosIniciados();
     }
 
-    public ArrayList<JogoLogica> listarJogosDecorrer() {
+    public ArrayList<JogoInterface> listarJogosDecorrer() {
         return lo.getJogosDecorrer();
     }
     
@@ -180,9 +185,10 @@ public class Gestaojogos implements Serializable {
     public void joga(int pos){
         boolean ok = false;        
         String id = "btn" + pos;
-        ok = lo.joga(username, pos);
+        int jogoId = sessao.getJogoId();
+        ok = lo.joga(username, pos, jogoId);
         if(ok){
-            for(JogoLogica j : lo.getJogosDecorrer()){
+            for(JogoInterface j : lo.getJogosDecorrer()){
                 if(j.getCriador().equals(user) || j.getParticipante().equals(user)){
                     j.adicionaJogada(new Jogadas(user, pos, 0));
                     break;
@@ -200,17 +206,17 @@ public class Gestaojogos implements Serializable {
         List <Jogadas> jog = null;
         boolean criador = false;
         JogoLogica jogo = null;
-        for(JogoLogica j : lo.getJogosDecorrer()){
+        for(JogoInterface j : lo.getJogosDecorrer()){
             if(j.getCriador().equals(user)){
-                jog = j.jogadasList;
+                jog = j.getJogadasList();
                 criador = true;
-                jogo = j;
+                jogo = (JogoLogica)j;
                 break;
             }
             if(j.getParticipante().equals(user)){
-                jog = j.jogadasList;
+                jog = j.getJogadasList();
                 criador = false;
-                jogo = j;
+                jogo = (JogoLogica) j;
                 break;
             }
         }

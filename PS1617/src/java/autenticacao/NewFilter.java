@@ -140,7 +140,7 @@ public class NewFilter implements Filter {
                             //String username = ses.getAttribute("username").toString();
                             System.out.println("-----LOGED USERNAME= " + username);
 
-                            if (!reqURI.contains("/area_privada")) {
+                            if (!reqURI.contains("/area_privada") ) {
                                 System.out.println("-----UIR no Utilizador --");
                                 res.sendRedirect(req.getContextPath() + "/faces/area_privada/gestaojogos.xhtml");
 //                                    return;
@@ -159,13 +159,11 @@ public class NewFilter implements Filter {
                     System.out.println("-----SES NULL or NO uSERNAME --");
                     if (!reqURI.contains("/faces/login.xhtml")) {
                         System.out.println("-----URI no VISITANTE --");
-                        res.sendRedirect(req.getContextPath() + "/faces/login.xhtml");
-                       // return;
+                       // TODO comendar para testes 
+                         res.sendRedirect(req.getContextPath() + "/faces/login.xhtml");
+                 
                     }
-//                    else {
-//                        chain.doFilter(request, response);
-//                        return;
-//                    }
+
                 }
             }
             chain.doFilter(request, response);

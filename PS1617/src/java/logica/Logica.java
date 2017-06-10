@@ -4,6 +4,7 @@ import autenticacao.Util;
 import entidades.Jogos;
 import entidades.Users;
 import java.util.ArrayList;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Singleton;
 import javax.servlet.http.HttpSession;
@@ -16,8 +17,8 @@ public class Logica {
     @EJB
     private beans.JogosFacade ejbFacadeJogos;
     private static int jogosId;
-    private ArrayList<Users> users;
-    private ArrayList<JogoLogica> jogos;
+    //private ArrayList<Users> users;
+    //private ArrayList<JogoInterface> jogos;
 
     public enum TipoJogo {
         JOGO_GALO,
@@ -25,8 +26,8 @@ public class Logica {
     }
   
     public Logica() {
-        users = new ArrayList<>();
-        jogos = new ArrayList<>();
+        //users = new ArrayList<>();
+        //jogos = new ArrayList<>();
         jogosId=0;
     }
   
@@ -94,7 +95,8 @@ public class Logica {
     }*/
 
     public int iniciarJogo(Users criador, TipoJogo tipoJogo) {
-        JogoLogica j;
+        JogoInterface j;
+        System.out.println("----tenta iniciar---"+tipoJogo.toString());
         switch (tipoJogo) {
             case JOGO_GALO:
                j = new JogoGalo(criador);
@@ -104,9 +106,9 @@ public class Logica {
                 j = new JogoQuatroEmLinha(criador);
         }
         
-        jogos.add(j);
-        Jogos jj = j;
-       // ejbFacadeJogos.create(jj);
+        //jogos.add(j);
+       
+        ejbFacadeJogos.create((Jogos)j);
         // TODO user id do objeto criado
         jogosId++;
         return jogosId;
@@ -114,69 +116,78 @@ public class Logica {
     }
 
     public void juntarJogo(int idJogo, Users participante) {
-        for (JogoLogica jogo : jogos) {
-            if (idJogo == jogo.getJogoId()) {
+        JogoInterface jogo = ejbFacadeJogos.find(idJogo);
+        
+            if (jogo!=null) {
                 jogo.setParticipante(participante);
                 jogo.setEmEspera(false);
-                return;
+               
             }
-        }
+        
     }
 
-    public JogoLogica getJogo(int id) {
-        for (JogoLogica jogo : jogos) {
-            if (jogo.getJogoId() == id) {
+    public JogoInterface getJogo(int id) {
+        JogoInterface jogo = ejbFacadeJogos.find(id);
+        
+            if (jogo!= null) {
                 return jogo;
-            }
-        }
+           }
+        
         return null;
     }
 
-    public ArrayList<JogoLogica> getJogosIniciados() {
-        ArrayList<JogoLogica> jogosEmEspera = new ArrayList<>();
-        for (JogoLogica jogo : jogos) {
+    public ArrayList<JogoInterface> getJogosIniciados() {
+        // TODO query por jogos em espera
+        List<Jogos> todosJogos = ejbFacadeJogos.findAll();
+        
+        ArrayList<JogoInterface> jogosEmEspera = new ArrayList<>();
+        for (Jogos jogo : todosJogos) {
             if (jogo.isEmEspera()) {
+                //JogoLogica j = new JogoInterface(jogo);
                 jogosEmEspera.add(jogo);
             }
         }
-
         return jogosEmEspera;
     }
 
-    public ArrayList<JogoLogica> getJogosDecorrer() {
-        ArrayList<JogoLogica> jogosDecorrer = new ArrayList<>();
-        for (JogoLogica jogo : jogos) {
+    public ArrayList<JogoInterface> getJogosDecorrer() {
+        // TODO query por jogos a decorrer
+        List<Jogos> todosJogos = ejbFacadeJogos.findAll();
+        
+        ArrayList<JogoInterface> jogosDecorrer = new ArrayList<>();
+        for (Jogos jogo : todosJogos) {
             if (!jogo.isEmEspera()) {
                 jogosDecorrer.add(jogo);
             }
         }
-
         return jogosDecorrer;
     }
 
     public boolean fazJogada(int idJogo, Users por, String jogada) {
-        for (JogoLogica jogo : jogos) {
-            if (idJogo == jogo.getJogoId()) {
-                return jogo.avaliaJogada(por, jogada);
+        JogoInterface j = ejbFacadeJogos.find(idJogo);
+        
+            if (j!=null) {
+                return j.avaliaJogada(por, jogada);
             }
-        }
+        
 
         return false;
     }
 
     public boolean terminaJogo(int idJogo) {
-        for (JogoLogica jogo : jogos) {
-            if (idJogo == jogo.getJogoId()) {
-                return jogo.terminaJogo();
+        JogoInterface j = ejbFacadeJogos.find(idJogo);
+        if (j!=null) {
+                return j.terminaJogo();
             }
-        }
+        
 
         return false;
     }
 
     public ArrayList<String> listarAtivos() {
+        List<Users> todosUsers = ejbFacadeUsers.findAll();
         ArrayList<String> utilizadoresAtivos = new ArrayList<>();
-        for (Users user : users) {
+        for (Users user : todosUsers) {
             if (user.isAtivo()) {
                 utilizadoresAtivos.add(user.getUsername());
             }
@@ -185,9 +196,11 @@ public class Logica {
         return utilizadoresAtivos;
     }
 
-    public int getJogoCriadoAtualmente(String username) {
-        for (JogoLogica jogo : jogos) {
-            if (jogo.getCriador().equals(username) && !jogo.isConcluido()) {
+    public int getJogoCriadoAtualmente(Users u) {
+        // TODO melhorar isto
+        List<Jogos> todosJogos = ejbFacadeJogos.findAll();
+        for (JogoInterface jogo : todosJogos) {
+            if (jogo.getCriador().equals(u) && !jogo.isConcluido()) {
                 return jogo.getJogoId();
             }
         }
@@ -195,27 +208,24 @@ public class Logica {
     }
     
     public boolean jogoTerminado(int idJogo) {
-        for (JogoLogica jogo : jogos) {
-            if (idJogo == jogo.getJogoId()) {
-                return jogo.isConcluido();
+         JogoInterface j = ejbFacadeJogos.find(idJogo);
+        if (j!=null) {
+                return j.isConcluido();
             }
-        }
-
         return false;
     }
     
     public boolean verificaJogadorExiste(String username){
-        for (Users user : users) {
-            if (username.equals(user.getUsername())) {
-                return true;
-            }
+        Users u = ejbFacadeUsers.find(username);
+        if (u!=null){
+             return true;
         }
         return false;
     }
     
     public void registaJogador(String username,String password,String email,String morada){
         Users u = new Users(username, password, email, morada, false);
-        users.add(u);
+        //users.add(u);
         try {
             ejbFacadeUsers.create(u);
         }catch(Exception e){
@@ -225,38 +235,32 @@ public class Logica {
     }
     
     public String getPassword(String username){
-        for (Users user : users) {
-            if (username.equals(user.getUsername())) {
-                return user.getPassword();
-            }
+        Users u = ejbFacadeUsers.find(username);
+        if (u!=null){
+            return u.getPassword();
         }
         return "";
     }
     
     public void alterarPassword(String username, String password){
-        for (Users user : users) {
-            if (username.equals(user.getUsername())) {
-                user.setPassword(password);
-                return;
+        Users u = ejbFacadeUsers.find(username);
+       if (u!=null){
+                u.setPassword(password);
+
             }
-        }
     }
     
     public void alterarEmail(String username, String email){
-        for (Users user : users) {
-            if (username.equals(user.getUsername())) {
-                user.setEmail(email);
-                return;
-            }
+        Users u = ejbFacadeUsers.find(username);
+       if (u!=null){
+                u.setEmail(email);
         }
     }
     
     public void alterarMorada(String username, String morada){
-        for (Users user : users) {
-            if (username.equals(user.getUsername())) {
-                user.setMorada(morada);
-                return;
-            }
+         Users u = ejbFacadeUsers.find(username);
+       if (u!=null){
+                u.setMorada(morada);
         }
     }
 
@@ -264,9 +268,9 @@ public class Logica {
     int turno = 0; // 0 -> criador ; 1 -> participante
 
     //metodo joga-> recebe nome do jogador que jogou, e posicao 
-    public boolean joga(String username, int pos) {
-        for (JogoLogica jogo : jogos) {
-            if (jogo.getCriador().equals(username)) {
+    public boolean joga(String username, int pos, int jogoId) {
+        Jogos jogo = ejbFacadeJogos.find(jogoId);
+        if (jogo!=null){
                 if (turno == 0) {
                     if (!jogo.isConcluido()) {
                         turno = 1;
@@ -275,7 +279,7 @@ public class Logica {
                 } else {
                     return false;
                 }
-            } else if (jogo.getParticipante().equals(username)) {
+            } else if (jogo.getParticipante().getUsername().equals(username)) {
                 if (turno == 1) {
                     if (!jogo.isConcluido()) {
                         turno = 0;
@@ -286,13 +290,13 @@ public class Logica {
                     return false;
                 }
             }
-        }
+        
         return false;
     }
 
-    public boolean termina(Users username, int pos) {
-        for (JogoLogica jogo : jogos) {
-            if (jogo.getCriador().equals(username)) {
+    public boolean termina(Users username, int pos, int JogoId) {
+        JogoInterface jogo = ejbFacadeJogos.find(JogoId);
+            if (jogo!=null) {
                 if (turno == 0) {
                     if (!jogo.isConcluido()) {
                         jogo.terminaTemp(username, pos);
@@ -311,18 +315,19 @@ public class Logica {
                     return false;
                 }
             }
-        }
+        
         return false;
     }
 
     public boolean isAtivo(String username) {
-        for (Users user : users) {
-            if (username.equals(user.getUsername())) {
-                if (user.isAtivo()) {
+        Users u = ejbFacadeUsers.find(username);
+    
+            if (u!=null) {
+                if (u.isAtivo()) {
                     return true;
                 }
             }
-        }
+        
         return false;
     }
 
