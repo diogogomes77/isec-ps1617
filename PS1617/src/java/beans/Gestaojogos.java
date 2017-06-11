@@ -22,8 +22,8 @@ import javax.servlet.http.HttpSession;
 import logica.JogoInterface;
 import logica.JogoLogica;
 import logica.Logica;
-import logica.Logica.TipoJogo;
 import logica.Sessao;
+import logica.TipoJogo;
 import org.primefaces.component.commandbutton.CommandButton;
 import org.primefaces.context.RequestContext;
 
@@ -40,9 +40,9 @@ public class Gestaojogos implements Serializable {
     private  Users user;
     private  HttpSession session;
     @EJB
-    private beans.UsersFacade ejbFacadeUsers;
+    private facades.UsersFacade ejbFacadeUsers;
     @EJB
-    private beans.JogosFacade ejbFacadeJogos;
+    private facades.JogosFacade ejbFacadeJogos;
     
     public Gestaojogos() {
         // this.username = sessao.getUsername();

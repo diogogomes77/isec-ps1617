@@ -23,7 +23,7 @@ public class GestaoRegisto implements Serializable {
     @EJB
     Logica logica;
     @EJB
-    private beans.UsersFacade ejbFacade;
+    private facades.UsersFacade ejbFacade;
      
     String username;
     String password;

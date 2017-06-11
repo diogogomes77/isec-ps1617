@@ -25,6 +25,8 @@
                     <h:inputText id="morada" value="#{usersController.selected.morada}" title="#{bundle.EditUsersTitle_morada}" />
                     <h:outputLabel value="#{bundle.EditUsersLabel_password}" for="password" />
                     <h:inputText id="password" value="#{usersController.selected.password}" title="#{bundle.EditUsersTitle_password}" />
+                    <h:outputLabel value="#{bundle.EditUsersLabel_session}" for="session" />
+                    <h:inputText id="session" value="#{usersController.selected.session}" title="#{bundle.EditUsersTitle_session}" />
                 </h:panelGrid>
                 <h:commandLink action="#{usersController.update}" value="#{bundle.EditUsersSaveLink}"/>
                 <br />

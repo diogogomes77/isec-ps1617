@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package beans;
+package facades;
 
-import entidades.Jogos;
+import entidades.Jogadas;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -15,18 +15,18 @@ import javax.persistence.PersistenceContext;
  * @author diogo
  */
 @Stateless
-public class JogosFacade extends AbstractFacade<Jogos> {
+public class JogadasFacade extends AbstractFacade<Jogadas> {
 
     @PersistenceContext(unitName = "PS1617PU")
     private EntityManager em;
 
     @Override
-    protected EntityManager getEntityManager() {
+    public EntityManager getEntityManager() {
         return em;
     }
 
-    public JogosFacade() {
-        super(Jogos.class);
+    public JogadasFacade() {
+        super(Jogadas.class);
     }
     
 }

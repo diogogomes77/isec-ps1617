@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.CreateJogadasTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundle.CreateJogadasLabel_posX}" for="posX" />
+                    <h:inputText id="posX" value="#{jogadasController.selected.posX}" title="#{bundle.CreateJogadasTitle_posX}" />
+                    <h:outputLabel value="#{bundle.CreateJogadasLabel_jogadaId}" for="jogadaId" />
+                    <h:inputText id="jogadaId" value="#{jogadasController.selected.jogadaId}" title="#{bundle.CreateJogadasTitle_jogadaId}" required="true" requiredMessage="#{bundle.CreateJogadasRequiredMessage_jogadaId}"/>
+                    <h:outputLabel value="#{bundle.CreateJogadasLabel_posY}" for="posY" />
+                    <h:inputText id="posY" value="#{jogadasController.selected.posY}" title="#{bundle.CreateJogadasTitle_posY}" />
+                    <h:outputLabel value="#{bundle.CreateJogadasLabel_jogoId}" for="jogoId" />
+                    <h:selectOneMenu id="jogoId" value="#{jogadasController.selected.jogoId}" title="#{bundle.CreateJogadasTitle_jogoId}" >
+                        <f:selectItems value="#{jogosController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                    <h:outputLabel value="#{bundle.CreateJogadasLabel_username}" for="username" />
+                    <h:selectOneMenu id="username" value="#{jogadasController.selected.username}" title="#{bundle.CreateJogadasTitle_username}" >
+                        <f:selectItems value="#{usersController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{jogadasController.create}" value="#{bundle.CreateJogadasSaveLink}" />
+                <br />
+                <br />
+                <h:commandLink action="#{jogadasController.prepareList}" value="#{bundle.CreateJogadasShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.CreateJogadasIndexLink}"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

@@ -23,6 +23,8 @@
                     <h:inputText id="tabuleiro" value="#{jogosController.selected.tabuleiro}" title="#{bundle.CreateJogosTitle_tabuleiro}" />
                     <h:outputLabel value="#{bundle.CreateJogosLabel_turno}" for="turno" />
                     <h:inputText id="turno" value="#{jogosController.selected.turno}" title="#{bundle.CreateJogosTitle_turno}" />
+                    <h:outputLabel value="#{bundle.CreateJogosLabel_tipo}" for="tipo" />
+                    <h:inputText id="tipo" value="#{jogosController.selected.tipo}" title="#{bundle.CreateJogosTitle_tipo}" />
                     <h:outputLabel value="#{bundle.CreateJogosLabel_criador}" for="criador" />
                     <h:selectOneMenu id="criador" value="#{jogosController.selected.criador}" title="#{bundle.CreateJogosTitle_criador}" >
                         <f:selectItems value="#{usersController.itemsAvailableSelectOne}"/>
@@ -35,6 +37,7 @@
                     <h:selectOneMenu id="vencedor" value="#{jogosController.selected.vencedor}" title="#{bundle.CreateJogosTitle_vencedor}" >
                         <f:selectItems value="#{usersController.itemsAvailableSelectOne}"/>
                     </h:selectOneMenu>
+
                 </h:panelGrid>
                 <br />
                 <h:commandLink action="#{jogosController.create}" value="#{bundle.CreateJogosSaveLink}" />

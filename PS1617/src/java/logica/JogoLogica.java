@@ -15,12 +15,10 @@ import entidades.Users;
  */
 public abstract class JogoLogica extends Jogos implements JogoInterface {
 
-    protected JogoLogica(Users criador) {
-        super(criador);
-    }
-    protected JogoLogica(Jogos j) {
-        super(j.getCriador());
+    protected JogoLogica(Users criador, TipoJogo tipo) {
+        super(criador, tipo);
     }
 
-    public abstract int verificaFim(Jogos jogo, Users username);
+
+    public abstract int verificaFim(JogoInterface jogo, Users username);
 }

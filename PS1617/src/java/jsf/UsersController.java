@@ -1,9 +1,9 @@
-package classes_jsf;
+package jsf;
 
-import entidades.Jogos;
-import classes_jsf.util.JsfUtil;
-import classes_jsf.util.PaginationHelper;
-import beans.JogosFacade;
+import entidades.Users;
+import jsf.util.JsfUtil;
+import jsf.util.PaginationHelper;
+import facades.UsersFacade;
 
 import java.io.Serializable;
 import java.util.ResourceBundle;
@@ -18,29 +18,29 @@ import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
 
-@Named("jogosController")
+@Named("usersController")
 @SessionScoped
-public class JogosController implements Serializable {
+public class UsersController implements Serializable {
 
-    private Jogos current;
+    private Users current;
     private DataModel items = null;
     @EJB
-    private beans.JogosFacade ejbFacade;
+    private facades.UsersFacade ejbFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
 
-    public JogosController() {
+    public UsersController() {
     }
 
-    public Jogos getSelected() {
+    public Users getSelected() {
         if (current == null) {
-            current = new Jogos();
+            current = new Users();
             selectedItemIndex = -1;
         }
         return current;
     }
 
-    private JogosFacade getFacade() {
+    private UsersFacade getFacade() {
         return ejbFacade;
     }
 
@@ -68,13 +68,13 @@ public class JogosController implements Serializable {
     }
 
     public String prepareView() {
-        current = (Jogos) getItems().getRowData();
+        current = (Users) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
         return "View";
     }
 
     public String prepareCreate() {
-        current = new Jogos();
+        current = new Users();
         selectedItemIndex = -1;
         return "Create";
     }
@@ -82,7 +82,7 @@ public class JogosController implements Serializable {
     public String create() {
         try {
             getFacade().create(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("JogosCreated"));
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("UsersCreated"));
             return prepareCreate();
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
@@ -91,7 +91,7 @@ public class JogosController implements Serializable {
     }
 
     public String prepareEdit() {
-        current = (Jogos) getItems().getRowData();
+        current = (Users) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
         return "Edit";
     }
@@ -99,7 +99,7 @@ public class JogosController implements Serializable {
     public String update() {
         try {
             getFacade().edit(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("JogosUpdated"));
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("UsersUpdated"));
             return "View";
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
@@ -108,7 +108,7 @@ public class JogosController implements Serializable {
     }
 
     public String destroy() {
-        current = (Jogos) getItems().getRowData();
+        current = (Users) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
         performDestroy();
         recreatePagination();
@@ -132,7 +132,7 @@ public class JogosController implements Serializable {
     private void performDestroy() {
         try {
             getFacade().remove(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("JogosDeleted"));
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("UsersDeleted"));
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
         }
@@ -188,30 +188,30 @@ public class JogosController implements Serializable {
         return JsfUtil.getSelectItems(ejbFacade.findAll(), true);
     }
 
-    public Jogos getJogos(java.lang.Integer id) {
+    public Users getUsers(java.lang.String id) {
         return ejbFacade.find(id);
     }
 
-    @FacesConverter(forClass = Jogos.class)
-    public static class JogosControllerConverter implements Converter {
+    @FacesConverter(forClass = Users.class)
+    public static class UsersControllerConverter implements Converter {
 
         @Override
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
             if (value == null || value.length() == 0) {
                 return null;
             }
-            JogosController controller = (JogosController) facesContext.getApplication().getELResolver().
-                    getValue(facesContext.getELContext(), null, "jogosController");
-            return controller.getJogos(getKey(value));
+            UsersController controller = (UsersController) facesContext.getApplication().getELResolver().
+                    getValue(facesContext.getELContext(), null, "usersController");
+            return controller.getUsers(getKey(value));
         }
 
-        java.lang.Integer getKey(String value) {
-            java.lang.Integer key;
-            key = Integer.valueOf(value);
+        java.lang.String getKey(String value) {
+            java.lang.String key;
+            key = value;
             return key;
         }
 
-        String getStringKey(java.lang.Integer value) {
+        String getStringKey(java.lang.String value) {
             StringBuilder sb = new StringBuilder();
             sb.append(value);
             return sb.toString();
@@ -222,11 +222,11 @@ public class JogosController implements Serializable {
             if (object == null) {
                 return null;
             }
-            if (object instanceof Jogos) {
-                Jogos o = (Jogos) object;
-                return getStringKey(o.getJogoId());
+            if (object instanceof Users) {
+                Users o = (Users) object;
+                return getStringKey(o.getUsername());
             } else {
-                throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName() + "; expected type: " + Jogos.class.getName());
+                throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName() + "; expected type: " + Users.class.getName());
             }
         }
 

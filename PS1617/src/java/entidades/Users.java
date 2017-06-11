@@ -182,7 +182,8 @@ public class Users implements Serializable {
 
     @Override
     public String toString() {
-        return "entidades.Users[ username=" + username + " ]";
+        return username;
+        //return "entidades.Users[ username=" + username + " ]";
     }
         
     public boolean isAtivo() {

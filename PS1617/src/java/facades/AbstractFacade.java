@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package beans;
+package facades;
 
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -20,7 +20,7 @@ public abstract class AbstractFacade<T> {
         this.entityClass = entityClass;
     }
 
-    protected abstract EntityManager getEntityManager();
+    public abstract EntityManager getEntityManager();
 
     public void create(T entity) {
         getEntityManager().persist(entity);

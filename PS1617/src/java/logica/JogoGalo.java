@@ -4,18 +4,25 @@ import entidades.Jogadas;
 import entidades.Jogos;
 import entidades.Users;
 import java.util.List;
+import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.Table;
 import org.primefaces.context.RequestContext;
 
+//@Entity
+//@Table(name = "jogos")
+//@Inheritance(strategy = InheritanceType.JOINED)
 public class JogoGalo extends JogoLogica implements JogoInterface{
     
-    public JogoGalo(Users criador) {
-        super(criador);
+    public JogoGalo(Users criador, TipoJogo tipo) {
+       super(criador,tipo);
     }
     
         
     @Override
-    public int verificaFim(Jogos jogo, Users username){
-        List<Jogadas> jog = jogo.jogadasList;        
+    public int verificaFim(JogoInterface jogo, Users username){
+        List<Jogadas> jog = jogo.getJogadasList();        
         int [] jj = new int [10];
         for(int i = 0; i < 10; i++){
             jj[i] = -1;

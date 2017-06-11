@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ListJogadasTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:form styleClass="jsfcrud_list_form">
+                <h:panelGroup id="messagePanel" layout="block">
+                    <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+                </h:panelGroup>
+                <h:outputText escape="false" value="#{bundle.ListJogadasEmpty}" rendered="#{jogadasController.items.rowCount == 0}"/>
+                <h:panelGroup rendered="#{jogadasController.items.rowCount > 0}">
+                    <h:outputText value="#{jogadasController.pagination.pageFirstItem + 1}..#{jogadasController.pagination.pageLastItem + 1}/#{jogadasController.pagination.itemsCount}"/>&nbsp;
+                    <h:commandLink action="#{jogadasController.previous}" value="#{bundle.Previous} #{jogadasController.pagination.pageSize}" rendered="#{jogadasController.pagination.hasPreviousPage}"/>&nbsp;
+                    <h:commandLink action="#{jogadasController.next}" value="#{bundle.Next} #{jogadasController.pagination.pageSize}" rendered="#{jogadasController.pagination.hasNextPage}"/>&nbsp;
+                    <h:dataTable value="#{jogadasController.items}" var="item" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" style="border:solid 1px">
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListJogadasTitle_posX}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.posX}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListJogadasTitle_jogadaId}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.jogadaId}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListJogadasTitle_posY}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.posY}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListJogadasTitle_jogoId}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.jogoId}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListJogadasTitle_username}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.username}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="&nbsp;"/>
+                            </f:facet>
+                            <h:commandLink action="#{jogadasController.prepareView}" value="#{bundle.ListJogadasViewLink}"/>
+                            <h:outputText value=" "/>
+                            <h:commandLink action="#{jogadasController.prepareEdit}" value="#{bundle.ListJogadasEditLink}"/>
+                            <h:outputText value=" "/>
+                            <h:commandLink action="#{jogadasController.destroy}" value="#{bundle.ListJogadasDestroyLink}"/>
+                        </h:column>
+                    </h:dataTable>
+                </h:panelGroup>
+                <br />
+                <h:commandLink action="#{jogadasController.prepareCreate}" value="#{bundle.ListJogadasCreateLink}"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.ListJogadasIndexLink}"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

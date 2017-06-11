@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ViewJogadasTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputText value="#{bundle.ViewJogadasLabel_posX}"/>
+                    <h:outputText value="#{jogadasController.selected.posX}" title="#{bundle.ViewJogadasTitle_posX}"/>
+                    <h:outputText value="#{bundle.ViewJogadasLabel_jogadaId}"/>
+                    <h:outputText value="#{jogadasController.selected.jogadaId}" title="#{bundle.ViewJogadasTitle_jogadaId}"/>
+                    <h:outputText value="#{bundle.ViewJogadasLabel_posY}"/>
+                    <h:outputText value="#{jogadasController.selected.posY}" title="#{bundle.ViewJogadasTitle_posY}"/>
+                    <h:outputText value="#{bundle.ViewJogadasLabel_jogoId}"/>
+                    <h:outputText value="#{jogadasController.selected.jogoId}" title="#{bundle.ViewJogadasTitle_jogoId}"/>
+                    <h:outputText value="#{bundle.ViewJogadasLabel_username}"/>
+                    <h:outputText value="#{jogadasController.selected.username}" title="#{bundle.ViewJogadasTitle_username}"/>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{jogadasController.destroyAndView}" value="#{bundle.ViewJogadasDestroyLink}"/>
+                <br />
+                <br />
+                <h:link outcome="Edit" value="#{bundle.ViewJogadasEditLink}"/>
+                <br />
+                <h:commandLink action="#{jogadasController.prepareCreate}" value="#{bundle.ViewJogadasCreateLink}" />
+                <br />
+                <h:commandLink action="#{jogadasController.prepareList}" value="#{bundle.ViewJogadasShowAllLink}"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.ViewJogadasIndexLink}"/>
+
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

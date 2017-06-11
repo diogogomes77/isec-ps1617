@@ -7,23 +7,20 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Singleton;
+import javax.persistence.EntityTransaction;
 import javax.servlet.http.HttpSession;
 
 @Singleton
 public class Logica {
 
     @EJB
-    private beans.UsersFacade ejbFacadeUsers;
+    private facades.UsersFacade ejbFacadeUsers;
     @EJB
-    private beans.JogosFacade ejbFacadeJogos;
+    private facades.JogosFacade ejbFacadeJogos;
     private static int jogosId;
     //private ArrayList<Users> users;
     //private ArrayList<JogoInterface> jogos;
 
-    public enum TipoJogo {
-        JOGO_GALO,
-        JOGO_QUATRO_EM_LINHA
-    }
   
     public Logica() {
         //users = new ArrayList<>();
@@ -97,18 +94,23 @@ public class Logica {
     public int iniciarJogo(Users criador, TipoJogo tipoJogo) {
         JogoInterface j;
         System.out.println("----tenta iniciar---"+tipoJogo.toString());
+        j = new Jogos(criador,tipoJogo);
+        System.out.println("----tenta CREATE---"+tipoJogo.toString());
+        ejbFacadeJogos.create((Jogos)j);
         switch (tipoJogo) {
             case JOGO_GALO:
-               j = new JogoGalo(criador);
+               j = new JogoGalo(criador,tipoJogo);
                break;
             case JOGO_QUATRO_EM_LINHA:
             default:
-                j = new JogoQuatroEmLinha(criador);
+                j = new JogoQuatroEmLinha(criador,tipoJogo);
         }
-        
+        //j.setId(jogosId);
         //jogos.add(j);
-       
-        ejbFacadeJogos.create((Jogos)j);
+       // EntityTransaction trans = ejbFacadeJogos.getEntityManager().getTransaction();
+      // trans.begin();
+  
+        //trans.commit();
         // TODO user id do objeto criado
         jogosId++;
         return jogosId;
@@ -141,7 +143,7 @@ public class Logica {
         List<Jogos> todosJogos = ejbFacadeJogos.findAll();
         
         ArrayList<JogoInterface> jogosEmEspera = new ArrayList<>();
-        for (Jogos jogo : todosJogos) {
+        for (JogoInterface jogo : todosJogos) {
             if (jogo.isEmEspera()) {
                 //JogoLogica j = new JogoInterface(jogo);
                 jogosEmEspera.add(jogo);
@@ -155,7 +157,7 @@ public class Logica {
         List<Jogos> todosJogos = ejbFacadeJogos.findAll();
         
         ArrayList<JogoInterface> jogosDecorrer = new ArrayList<>();
-        for (Jogos jogo : todosJogos) {
+        for (JogoInterface jogo : todosJogos) {
             if (!jogo.isEmEspera()) {
                 jogosDecorrer.add(jogo);
             }
@@ -197,6 +199,7 @@ public class Logica {
     }
 
     public int getJogoCriadoAtualmente(Users u) {
+        System.out.println("----getJogoCriadoAtualmente---");
         // TODO melhorar isto
         List<Jogos> todosJogos = ejbFacadeJogos.findAll();
         for (JogoInterface jogo : todosJogos) {
@@ -269,7 +272,7 @@ public class Logica {
 
     //metodo joga-> recebe nome do jogador que jogou, e posicao 
     public boolean joga(String username, int pos, int jogoId) {
-        Jogos jogo = ejbFacadeJogos.find(jogoId);
+        JogoInterface jogo = ejbFacadeJogos.find(jogoId);
         if (jogo!=null){
                 if (turno == 0) {
                     if (!jogo.isConcluido()) {

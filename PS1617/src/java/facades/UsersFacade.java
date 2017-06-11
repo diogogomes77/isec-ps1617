@@ -3,10 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package beans;
+package facades;
 
 import entidades.Users;
-import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -22,7 +21,7 @@ public class UsersFacade extends AbstractFacade<Users> {
     private EntityManager em;
 
     @Override
-    protected EntityManager getEntityManager() {
+    public EntityManager getEntityManager() {
         return em;
     }
 
@@ -30,5 +29,4 @@ public class UsersFacade extends AbstractFacade<Users> {
         super(Users.class);
     }
     
-
 }

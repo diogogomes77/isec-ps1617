@@ -13,19 +13,20 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import logica.JogoInterface;
+import logica.TipoJogo;
 
 
 /**
@@ -34,54 +35,70 @@ import logica.JogoInterface;
  */
 @Entity
 @Table(name = "jogos")
+//@Inheritance(strategy=InheritanceType.SINGLE_TABLE)
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Jogos.findAll", query = "SELECT j FROM Jogos j")
     , @NamedQuery(name = "Jogos.findByJogoId", query = "SELECT j FROM Jogos j WHERE j.jogoId = :jogoId")
     , @NamedQuery(name = "Jogos.findByEstado", query = "SELECT j FROM Jogos j WHERE j.estado = :estado")
     , @NamedQuery(name = "Jogos.findByTabuleiro", query = "SELECT j FROM Jogos j WHERE j.tabuleiro = :tabuleiro")
-    , @NamedQuery(name = "Jogos.findByTurno", query = "SELECT j FROM Jogos j WHERE j.turno = :turno")})
+    , @NamedQuery(name = "Jogos.findByTurno", query = "SELECT j FROM Jogos j WHERE j.turno = :turno")
+    , @NamedQuery(name = "Jogos.findByTipo", query = "SELECT j FROM Jogos j WHERE j.tipo = :tipo")})
 public class Jogos implements Serializable , JogoInterface{
 
-    @OneToMany(mappedBy = "jogoId")
-    public List<Jogadas> jogadasList;
-
     private static final long serialVersionUID = 1L;
+    /*
+        @Id
+    @SequenceGenerator(name="jogos_seq",
+                       sequenceName="jogos_seq",
+                       allocationSize=1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE,
+                    generator="jogos_seq")
+    @Column(name = "jogo_id", updatable=false)
+    
+    */
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    //@NotNull
-   @SequenceGenerator(name="SEQ",sequenceName = "jogos_seq",allocationSize=1)
-   @GeneratedValue(strategy=GenerationType.IDENTITY, generator="SEQ")
     @Column(name = "jogo_id")
-    protected Integer jogoId;
+    private Integer jogoId;
     @Column(name = "estado")
-    protected Integer estado;
+    private Integer estado;
     @Size(max = 255)
     @Column(name = "tabuleiro")
-    protected String tabuleiro;
+    private String tabuleiro;
     @Size(max = 255)
     @Column(name = "turno")
-    protected String turno;
+    private String turno;
+    @Size(max = 255)
+    @Column(name = "tipo")
+    private String tipo;
+    @OneToMany(mappedBy = "jogoId")
+    private List<Jogadas> jogadasList;
     @JoinColumn(name = "criador", referencedColumnName = "username")
     @ManyToOne
-    protected Users criador;
+    private Users criador;
     @JoinColumn(name = "participante", referencedColumnName = "username")
     @ManyToOne
-    protected Users participante;
+    private Users participante;
     @JoinColumn(name = "vencedor", referencedColumnName = "username")
     @ManyToOne
-    protected Users vencedor;
+    private Users vencedor;
 
     public Jogos() {
     }
-    protected Jogos(Users criador) {
+
+    public Jogos(Users criador,TipoJogo tipo) {
         this.criador=criador;
+        this.tipo=tipo.toString();
     }
+
     public Jogos(Integer jogoId) {
         this.jogoId = jogoId;
     }
+
     @Override
-    public int getJogoId() {
+    public Integer getJogoId() {
         return jogoId;
     }
 
@@ -111,6 +128,24 @@ public class Jogos implements Serializable , JogoInterface{
 
     public void setTurno(String turno) {
         this.turno = turno;
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
+
+    @XmlTransient
+    @Override
+    public List<Jogadas> getJogadasList() {
+        return jogadasList;
+    }
+
+    public void setJogadasList(List<Jogadas> jogadasList) {
+        this.jogadasList = jogadasList;
     }
 
     @Override
@@ -161,16 +196,6 @@ public class Jogos implements Serializable , JogoInterface{
     }
 
 
-
-    @XmlTransient
-    @Override
-    public List<Jogadas> getJogadasList() {
-        return jogadasList;
-    }
-
-    public void setJogadasList(List<Jogadas> jogadasList) {
-        this.jogadasList = jogadasList;
-    }
         //Função para condizer com o método que o pedro fez de fazer jogada vai ser remvida no futuro
     //public abstract boolean terminaTemp(String username,int i);
     
@@ -179,13 +204,13 @@ public class Jogos implements Serializable , JogoInterface{
         this.jogadasList.add(jogada);
     }
     
-    public int getNumeroJogadas() {
-        return this.jogadasList.size();
-    }
+   // public int getNumeroJogadas_() {
+   //     return this.jogadasList.size();
+   // }
     @Override
     public String toString(){
         String result;
-        if (participante==null) result = "Iniciado por "+criador;
+        if (participante==null) result = "Iniciado por "+criador.getUsername();
         else result = criador+" vs "+participante;
         return result;
     }
@@ -202,6 +227,7 @@ public class Jogos implements Serializable , JogoInterface{
  //Variaveis para este jogo em especifico
     @Transient
     protected String comando;
+    @Override
     public boolean isEmEspera() {
         return emEspera;
     }
@@ -216,6 +242,7 @@ public class Jogos implements Serializable , JogoInterface{
         return concluido;
     }
 
+    @Override
     public void setConcluido(boolean concluido) {
         this.concluido = concluido;
     }
@@ -255,7 +282,7 @@ public class Jogos implements Serializable , JogoInterface{
     public boolean terminaJogo() {
         switch (comando) {
             case "Ganhar":
-                if (turno.equals(criador)) {
+                if (turno.equals(criador.getUsername())) {
                     vencedor = criador;
                 } else {
                     vencedor = participante;
@@ -263,7 +290,7 @@ public class Jogos implements Serializable , JogoInterface{
                 concluido = true;
                 return true;
             case "Perder":
-                if (turno.equals(criador)) {
+                if (turno.equals(criador.getUsername())) {
                     vencedor = participante;
                 } else {
                     vencedor = criador;
