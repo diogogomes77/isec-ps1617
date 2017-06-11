@@ -15,7 +15,7 @@ import javax.xml.bind.annotation.XmlTransient;
  *
  * @author diogo
  */
-public interface JogoInterface {
+public interface InterfaceJogo {
     
     Users getCriador();
    Users getParticipante();

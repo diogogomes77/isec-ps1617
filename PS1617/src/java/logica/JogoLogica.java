@@ -13,12 +13,12 @@ import entidades.Users;
  *
  * @author diogo
  */
-public abstract class JogoLogica extends Jogos implements JogoInterface {
+public abstract class JogoLogica extends Jogos implements InterfaceJogo {
 
-    protected JogoLogica(Users criador, TipoJogo tipo) {
+    protected JogoLogica(Users criador, EnumTipoJogo tipo) {
         super(criador, tipo);
     }
 
 
-    public abstract int verificaFim(JogoInterface jogo, Users username);
+    public abstract int verificaFim(InterfaceJogo jogo, Users username);
 }

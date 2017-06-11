@@ -13,9 +13,9 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.servlet.http.HttpSession;
-import logica.JogoInterface;
 import logica.Logica;
 import logica.Sessao;
+import logica.InterfaceJogo;
 
 
 @ManagedBean
@@ -103,7 +103,7 @@ public class GestaoSessao implements Serializable{
         if(jogoId == -1){
             return false;
         }
-        JogoInterface jogo = logica.getJogo(jogoId);
+        InterfaceJogo jogo = logica.getJogo(jogoId);
         if (jogo!=null){
             if(!jogo.isEmEspera() && !jogo.isConcluido()){
                 return true;

@@ -160,7 +160,7 @@ public class NewFilter implements Filter {
                     if (!reqURI.contains("/faces/login.xhtml")) {
                         System.out.println("-----URI no VISITANTE --");
                        // TODO comendar para testes 
-                        // res.sendRedirect(req.getContextPath() + "/faces/login.xhtml");
+                         res.sendRedirect(req.getContextPath() + "/faces/login.xhtml");
                  
                     }
 

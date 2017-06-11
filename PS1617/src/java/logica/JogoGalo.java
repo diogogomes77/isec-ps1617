@@ -13,15 +13,15 @@ import org.primefaces.context.RequestContext;
 //@Entity
 //@Table(name = "jogos")
 //@Inheritance(strategy = InheritanceType.JOINED)
-public class JogoGalo extends JogoLogica implements JogoInterface{
+public class JogoGalo extends JogoLogica implements InterfaceJogo{
     
-    public JogoGalo(Users criador, TipoJogo tipo) {
+    public JogoGalo(Users criador, EnumTipoJogo tipo) {
        super(criador,tipo);
     }
     
         
     @Override
-    public int verificaFim(JogoInterface jogo, Users username){
+    public int verificaFim(InterfaceJogo jogo, Users username){
         List<Jogadas> jog = jogo.getJogadasList();        
         int [] jj = new int [10];
         for(int i = 0; i < 10; i++){

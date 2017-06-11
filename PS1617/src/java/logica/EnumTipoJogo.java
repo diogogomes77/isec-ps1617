@@ -9,7 +9,7 @@ package logica;
  *
  * @author diogo
  */
-public enum TipoJogo {
+public enum EnumTipoJogo {
     JOGO_GALO,
     JOGO_QUATRO_EM_LINHA
 }

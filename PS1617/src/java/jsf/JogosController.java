@@ -17,13 +17,13 @@ import javax.faces.convert.FacesConverter;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
-import logica.JogoInterface;
+import logica.InterfaceJogo;
 
 @Named("jogosController")
 @SessionScoped
 public class JogosController implements Serializable {
 
-    private JogoInterface current;
+    private InterfaceJogo current;
     private DataModel items = null;
     @EJB
     private facades.JogosFacade ejbFacade;
@@ -33,7 +33,7 @@ public class JogosController implements Serializable {
     public JogosController() {
     }
 
-    public JogoInterface getSelected() {
+    public InterfaceJogo getSelected() {
         if (current == null) {
             current = new Jogos();
             selectedItemIndex = -1;
@@ -189,7 +189,7 @@ public class JogosController implements Serializable {
         return JsfUtil.getSelectItems(ejbFacade.findAll(), true);
     }
 
-    public JogoInterface getJogos(java.lang.Integer id) {
+    public InterfaceJogo getJogos(java.lang.Integer id) {
         return ejbFacade.find(id);
     }
 

@@ -25,8 +25,10 @@ import javax.persistence.Transient;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
-import logica.JogoInterface;
-import logica.TipoJogo;
+import logica.EnumEstado;
+import static logica.EnumEstado.*;
+import logica.EnumTipoJogo;
+import logica.InterfaceJogo;
 
 
 /**
@@ -44,7 +46,7 @@ import logica.TipoJogo;
     , @NamedQuery(name = "Jogos.findByTabuleiro", query = "SELECT j FROM Jogos j WHERE j.tabuleiro = :tabuleiro")
     , @NamedQuery(name = "Jogos.findByTurno", query = "SELECT j FROM Jogos j WHERE j.turno = :turno")
     , @NamedQuery(name = "Jogos.findByTipo", query = "SELECT j FROM Jogos j WHERE j.tipo = :tipo")})
-public class Jogos implements Serializable , JogoInterface{
+public class Jogos implements Serializable , InterfaceJogo{
 
     private static final long serialVersionUID = 1L;
     /*
@@ -88,9 +90,12 @@ public class Jogos implements Serializable , JogoInterface{
     public Jogos() {
     }
 
-    public Jogos(Users criador,TipoJogo tipo) {
+    public Jogos(Users criador,EnumTipoJogo tipo) {
         this.criador=criador;
         this.tipo=tipo.toString();
+        this.estado=INICIADO.getValue();
+        // this.estado=1;
+         System.out.println("---NEW JOGOS---estado="+INICIADO.getValue());
     }
 
     public Jogos(Integer jogoId) {
@@ -107,6 +112,8 @@ public class Jogos implements Serializable , JogoInterface{
     }
 
     public Integer getEstado() {
+        // 0 = em espera
+        // 1 = concluido
         return estado;
     }
 
@@ -210,8 +217,9 @@ public class Jogos implements Serializable , JogoInterface{
     @Override
     public String toString(){
         String result;
-        if (participante==null) result = "Iniciado por "+criador.getUsername();
-        else result = criador+" vs "+participante;
+        result ="ID="+jogoId.toString()+" Estado="+estado.toString()+" ";
+        if (participante==null) result += "Iniciado por "+criador.getUsername();
+        else result += criador+" vs "+participante;
         return result;
     }
     
@@ -220,36 +228,40 @@ public class Jogos implements Serializable , JogoInterface{
         return "entidades.Jogos[ jogoId=" + jogoId + " ]";
     }
     
-    @Transient
-    protected boolean emEspera;
-    @Transient
-    protected boolean concluido;
+  //  @Transient
+  //  protected boolean emEspera;
+  //  @Transient
+  //  protected boolean concluido;
  //Variaveis para este jogo em especifico
     @Transient
     protected String comando;
     @Override
     public boolean isEmEspera() {
-        return emEspera;
+        return (0==estado);
     }
 
     @Override
     public void setEmEspera(Boolean emEspera) {
-        this.emEspera = emEspera;
+        if (emEspera==true)
+            this.estado = ESPERA.getValue();
+        this.estado=-1;
     }
 
     @Override
     public boolean isConcluido() {
-        return concluido;
+        return (1==estado);
     }
 
     @Override
     public void setConcluido(boolean concluido) {
-        this.concluido = concluido;
+        if (concluido==true)
+            this.estado = CONCLUIDO.getValue();
+        
     }
 
 @Override
     public boolean avaliaJogada(Users por, String jogada) {
-        if (por.getUsername().equals(turno) && emEspera == false) {
+        if (por.getUsername().equals(turno) && isEmEspera() == false) {
             switch (jogada) {
                 case "Ganhar":
                     comando = jogada;
@@ -287,7 +299,7 @@ public class Jogos implements Serializable , JogoInterface{
                 } else {
                     vencedor = participante;
                 }
-                concluido = true;
+                setConcluido(true);
                 return true;
             case "Perder":
                 if (turno.equals(criador.getUsername())) {
@@ -295,11 +307,11 @@ public class Jogos implements Serializable , JogoInterface{
                 } else {
                     vencedor = criador;
                 }
-                concluido = true;
+                setConcluido(true);
                 return true;
             case "Empate":
                 vencedor = null;
-                concluido = true;
+                setConcluido(true);
                 return true;
             default:
                 //Jogada não termina
@@ -317,12 +329,12 @@ public class Jogos implements Serializable , JogoInterface{
                 } else {
                     vencedor = criador;
                 }
-                concluido = true;
+                setConcluido(true);
                 return true;
             //Empate
             case 0:
                 vencedor = null;
-                concluido = true;
+                setConcluido(true);
                 return true;
             //Jogador Atual Ganha
             case 1:
@@ -331,12 +343,9 @@ public class Jogos implements Serializable , JogoInterface{
                 } else {
                     vencedor = participante;
                 }
-                concluido = true;
+                setConcluido(true);
                 return true;
         }
         return false;
     }
-
-   
-    
 }

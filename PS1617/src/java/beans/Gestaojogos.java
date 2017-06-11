@@ -19,13 +19,13 @@ import javax.faces.component.visit.VisitContext;
 import javax.faces.component.visit.VisitResult;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
-import logica.JogoInterface;
 import logica.JogoLogica;
 import logica.Logica;
 import logica.Sessao;
-import logica.TipoJogo;
+import logica.EnumTipoJogo;
 import org.primefaces.component.commandbutton.CommandButton;
 import org.primefaces.context.RequestContext;
+import logica.InterfaceJogo;
 
 @ManagedBean
 @SessionScoped
@@ -48,15 +48,12 @@ public class Gestaojogos implements Serializable {
         // this.username = sessao.getUsername();
         // System.out.println("---- Gestao jogos iniciada "+username);
         // this.username = "okok";
-        session = Util.getSession();
-        username=session.getAttribute("username").toString();
-        
-        System.out.println("---- Gestao jogos iniciada "+username);
+
         
     }
 
-    public String iniciarJogo(TipoJogo tipoJogo) {
-        user = ejbFacadeUsers.find(username);
+    public String iniciarJogo(EnumTipoJogo tipoJogo) {
+       // user = ejbFacadeUsers.find(username);
         if (user != null) {
             System.out.println("---- Encontrou "+user.getUsername());
             if(sessao.getJogoId() < 1){
@@ -85,9 +82,10 @@ public class Gestaojogos implements Serializable {
     
     public boolean possoJuntar(int id){
        Jogos j = ejbFacadeJogos.find(id);
-        System.out.println("----possoJuntar--id-"+id);
+        System.out.println("----possoJuntar?--id-"+id);
        
        if (j!=null){
+           System.out.println("----Jogo not null--id-"+id);
             System.out.println("----JOGO---"+j.toString());
             System.out.println("----CRIADOR---"+j.getCriador().getUsername());
             System.out.println("----USER---"+user.getUsername());
@@ -124,11 +122,11 @@ public class Gestaojogos implements Serializable {
         return "/area_privada/jogo";
     }
     
-    public ArrayList<JogoInterface> listarJogosIniciados() {
+    public List<Jogos> listarJogosIniciados() {
         return lo.getJogosIniciados();
     }
 
-    public ArrayList<JogoInterface> listarJogosDecorrer() {
+    public List<Jogos> listarJogosDecorrer() {
         return lo.getJogosDecorrer();
     }
     
@@ -157,6 +155,12 @@ public class Gestaojogos implements Serializable {
     public void init() {
         HttpSession session = Util.getSession();
         this.username = (String) session.getAttribute("username");
+        this.session = session;
+        this.user = ejbFacadeUsers.find(username);
+        if (user!=null)
+        System.out.println("---- Gestao jogos iniciada "+user.getUsername());
+        else 
+            System.out.println("---- USER NULL!!!! ");
     }
     
 
@@ -188,7 +192,7 @@ public class Gestaojogos implements Serializable {
         int jogoId = sessao.getJogoId();
         ok = lo.joga(username, pos, jogoId);
         if(ok){
-            for(JogoInterface j : lo.getJogosDecorrer()){
+            for(InterfaceJogo j : lo.getJogosDecorrer()){
                 if(j.getCriador().equals(user) || j.getParticipante().equals(user)){
                     j.adicionaJogada(new Jogadas(user, pos, 0));
                     break;
@@ -199,14 +203,13 @@ public class Gestaojogos implements Serializable {
             RequestContext r = RequestContext.getCurrentInstance();
             r.execute("PF('dlg').show();");
         }
-
     }
     
     public void atualiza(){  
         List <Jogadas> jog = null;
         boolean criador = false;
         JogoLogica jogo = null;
-        for(JogoInterface j : lo.getJogosDecorrer()){
+        for(InterfaceJogo j : lo.getJogosDecorrer()){
             if(j.getCriador().equals(user)){
                 jog = j.getJogadasList();
                 criador = true;

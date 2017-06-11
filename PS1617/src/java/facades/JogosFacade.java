@@ -9,7 +9,7 @@ import entidades.Jogos;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import logica.JogoInterface;
+import logica.InterfaceJogo;
 
 /**
  *
@@ -28,6 +28,13 @@ public class JogosFacade extends AbstractFacade<Jogos> {
 
     public JogosFacade() {
         super(Jogos.class);
+    }
+    
+    public Jogos  createJogo(Jogos entity) {
+        getEntityManager().persist(entity);
+        getEntityManager().flush();
+       // return entity.getJogoId();
+        return entity;
     }
     
 }

@@ -10,12 +10,12 @@ import javax.persistence.Table;
 //@Inheritance(strategy = InheritanceType.JOINED)
 public class JogoQuatroEmLinha extends JogoLogica  {
     
-    public JogoQuatroEmLinha(Users criador, TipoJogo tipo) {
+    public JogoQuatroEmLinha(Users criador, EnumTipoJogo tipo) {
         super(criador,tipo);
     }
 
     @Override
-    public int verificaFim(JogoInterface jogo, Users username) {
+    public int verificaFim(InterfaceJogo jogo, Users username) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
