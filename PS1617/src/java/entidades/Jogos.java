@@ -226,10 +226,17 @@ public class Jogos implements Serializable , InterfaceJogo{
    // }
     @Override
     public String toString(){
-        String result ="";
-        
-        if (participante==null) result += "Iniciado por "+criador.getUsername();
-        else result += criador+" vs "+participante;
+        String tipo;
+        if ("JOGO_GALO".equals(getTipo())) {
+            tipo = "Jogo do Galo";
+        } else {
+            tipo = "Quatro em Linha";
+        }
+
+        String result = "[" + tipo + "]";
+
+        if (participante==null) result += " Iniciado por "+criador.getUsername();
+        else result += " " + criador+" vs "+participante;
         return result;
     }
    

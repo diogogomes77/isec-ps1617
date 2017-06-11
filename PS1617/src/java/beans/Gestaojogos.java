@@ -26,6 +26,7 @@ import logica.EnumTipoJogo;
 import org.primefaces.component.commandbutton.CommandButton;
 import org.primefaces.context.RequestContext;
 import logica.InterfaceJogo;
+import logica.JogoGalo;
 
 @ManagedBean
 @SessionScoped
@@ -75,7 +76,11 @@ public class Gestaojogos implements Serializable {
         if (username != null && !lo.getJogo(id).getCriador().equals(user)) {
             lo.juntarJogo(id, user);
             sessao.setJogoId(id);
-            return "/area_privada/jogo";
+            if (lo.getJogo(id) instanceof JogoGalo) {
+                return "/area_privada/jogo";
+            } else {
+                return "/area_privada/jogoemlinha";
+            }
         }
         return "/area_privada/gestaojogos";
     }
@@ -119,7 +124,11 @@ public class Gestaojogos implements Serializable {
     
     public String jogar(int id){
         sessao.setJogoId(id);
-        return "/area_privada/jogo";
+        if (lo.getJogo(id) instanceof JogoGalo) {
+            return "/area_privada/jogo";
+        } else {
+            return "/area_privada/jogoemlinha";
+        }
     }
     
     public List<Jogos> listarJogosIniciados() {
@@ -139,7 +148,11 @@ public class Gestaojogos implements Serializable {
         }else{
             RequestContext r = RequestContext.getCurrentInstance();
             r.execute("PF('dlg').show();");
-            return "/area_privada/jogo";
+            if (lo.getJogo(sessao.getJogoId()) instanceof JogoGalo) {
+                return "/area_privada/jogo";
+            } else {
+                return "/area_privada/jogoemlinha";
+            }
         }
     }
 
@@ -148,7 +161,11 @@ public class Gestaojogos implements Serializable {
             sessao.setJogoId(-1);
             return "/area_privada/gestaojogos";
         }
-        return "/area_privada/jogo";
+        if (lo.getJogo(sessao.getJogoId()) instanceof JogoGalo) {
+            return "/area_privada/jogo";
+        } else {
+            return "/area_privada/jogoemlinha";
+        }
     }
     
     @PostConstruct

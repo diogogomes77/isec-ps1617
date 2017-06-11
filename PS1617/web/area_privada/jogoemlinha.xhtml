@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:p="http://primefaces.org/ui">
+    <head>
+         
+    </head>
+    <body>
+	<ui:composition template="/resources/TemplateMenu.xhtml">
+            <ui:define name="top">
+                <h:form>
+                                            
+                </h:form>
+            </ui:define>
+            <ui:define name="left">
+                <h:form>
+                    
+                </h:form>
+            </ui:define>
+            <ui:define name="content">
+                <h:form>
+                    <h:panelGrid id="table" columns="7" bodyrows="3" width="450px"   border="1"> 
+                        <c:forEach begin="1" end="42" var="pos">
+                            <p:commandButton id="btn1" style="width: 75px; height: 75px; font-size: xx-large" 
+                                             value="" action="#{gestaojogos.joga(pos)}"/>
+                        </c:forEach>
+                    </h:panelGrid>                    
+                    <p:poll interval="2" update="table" listener="#{gestaojogos.atualiza()}" /> <!-- atualiza a tabela de 2 em 2 segundos -->
+                    <br/>
+                    
+                    <p:dialog id="dialog" widgetVar="dlg" header="Espere pela sua vez !" width="200px" height="50px">  
+                        <h:outputText value="Não é a sua vez de jogar !"/>
+                        <br/><br/>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        <h:commandButton value="OK" onclick="PF('dlg').hide()" />
+                    </p:dialog>
+                    <p:dialog id="dialogGanhar" widgetVar="dlgGanhar" header="O jogo terminou" width="200px" height="50px">  
+                        <h:outputText value="Venceu o jogo !!!!"/>
+                        <br/><br/>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        <h:button value="Voltar" outcome="/area_privada/gestaojogos" />
+                    </p:dialog>
+                    <p:dialog id="dialogPerder" widgetVar="dlgPerder" header="O jogo terminou" width="200px" height="50px" onHide="">  
+                        <h:outputText value="Perdeu o jogo...."/>
+                        <br/><br/>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        <h:button value="Voltar" outcome="/area_privada/gestaojogos" />
+                    </p:dialog>
+                    <p:dialog id="dialogEmpate" widgetVar="dlgEmpate" header="O jogo terminou" width="200px" height="50px" onHide="">  
+                        <h:outputText value="O jogo terminou empatado."/>
+                        <br/><br/>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        <h:button value="Voltar" outcome="/area_privada/gestaojogos" />
+                    </p:dialog>
+                </h:form>
+            </ui:define>
+            <ui:define name="right">
+                <h:form>
+                    
+                </h:form>
+            </ui:define>
+            <ui:define name="bottom">
+                <h:form>
+                    
+                </h:form>
+            </ui:define>
+    	</ui:composition>
+    </body>
+</html>
