@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -36,8 +37,10 @@ import logica.InterfaceJogo;
  * @author diogo
  */
 @Entity
+@Inheritance
+@DiscriminatorColumn(name="Tipo")
 @Table(name = "jogos")
-//@Inheritance(strategy=InheritanceType.SINGLE_TABLE)
+//@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Jogos.findAll", query = "SELECT j FROM Jogos j")
@@ -98,6 +101,13 @@ public class Jogos implements Serializable , InterfaceJogo{
          System.out.println("---NEW JOGOS---estado="+INICIADO.getValue());
     }
 
+    public Jogos(Users criador) {
+        this.criador=criador;
+        
+        this.estado=INICIADO.getValue();
+        // this.estado=1;
+         System.out.println("---NEW JOGOS---estado="+INICIADO.getValue());
+    }
     public Jogos(Integer jogoId) {
         this.jogoId = jogoId;
     }

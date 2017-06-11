@@ -102,21 +102,21 @@ public class Logica {
 
     public int iniciarJogo(Users criador, EnumTipoJogo tipoJogo) {
         InterfaceJogo j;
-        System.out.println("----tenta iniciar---"+tipoJogo.toString());
-        j = new Jogos(criador,tipoJogo);
-        System.out.println("----tenta CREATE---"+tipoJogo.toString());
-        Jogos novo = ejbFacadeJogos.createJogo((Jogos)j);
-         System.out.println("----NOVO JOGO ID=---"+novo.getJogoId());
+       // System.out.println("----tenta iniciar---"+tipoJogo.toString());
+       // j = new Jogos(criador,tipoJogo);
+      //  System.out.println("----tenta CREATE---"+tipoJogo.toString());
+      //  Jogos novo = ejbFacadeJogos.createJogo((Jogos)j);
+      //   System.out.println("----NOVO JOGO ID=---"+novo.getJogoId());
        // int jogoId = ejbFacadeJogos.createJogo((Jogos)j);
         
-      /*  switch (tipoJogo) {
+        switch (tipoJogo) {
             case JOGO_GALO:
-               j = new JogoGalo(criador,tipoJogo);
+               j = ejbFacadeJogos.createJogo(new JogoGalo(criador));
                break;
             case JOGO_QUATRO_EM_LINHA:
             default:
-                j = new JogoQuatroEmLinha(criador,tipoJogo);
-        }*/
+                j = ejbFacadeJogos.createJogo(new JogoQuatroEmLinha(criador));
+        }
         //j.setId(jogosId);
         //jogos.add(j);
        // EntityTransaction trans = ejbFacadeJogos.getEntityManager().getTransaction();
@@ -125,7 +125,8 @@ public class Logica {
         //trans.commit();
         // TODO user id do objeto criado
        // jogosId++;
-        return novo.getJogoId();
+       
+        return j.getJogoId();
         //return j.getJogoId();
     }
 
@@ -145,6 +146,7 @@ public class Logica {
         InterfaceJogo jogo = ejbFacadeJogos.find(id);
         
             if (jogo!= null) {
+                
                 return jogo;
            }
         

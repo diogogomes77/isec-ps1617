@@ -4,21 +4,23 @@ import entidades.Jogadas;
 import entidades.Jogos;
 import entidades.Users;
 import java.util.List;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.Table;
 import org.primefaces.context.RequestContext;
 
-//@Entity
-//@Table(name = "jogos")
-//@Inheritance(strategy = InheritanceType.JOINED)
+@Entity
+@DiscriminatorValue("JOGO_GALO")
 public class JogoGalo extends JogoLogica implements InterfaceJogo{
-    
-    public JogoGalo(Users criador, EnumTipoJogo tipo) {
-       super(criador,tipo);
+ 
+    public JogoGalo(Users criador) {
+       super(criador);
     }
-    
+    public JogoGalo() {
+       
+    }
         
     @Override
     public int verificaFim(InterfaceJogo jogo, Users username){

@@ -8,17 +8,21 @@ package logica;
 import entidades.Jogadas;
 import entidades.Jogos;
 import entidades.Users;
+import javax.persistence.MappedSuperclass;
 
 /**
  *
  * @author diogo
  */
+@MappedSuperclass
 public abstract class JogoLogica extends Jogos implements InterfaceJogo {
 
-    protected JogoLogica(Users criador, EnumTipoJogo tipo) {
-        super(criador, tipo);
+    protected JogoLogica(Users criador) {
+        super(criador);
     }
-
+protected JogoLogica() {
+       
+    }
 
     public abstract int verificaFim(InterfaceJogo jogo, Users username);
 }
