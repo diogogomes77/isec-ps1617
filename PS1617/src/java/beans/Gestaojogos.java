@@ -208,23 +208,23 @@ public class Gestaojogos implements Serializable {
     public void atualiza(){  
         List <Jogadas> jog = null;
         boolean criador = false;
-        JogoLogica jogo = null;
+        InterfaceJogo jogo = null;
         for(InterfaceJogo j : lo.getJogosDecorrer()){
             if(j.getCriador().equals(user)){
                 jog = j.getJogadasList();
                 criador = true;
-                jogo = (JogoLogica)j;
+                jogo = j;
                 break;
             }
             if(j.getParticipante().equals(user)){
                 jog = j.getJogadasList();
                 criador = false;
-                jogo = (JogoLogica) j;
+                jogo =  j;
                 break;
             }
         }
         for(Jogadas j : jog){
-            String id = "btn" + j.getPosX();
+            String id = "btn" + j.getPos_x();
             CommandButton btn = (CommandButton) findComponent(id);
             btn.setDisabled(true);
             if((j.getUsername()==user && criador) || (!(j.getUsername()==user) && !criador)){
@@ -235,7 +235,7 @@ public class Gestaojogos implements Serializable {
             }
         }
         
-        int fim = jogo.verificaFim(jogo, user);
+     /*   int fim = jogo.verificaFim(jogo, user);
        
         if(fim == 0){
             RequestContext r = RequestContext.getCurrentInstance();
@@ -249,6 +249,6 @@ public class Gestaojogos implements Serializable {
             RequestContext r = RequestContext.getCurrentInstance();
             r.execute("PF('dlgEmpate').show();");
         }
-        
+        */
     }
 }

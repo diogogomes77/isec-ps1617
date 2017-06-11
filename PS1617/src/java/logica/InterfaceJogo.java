@@ -61,4 +61,7 @@ public interface InterfaceJogo {
     public int hashCode() ;
 
     public boolean equals(Object object) ;
+    
+   // public int verificaFim(InterfaceJogo jogo, Users username);
+    
 }

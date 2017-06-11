@@ -216,6 +216,14 @@ public class Jogos implements Serializable , InterfaceJogo{
    // }
     @Override
     public String toString(){
+        String result ="";
+        
+        if (participante==null) result += "Iniciado por "+criador.getUsername();
+        else result += criador+" vs "+participante;
+        return result;
+    }
+   
+    public String toString_debug(){
         String result;
         result ="ID="+jogoId.toString()+" Estado="+estado.toString()+" ";
         if (participante==null) result += "Iniciado por "+criador.getUsername();
@@ -259,7 +267,7 @@ public class Jogos implements Serializable , InterfaceJogo{
         
     }
 
-@Override
+    @Override
     public boolean avaliaJogada(Users por, String jogada) {
         if (por.getUsername().equals(turno) && isEmEspera() == false) {
             switch (jogada) {

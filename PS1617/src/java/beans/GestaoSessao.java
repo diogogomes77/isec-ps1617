@@ -33,6 +33,7 @@ public class GestaoSessao implements Serializable{
     String mensagem;
     
     String s;
+private boolean usernameCheck = true;
 
     public GestaoSessao() {
     }
@@ -119,5 +120,22 @@ public class GestaoSessao implements Serializable{
     
     public ArrayList<String> listaAtivos(){
         return logica.listarAtivos();
+    }
+    
+     public void checkUsername() {
+        // usernameCheck =false;
+        //System.out.println("-------" + current.getUsername());
+        if (logica.existeUsername(username)) {
+            usernameCheck = false;
+        } else {
+            usernameCheck = true;
+        }
+    }
+     public String getUsernameCheck() {
+        if (usernameCheck == true) {
+            return null;
+        } else {
+            return "ERRO: já existe um username igual";
+        }
     }
 }

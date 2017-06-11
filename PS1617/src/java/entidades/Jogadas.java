@@ -9,6 +9,8 @@ import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -27,21 +29,21 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Jogadas.findAll", query = "SELECT j FROM Jogadas j")
-    , @NamedQuery(name = "Jogadas.findByPosX", query = "SELECT j FROM Jogadas j WHERE j.posX = :posX")
+    , @NamedQuery(name = "Jogadas.findByPos_x", query = "SELECT j FROM Jogadas j WHERE j.pos_x = :pos_x")
     , @NamedQuery(name = "Jogadas.findByJogadaId", query = "SELECT j FROM Jogadas j WHERE j.jogadaId = :jogadaId")
-    , @NamedQuery(name = "Jogadas.findByPosY", query = "SELECT j FROM Jogadas j WHERE j.posY = :posY")})
+    , @NamedQuery(name = "Jogadas.findByPos_y", query = "SELECT j FROM Jogadas j WHERE j.pos_y = :pos_y")})
 public class Jogadas implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @Column(name = "posX")
-    private Integer posX;
+    @Column(name = "pos_x")
+    private Integer pos_x;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
     @Column(name = "jogada_id")
     private Integer jogadaId;
-    @Column(name = "posY")
-    private Integer posY;
+    @Column(name = "pos_y")
+    private Integer pos_y;
     @JoinColumn(name = "jogo_id", referencedColumnName = "jogo_id")
     @ManyToOne
     private Jogos jogoId;
@@ -53,19 +55,19 @@ public class Jogadas implements Serializable {
     }
     public Jogadas(Users username, int posX, int posY) {
         this.username = username;
-        this.posX = posX;
-        this.posY = posY;
+        this.pos_x = posX;
+        this.pos_y = posY;
     }
     public Jogadas(Integer jogadaId) {
         this.jogadaId = jogadaId;
     }
 
-    public Integer getPosX() {
-        return posX;
+    public Integer getPos_x() {
+        return pos_x;
     }
 
-    public void setPosX(Integer posX) {
-        this.posX = posX;
+    public void setPos_x(Integer posX) {
+        this.pos_x = posX;
     }
 
     public Integer getJogadaId() {
@@ -76,12 +78,12 @@ public class Jogadas implements Serializable {
         this.jogadaId = jogadaId;
     }
 
-    public Integer getPosY() {
-        return posY;
+    public Integer getPos_y() {
+        return pos_y;
     }
 
-    public void setPosY(Integer posY) {
-        this.posY = posY;
+    public void setPos_y(Integer posY) {
+        this.pos_y = posY;
     }
 
     public Jogos getJogoId() {

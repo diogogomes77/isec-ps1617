@@ -20,7 +20,9 @@
                 <h:form>
                     <h3>Login</h3>
                     <h:outputText value="Username:" /><br/>
-                    <h:inputText id="username" value="#{gestaoSessao.username}"/><br/>
+                    <h:inputText id="username" value="#{gestaoSessao.username}"/>
+                                 <br/>
+                   
                     <h:outputText value="Password" /><br/>
                     <h:inputSecret id="password" value="#{gestaoSessao.password}"/><br/><br/>
                     <h:commandButton value="Login" action="#{gestaoSessao.login()}" /><br/>
@@ -28,12 +30,19 @@
                 </h:form>
             </ui:define>
             <ui:define name="content">
+            
+         
                 <h:form>
                     <h3>Registrar Utilizador</h3>
                     <h:outputText value="Username"/><br/>
-                    <h:inputText id="cria_username" value="#{gestaoRegisto.username}"  required="true"/>
-                    <h:message for="cria_username" style="color:red" /><br/><br/><br/>
-                    
+                    <h:inputText id="cria_username" value="#{gestaoRegisto.username}"  required="true">
+                    <f:validator binding="#{userNameAvailableValidator}" />
+                    <f:ajax event="blur" render="msg_username" />
+                    </h:inputText>
+                    <h:message id="msg_username" for="cria_username" style="color:red" />
+                    <br/><br/><br/>
+                     
+                     
                     <h:outputText value="Password"/><br/>
                     <h:inputSecret id="cria_password" value="#{gestaoRegisto.password}" required="true"/>
                     <h:message for="cria_password" style="color:red" /><br/><br/>

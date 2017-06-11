@@ -29,10 +29,10 @@ public class JogoGalo extends JogoLogica implements InterfaceJogo{
         }
         for(Jogadas j : jog)
             if(j.getUsername().equals(username)){
-                jj[j.getPosX()] = 1;
+                jj[j.getPos_x()] = 1;
             }
             else{
-                jj[j.getPosX()] = 2;
+                jj[j.getPos_x()] = 2;
             }
          if((jj[1] == 1 && jj[2] == 1 && jj[3] == 1)||(jj[4] == 1 && jj[5] == 1 && jj[6] == 1)||(jj[7] == 1 && jj[8] == 1 && jj[9] == 1)
                 ||(jj[1] == 1 && jj[4] == 1 && jj[7] == 1)||(jj[2] == 1 && jj[5] == 1 && jj[8] == 1)||(jj[3] == 1 && jj[6] == 1 && jj[9] == 1)

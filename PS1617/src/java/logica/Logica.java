@@ -19,17 +19,24 @@ public class Logica {
     private facades.UsersFacade ejbFacadeUsers;
     @EJB
     private facades.JogosFacade ejbFacadeJogos;
+    
+    
     private static int jogosId;
     //private ArrayList<Users> users;
     //private ArrayList<JogoInterface> jogos;
 
   
     public Logica() {
-        //users = new ArrayList<>();
-        //jogos = new ArrayList<>();
-        jogosId=0;
+
     }
   
+    public boolean existeUsername(String username){
+        System.out.println("----existeUsername--"+username);
+        Users u = (Users) ejbFacadeUsers.find(username);
+        if (u!=null)
+            return true;
+        return false;
+    }
     public Users verificaLogin(String username, String password) {
         // TODO usar facade
         Users u = (Users) ejbFacadeUsers.find(username);
