@@ -19,6 +19,9 @@
                 <h:form>
                     <h:commandButton value="Iniciar Jogo do Galo" action="#{gestaojogos.iniciarJogo('JOGO_GALO')}"/><br/>
                     <h:commandButton value="Iniciar Jogo do 4 em Linha" action="#{gestaojogos.iniciarJogo('JOGO_QUATRO_EM_LINHA')}"/><br/><br/>
+                    
+                    <h:commandButton value="Criar Torneio" action="criarTorneio"/><br/><br/>
+                    
                     <h:commandButton value="Alterar Dados" action="alterarDados"/><br/><br/>
                     <h:commandButton value="Logout" type='button' onclick="PF('dlg').show()" />
                     
@@ -43,10 +46,16 @@
                     <ui:repeat var="item" value="#{gestaojogos.listarJogosIniciados()}"> 
                         <h1>#{item} id = #{item.jogoId}<h:commandButton value="Juntar ao jogo" action="#{gestaojogos.juntarJogo(item.jogoId)}" rendered="${gestaojogos.possoJuntar(item.jogoId)==true}"/></h1>
                     </ui:repeat>
+                    
                     <h:outputText value="Jogos a decorrer" rendered="${not empty gestaojogos.listarJogosDecorrer()}"/>
                     <ui:repeat var="item" value="#{gestaojogos.listarJogosDecorrer()}"> 
                         <h1>#{item} <h:commandButton value="Jogar" action="#{gestaojogos.jogar(item.jogoId)}" rendered="${gestaojogos.possoJogar(item.jogoId)==true}"/></h1>
                     </ui:repeat>
+                    
+                    <h:outputText value="Torneios a decorrer"/><br/>
+                    
+                    <h:outputText value="Jogos do Torneios a decorrer"/>
+                    
                 </h:form>
             </ui:define>
     	</ui:composition>
