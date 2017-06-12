@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-          
+
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <head>
-	
+
     </head>
     <body>
-	<ui:composition template="/resources/TemplateLogin.xhtml">
+        <ui:composition template="/resources/TemplateLogin.xhtml">
             <ui:define name="top">
                 <h:form>
-                    
+
                 </h:form>
             </ui:define>
             <ui:define name="left">
@@ -21,8 +21,8 @@
                     <h3>Login</h3>
                     <h:outputText value="Username:" /><br/>
                     <h:inputText id="username" value="#{gestaoSessao.username}"/>
-                                 <br/>
-                   
+                    <br/>
+
                     <h:outputText value="Password" /><br/>
                     <h:inputSecret id="password" value="#{gestaoSessao.password}"/><br/><br/>
                     <h:commandButton value="Login" action="#{gestaoSessao.login()}" /><br/>
@@ -30,46 +30,46 @@
                 </h:form>
             </ui:define>
             <ui:define name="content">
-            
-         
+
+
                 <h:form>
                     <h3>Registrar Utilizador</h3>
                     <h:outputText value="Username"/><br/>
                     <h:inputText id="cria_username" value="#{gestaoRegisto.username}"  required="true">
-                    <f:validator binding="#{userNameAvailableValidator}" />
-                    <f:ajax event="blur" render="msg_username" />
+                        <f:validator binding="#{userNameAvailableValidator}" />
+                        <f:ajax event="blur" render="msg_username" />
                     </h:inputText>
                     <h:message id="msg_username" for="cria_username" style="color:red" />
                     <br/><br/><br/>
-                     
-                     
+
+
                     <h:outputText value="Password"/><br/>
                     <h:inputSecret id="cria_password" value="#{gestaoRegisto.password}" required="true"/>
                     <h:message for="cria_password" style="color:red" /><br/><br/>
                     <h:outputText value="Re-Introduza Password"/><br/>
                     <h:inputSecret id="re_password" value="#{gestaoRegisto.repassword}" required="true"/>
                     <h:message for="re_password" style="color:red" /><br/><br/><br/>
-                    
+
                     <h:outputText value="Email"/><br/>
                     <h:inputText id="cria_email" value="#{gestaoRegisto.email}" required="true"/>
                     <h:message for="cria_email" style="color:red" /><br/><br/><br/>
-                    
+
                     <h:outputText value="Morada"/><br/>
                     <h:inputText id="cria_morada" value="#{gestaoRegisto.morada}" required="true"/>
                     <h:message for="cria_morada" style="color:red" /><br/><br/><br/>
-                    
+
                     <h:commandButton value="Criar" action="#{gestaoRegisto.registar()}"/>
                     <h:outputText value="#{gestaoRegisto.mensagem}"/>
                 </h:form>
-                        <h:link outcome="/jogos/List" value="Show All Jogos Items"/>
-        <br />
-        <h:link outcome="/users/List" value="Show All Users Items"/>
+                <h:link outcome="/jogos/List" value="Show All Jogos Items"/>
+                <br />
+                <h:link outcome="/users/List" value="Show All Users Items"/>
             </ui:define>
             <ui:define name="bottom">
                 <h:form> 
-                    
+
                 </h:form>
             </ui:define>
-    	</ui:composition>
+        </ui:composition>
     </body>
 </html>

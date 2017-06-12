@@ -14,7 +14,7 @@ public class Sessao {
 
    //private String username;
     //private String password;
-    private int jogoId;
+    //private int jogoId;
     private Users user;
     @EJB
     Logica lo;
@@ -27,14 +27,14 @@ public class Sessao {
         System.out.println("------SESSAO login -----"+session.getAttribute("username"));
     }
 
-    public int getJogoId() {
+/*    public int getJogoId() {
         return jogoId;
     }
 
     public void setJogoId(int jogoId) {
         this.jogoId = jogoId;
     }
-
+*/
     public void logout() {
         user.setAtivo(false);
         this.user=null;

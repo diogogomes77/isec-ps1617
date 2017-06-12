@@ -64,4 +64,6 @@ public interface InterfaceJogo {
     
    // public int verificaFim(InterfaceJogo jogo, Users username);
     
+    public String returnTabuleiro();
+    
 }

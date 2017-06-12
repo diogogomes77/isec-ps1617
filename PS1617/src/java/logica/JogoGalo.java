@@ -55,4 +55,8 @@ public class JogoGalo extends JogoLogica implements InterfaceJogo{
         }
         return -1;
     }
+    @Override
+    public String returnTabuleiro(){
+        return "/area_privada/jogo";
+    }
 }

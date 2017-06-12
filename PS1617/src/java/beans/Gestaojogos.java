@@ -39,6 +39,7 @@ public class Gestaojogos implements Serializable {
     
     private String username;
     private  Users user;
+    private InterfaceJogo jogo;
     private  HttpSession session;
     @EJB
     private facades.UsersFacade ejbFacadeUsers;
@@ -49,25 +50,24 @@ public class Gestaojogos implements Serializable {
         // this.username = sessao.getUsername();
         // System.out.println("---- Gestao jogos iniciada "+username);
         // this.username = "okok";
-
-        
     }
 
     public String iniciarJogo(EnumTipoJogo tipoJogo) {
        // user = ejbFacadeUsers.find(username);
         if (user != null) {
             System.out.println("---- Encontrou "+user.getUsername());
-            if(sessao.getJogoId() < 1){
-                System.out.println("---- sessao jogo "+sessao.getJogoId());
+          //  if(sessao.getJogoId() < 1){
+            //    System.out.println("---- sessao jogo "+sessao.getJogoId());
                 int jId = lo.iniciarJogo(user, tipoJogo);
-                sessao.setJogoId(jId);
+               /// sessao.setJogoId(jId);
+               jogo = lo.getJogo(jId);
                 return "/area_privada/gestaojogos";
-            }
-            else{
-                RequestContext r = RequestContext.getCurrentInstance();
-                r.execute("PF('dlgIni').show();");                
-                return "/area_privada/gestaojogos";
-            }
+          //  }
+          //  else{
+          //      RequestContext r = RequestContext.getCurrentInstance();
+          //      r.execute("PF('dlgIni').show();");                
+          //      return "/area_privada/gestaojogos";
+          //  }
         }
         return "login";
     }
@@ -75,19 +75,21 @@ public class Gestaojogos implements Serializable {
     public String juntarJogo(int id) {
         if (username != null && !lo.getJogo(id).getCriador().equals(user)) {
             lo.juntarJogo(id, user);
-            sessao.setJogoId(id);
-            if (lo.getJogo(id) instanceof JogoGalo) {
-                return "/area_privada/jogo";
-            } else {
-                return "/area_privada/jogoemlinha";
-            }
+           // sessao.setJogoId(id);
+           jogo = lo.getJogo(id);
+           return jogo.getTabuleiro();
+          //  if (lo.getJogo(id) instanceof JogoGalo) {
+          //      return "/area_privada/jogo";
+          //  } else {
+          //      return "/area_privada/jogoemlinha";
+          //  }
         }
         return "/area_privada/gestaojogos";
     }
     
     public boolean possoJuntar(int id){
        Jogos j = ejbFacadeJogos.find(id);
-        System.out.println("----possoJuntar?--id-"+id);
+       System.out.println("----possoJuntar?--id-"+id);
        
        if (j!=null){
            System.out.println("----Jogo not null--id-"+id);
@@ -123,12 +125,21 @@ public class Gestaojogos implements Serializable {
     }
     
     public String jogar(int id){
-        sessao.setJogoId(id);
-        if (lo.getJogo(id) instanceof JogoGalo) {
+       // sessao.setJogoId(id);
+       jogo = lo.getJogo(id);
+       System.out.println("-----GestaoJogos--jogar id--"+id);
+       if (jogo!=null){
+           System.out.println("-----GestaoJogos--jogo encontrado id--" + jogo.getJogoId() );
+            return jogo.returnTabuleiro();
+            
+       }
+        System.out.println("-----GestaoJogos--jogo nao encontrado id--"  );
+       return "/area_privada/gestaojogos";
+       /* if (lo.getJogo(id) instanceof JogoGalo) {
             return "/area_privada/jogo";
         } else {
             return "/area_privada/jogoemlinha";
-        }
+        }*/
     }
     
     public List<Jogos> listarJogosIniciados() {
@@ -140,32 +151,34 @@ public class Gestaojogos implements Serializable {
     }
     
     public String fazJogada(String jogada) {
-        if(lo.fazJogada(sessao.getJogoId(),user, jogada)){
+        if(lo.fazJogada(jogo.getJogoId(),user, jogada)){
             return verificaTerminaJogo();
-        }if(lo.jogoTerminado(sessao.getJogoId())){
-            sessao.setJogoId(-1);
+        }if(lo.jogoTerminado(jogo.getJogoId())){
+            //sessao.setJogoId(-1);
             return "/area_privada/gestaojogos";
         }else{
             RequestContext r = RequestContext.getCurrentInstance();
             r.execute("PF('dlg').show();");
-            if (lo.getJogo(sessao.getJogoId()) instanceof JogoGalo) {
-                return "/area_privada/jogo";
-            } else {
-                return "/area_privada/jogoemlinha";
-            }
+            return jogo.getTabuleiro();
+            //if (lo.getJogo(sessao.getJogoId()) instanceof JogoGalo) {
+            //    return "/area_privada/jogo";
+            //} else {
+            //    return "/area_privada/jogoemlinha";
+           // }
         }
     }
 
     public String verificaTerminaJogo() {
-        if(lo.terminaJogo(sessao.getJogoId())){
-            sessao.setJogoId(-1);
+        if(lo.terminaJogo(jogo.getJogoId())){
+            //sessao.setJogoId(-1);
             return "/area_privada/gestaojogos";
         }
-        if (lo.getJogo(sessao.getJogoId()) instanceof JogoGalo) {
-            return "/area_privada/jogo";
-        } else {
-            return "/area_privada/jogoemlinha";
-        }
+        return jogo.getTabuleiro();
+      //  if (lo.getJogo(sessao.getJogoId()) instanceof JogoGalo) {
+      //      return "/area_privada/jogo";
+      //  } else {
+      //      return "/area_privada/jogoemlinha";
+      //  }
     }
     
     @PostConstruct
@@ -204,17 +217,15 @@ public class Gestaojogos implements Serializable {
     }
     
     public void joga(int pos){
-        boolean ok = false;        
-        String id = "btn" + pos;
-        int jogoId = sessao.getJogoId();
-        ok = lo.joga(username, pos, jogoId);
-        if(ok){
-            for(InterfaceJogo j : lo.getJogosDecorrer()){
-                if(j.getCriador().equals(user) || j.getParticipante().equals(user)){
-                    j.adicionaJogada(new Jogadas(user, pos, 0));
-                    break;
-                }
-            }
+        if(lo.podeJogar(username, pos, jogo.getJogoId())){   
+            
+                
+                    System.out.println("------JOGA id--------" + jogo.getJogoId()+"---------");
+                    jogo.adicionaJogada(new Jogadas(user, pos, 0));
+                   // System.out.println(j.getJogadasList().get(0).getUsername().getUsername());
+                  
+                
+            
         }
         else{
             RequestContext r = RequestContext.getCurrentInstance();
@@ -225,26 +236,19 @@ public class Gestaojogos implements Serializable {
     public void atualiza(){  
         List <Jogadas> jog = null;
         boolean criador = false;
-        InterfaceJogo jogo = null;
-        for(InterfaceJogo j : lo.getJogosDecorrer()){
-            if(j.getCriador().equals(user)){
-                jog = j.getJogadasList();
-                criador = true;
-                jogo = j;
-                break;
-            }
-            if(j.getParticipante().equals(user)){
-                jog = j.getJogadasList();
-                criador = false;
-                jogo =  j;
-                break;
-            }
-        }
+        
+        jog = jogo.getJogadasList();
+         if (jogo.getCriador().equals(user))
+                 criador=true;
+
+        
         for(Jogadas j : jog){
             String id = "btn" + j.getPos_x();
             CommandButton btn = (CommandButton) findComponent(id);
             btn.setDisabled(true);
-            if((j.getUsername()==user && criador) || (!(j.getUsername()==user) && !criador)){
+            boolean serCriador = j.getUsername().equals(user.getUsername()) && criador;
+            boolean serParticipante = !(j.getUsername().equals(user.getUsername())) && !criador;
+            if(serCriador || serParticipante){
                 btn.setValue("X");
             }
             else{

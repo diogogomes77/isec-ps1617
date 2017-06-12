@@ -97,6 +97,7 @@ public class Jogos implements Serializable , InterfaceJogo{
         this.criador=criador;
         this.tipo=tipo.toString();
         this.estado=INICIADO.getValue();
+        this.turno = criador.getUsername();
         // this.estado=1;
          System.out.println("---NEW JOGOS---estado="+INICIADO.getValue());
     }
@@ -372,5 +373,10 @@ public class Jogos implements Serializable , InterfaceJogo{
                 return true;
         }
         return false;
+    }
+    
+    @Override
+    public String returnTabuleiro(){
+        return "/area_privada/gestaojogos";
     }
 }

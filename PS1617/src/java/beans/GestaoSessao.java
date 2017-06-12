@@ -83,10 +83,10 @@ private boolean usernameCheck = true;
                 System.out.println("-----login reconhecido --");
                 sessao.login(user);
                 
-                sessao.setJogoId(logica.getJogoCriadoAtualmente(user));
-                if(redirectQuandoJogoIniciado())
-                    return "/area_privada/jogo?faces-redirect=true";
-                else
+               // sessao.setJogoId(logica.getJogoCriadoAtualmente(user));
+               // if(redirectQuandoJogoIniciado())
+               //     return "/area_privada/jogo?faces-redirect=true";
+               // else
                     return "/area_privada/gestaojogos?faces-redirect=true";
             }
             else{
@@ -99,19 +99,7 @@ private boolean usernameCheck = true;
         return "/login?faces-redirect=true";
     }
     
-    public boolean redirectQuandoJogoIniciado(){
-        int jogoId = sessao.getJogoId();
-        if(jogoId == -1){
-            return false;
-        }
-        InterfaceJogo jogo = logica.getJogo(jogoId);
-        if (jogo!=null){
-            if(!jogo.isEmEspera() && !jogo.isConcluido()){
-                return true;
-            }
-        }
-        return false;
-    }
+
     
     public String logout(){
         sessao.logout();

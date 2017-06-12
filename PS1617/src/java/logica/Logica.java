@@ -292,36 +292,44 @@ public class Logica {
     }
 
     //-------------------------------------//-------------------------------//-----------------------
-    int turno = 0; // 0 -> criador ; 1 -> participante
+   // int turno = 0; // 0 -> criador ; 1 -> participante
 
-    //metodo joga-> recebe nome do jogador que jogou, e posicao 
-    public boolean joga(String username, int pos, int jogoId) {
-        InterfaceJogo jogo = ejbFacadeJogos.find(jogoId);
-        if (jogo!=null){
-                if (turno == 0) {
-                    if (!jogo.isConcluido()) {
-                        turno = 1;
-                        return true;
-                    }
-                } else {
-                    return false;
-                }
-            } else if (jogo.getParticipante().getUsername().equals(username)) {
-                if (turno == 1) {
-                    if (!jogo.isConcluido()) {
-                        turno = 0;
-                        return true;
-                    }
-                    return true;
-                } else {
-                    return false;
-                }
-            }
-        
-        return false;
-    }
+    //metodo podeJogar-> recebe nome do jogador que jogou, e posicao 
+    public boolean podeJogar(String username, int pos, int jogoId) {
+       InterfaceJogo jogo = ejbFacadeJogos.find(jogoId);
+       System.out.println("------Logica.podeJogar---"+jogo.getJogoId());
+       if (jogo!=null){
+           System.out.println("------turno---"+jogo.getTurno());
+           String turno = jogo.getTurno();
+           if (turno!=null){
+               if (jogo.getTurno().equals(username)) {
+                   if (!jogo.isConcluido()) {
+                       if(jogo.getCriador().getUsername().equals(username)){
+                           jogo.setTurno(jogo.getParticipante().getUsername());
+                       }
+                       else{                        
+                           jogo.setTurno(jogo.getCriador().getUsername());
+                       }
+                       return true;
+                   }
+                   else {
+                       return false;
+                   }
+               }
+               else{
+                   return false;
+               }
+           }else {
+               jogo.setTurno(jogo.getCriador().getUsername());
+               return (username.equals(jogo.getTurno()));
 
-    public boolean termina(Users username, int pos, int JogoId) {
+           }
+           
+       }
+       return false;
+   }
+
+   /* public boolean termina(Users username, int pos, int JogoId) {
         InterfaceJogo jogo = ejbFacadeJogos.find(JogoId);
             if (jogo!=null) {
                 if (turno == 0) {
@@ -344,7 +352,7 @@ public class Logica {
             }
         
         return false;
-    }
+    }*/
 
     public boolean isAtivo(String username) {
         Users u = ejbFacadeUsers.find(username);

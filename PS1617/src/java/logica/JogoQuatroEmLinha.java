@@ -134,4 +134,8 @@ public class JogoQuatroEmLinha extends JogoLogica  {
     
         return false;
     }
+    @Override
+    public String returnTabuleiro(){
+        return "area_privada/jogoemlinha";
+    }
  }
