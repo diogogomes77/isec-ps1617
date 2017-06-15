@@ -5,6 +5,7 @@
  */
 package facades;
 
+import entidades.Jogadas;
 import entidades.TorneiosUsers;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -29,4 +30,8 @@ public class TorneiosUsersFacade extends AbstractFacade<TorneiosUsers> {
         super(TorneiosUsers.class);
     }
     
+   // public void  createTorneiosUsers(TorneiosUsers entity) {
+   //     getEntityManager().persist(entity);
+   //     getEntityManager().flush();
+   // }
 }

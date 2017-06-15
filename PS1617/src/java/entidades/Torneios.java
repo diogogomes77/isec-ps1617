@@ -39,10 +39,6 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Torneios.findByTipo", query = "SELECT t FROM Torneios t WHERE t.tipo = :tipo")})
 public class Torneios implements Serializable {
 
-    @Size(max = 2147483647)
-    @Column(name = "tipo")
-    private String tipo;
-
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -58,7 +54,10 @@ public class Torneios implements Serializable {
     private Integer rondaAtual;
     @Column(name = "estado")
     private Integer estado;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "torneios")
+    @Size(max = 2147483647)
+    @Column(name = "tipo")
+    private String tipo;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "torneio")
     private List<TorneiosUsers> torneiosUsersList;
     @OneToMany(mappedBy = "torneio")
     private List<TorneiosJogos> torneiosJogosList;
@@ -110,6 +109,13 @@ public class Torneios implements Serializable {
         this.estado = estado;
     }
 
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
 
     @XmlTransient
     public List<TorneiosUsers> getTorneiosUsersList() {
@@ -152,14 +158,6 @@ public class Torneios implements Serializable {
     @Override
     public String toString() {
         return "entidades.Torneios[ torneioId=" + torneioId + " ]";
-    }
-
-    public String getTipo() {
-        return tipo;
-    }
-
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
     }
     
 }

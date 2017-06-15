@@ -19,12 +19,14 @@
                     <h:inputText id="data" value="#{torneiosUsersController.selected.data}" title="#{bundle.CreateTorneiosUsersTitle_data}" >
                         <f:convertDateTime pattern="MM/dd/yyyy" />
                     </h:inputText>
-                    <h:outputLabel value="#{bundle.CreateTorneiosUsersLabel_torneios}" for="torneios" />
-                    <h:selectOneMenu id="torneios" value="#{torneiosUsersController.selected.torneios}" title="#{bundle.CreateTorneiosUsersTitle_torneios}" required="true" requiredMessage="#{bundle.CreateTorneiosUsersRequiredMessage_torneios}">
+                    <h:outputLabel value="#{bundle.CreateTorneiosUsersLabel_userTorneioId}" for="userTorneioId" />
+                    <h:inputText id="userTorneioId" value="#{torneiosUsersController.selected.userTorneioId}" title="#{bundle.CreateTorneiosUsersTitle_userTorneioId}" required="true" requiredMessage="#{bundle.CreateTorneiosUsersRequiredMessage_userTorneioId}"/>
+                    <h:outputLabel value="#{bundle.CreateTorneiosUsersLabel_torneio}" for="torneio" />
+                    <h:selectOneMenu id="torneio" value="#{torneiosUsersController.selected.torneio}" title="#{bundle.CreateTorneiosUsersTitle_torneio}" >
                         <f:selectItems value="#{torneiosController.itemsAvailableSelectOne}"/>
                     </h:selectOneMenu>
-                    <h:outputLabel value="#{bundle.CreateTorneiosUsersLabel_users}" for="users" />
-                    <h:selectOneMenu id="users" value="#{torneiosUsersController.selected.users}" title="#{bundle.CreateTorneiosUsersTitle_users}" required="true" requiredMessage="#{bundle.CreateTorneiosUsersRequiredMessage_users}">
+                    <h:outputLabel value="#{bundle.CreateTorneiosUsersLabel_username}" for="username" />
+                    <h:selectOneMenu id="username" value="#{torneiosUsersController.selected.username}" title="#{bundle.CreateTorneiosUsersTitle_username}" >
                         <f:selectItems value="#{usersController.itemsAvailableSelectOne}"/>
                     </h:selectOneMenu>
                 </h:panelGrid>

@@ -29,4 +29,8 @@ public class TorneiosJogosFacade extends AbstractFacade<TorneiosJogos> {
         super(TorneiosJogos.class);
     }
     
+    public void  createTorneiosJogos(TorneiosJogos entity) {
+        getEntityManager().persist(entity);
+        getEntityManager().flush();
+    }
 }

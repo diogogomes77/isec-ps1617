@@ -1,9 +1,9 @@
 package jsf;
 
 import entidades.Torneios;
-import facades.TorneiosFacade;
 import jsf.util.JsfUtil;
 import jsf.util.PaginationHelper;
+import facades.TorneiosFacade;
 
 import java.io.Serializable;
 import java.util.ResourceBundle;

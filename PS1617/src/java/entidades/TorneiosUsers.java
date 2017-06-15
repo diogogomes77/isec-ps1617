@@ -7,9 +7,12 @@ package entidades;
 
 import java.io.Serializable;
 import java.util.Date;
+import javax.persistence.Basic;
 import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
@@ -28,41 +31,31 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "TorneiosUsers.findAll", query = "SELECT t FROM TorneiosUsers t"),
-    @NamedQuery(name = "TorneiosUsers.findByUser", query = "SELECT t FROM TorneiosUsers t WHERE t.torneiosUsersPK.user = :user"),
-    @NamedQuery(name = "TorneiosUsers.findByTorneio", query = "SELECT t FROM TorneiosUsers t WHERE t.torneiosUsersPK.torneio = :torneio"),
-    @NamedQuery(name = "TorneiosUsers.findByData", query = "SELECT t FROM TorneiosUsers t WHERE t.data = :data")})
+    @NamedQuery(name = "TorneiosUsers.findByData", query = "SELECT t FROM TorneiosUsers t WHERE t.data = :data"),
+    @NamedQuery(name = "TorneiosUsers.findByUserTorneioId", query = "SELECT t FROM TorneiosUsers t WHERE t.userTorneioId = :userTorneioId")})
 public class TorneiosUsers implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @EmbeddedId
-    protected TorneiosUsersPK torneiosUsersPK;
     @Column(name = "data")
     @Temporal(TemporalType.DATE)
     private Date data;
-    @JoinColumn(name = "torneio", referencedColumnName = "torneio_id", insertable = false, updatable = false)
-    @ManyToOne(optional = false)
-    private Torneios torneios;
-    @JoinColumn(name = "user", referencedColumnName = "username", insertable = false, updatable = false)
-    @ManyToOne(optional = false)
-    private Users users;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "user_torneio_id")
+    private Integer userTorneioId;
+    @JoinColumn(name = "torneio", referencedColumnName = "torneio_id")
+    @ManyToOne
+    private Torneios torneio;
+    @JoinColumn(name = "username", referencedColumnName = "username")
+    @ManyToOne
+    private Users username;
 
     public TorneiosUsers() {
     }
 
-    public TorneiosUsers(TorneiosUsersPK torneiosUsersPK) {
-        this.torneiosUsersPK = torneiosUsersPK;
-    }
-
-    public TorneiosUsers(String user, int torneio) {
-        this.torneiosUsersPK = new TorneiosUsersPK(user, torneio);
-    }
-
-    public TorneiosUsersPK getTorneiosUsersPK() {
-        return torneiosUsersPK;
-    }
-
-    public void setTorneiosUsersPK(TorneiosUsersPK torneiosUsersPK) {
-        this.torneiosUsersPK = torneiosUsersPK;
+    public TorneiosUsers(Integer userTorneioId) {
+        this.userTorneioId = userTorneioId;
     }
 
     public Date getData() {
@@ -73,26 +66,34 @@ public class TorneiosUsers implements Serializable {
         this.data = data;
     }
 
-    public Torneios getTorneios() {
-        return torneios;
+    public Integer getUserTorneioId() {
+        return userTorneioId;
     }
 
-    public void setTorneios(Torneios torneios) {
-        this.torneios = torneios;
+    public void setUserTorneioId(Integer userTorneioId) {
+        this.userTorneioId = userTorneioId;
     }
 
-    public Users getUsers() {
-        return users;
+    public Torneios getTorneio() {
+        return torneio;
     }
 
-    public void setUsers(Users users) {
-        this.users = users;
+    public void setTorneio(Torneios torneio) {
+        this.torneio = torneio;
+    }
+
+    public Users getUsername() {
+        return username;
+    }
+
+    public void setUsername(Users username) {
+        this.username = username;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (torneiosUsersPK != null ? torneiosUsersPK.hashCode() : 0);
+        hash += (userTorneioId != null ? userTorneioId.hashCode() : 0);
         return hash;
     }
 
@@ -103,7 +104,7 @@ public class TorneiosUsers implements Serializable {
             return false;
         }
         TorneiosUsers other = (TorneiosUsers) object;
-        if ((this.torneiosUsersPK == null && other.torneiosUsersPK != null) || (this.torneiosUsersPK != null && !this.torneiosUsersPK.equals(other.torneiosUsersPK))) {
+        if ((this.userTorneioId == null && other.userTorneioId != null) || (this.userTorneioId != null && !this.userTorneioId.equals(other.userTorneioId))) {
             return false;
         }
         return true;
@@ -111,7 +112,7 @@ public class TorneiosUsers implements Serializable {
 
     @Override
     public String toString() {
-        return "entidades.TorneiosUsers[ torneiosUsersPK=" + torneiosUsersPK + " ]";
+        return "entidades.TorneiosUsers[ userTorneioId=" + userTorneioId + " ]";
     }
     
 }

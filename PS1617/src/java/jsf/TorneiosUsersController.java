@@ -35,7 +35,6 @@ public class TorneiosUsersController implements Serializable {
     public TorneiosUsers getSelected() {
         if (current == null) {
             current = new TorneiosUsers();
-            current.setTorneiosUsersPK(new entidades.TorneiosUsersPK());
             selectedItemIndex = -1;
         }
         return current;
@@ -76,15 +75,12 @@ public class TorneiosUsersController implements Serializable {
 
     public String prepareCreate() {
         current = new TorneiosUsers();
-        current.setTorneiosUsersPK(new entidades.TorneiosUsersPK());
         selectedItemIndex = -1;
         return "Create";
     }
 
     public String create() {
         try {
-            current.getTorneiosUsersPK().setTorneio(current.getTorneios().getTorneioId());
-            current.getTorneiosUsersPK().setUser(current.getUsers().getUsername());
             getFacade().create(current);
             JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("TorneiosUsersCreated"));
             return prepareCreate();
@@ -102,8 +98,6 @@ public class TorneiosUsersController implements Serializable {
 
     public String update() {
         try {
-            current.getTorneiosUsersPK().setTorneio(current.getTorneios().getTorneioId());
-            current.getTorneiosUsersPK().setUser(current.getUsers().getUsername());
             getFacade().edit(current);
             JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("TorneiosUsersUpdated"));
             return "View";
@@ -194,15 +188,12 @@ public class TorneiosUsersController implements Serializable {
         return JsfUtil.getSelectItems(ejbFacade.findAll(), true);
     }
 
-    public TorneiosUsers getTorneiosUsers(entidades.TorneiosUsersPK id) {
+    public TorneiosUsers getTorneiosUsers(java.lang.Integer id) {
         return ejbFacade.find(id);
     }
 
     @FacesConverter(forClass = TorneiosUsers.class)
     public static class TorneiosUsersControllerConverter implements Converter {
-
-        private static final String SEPARATOR = "#";
-        private static final String SEPARATOR_ESCAPED = "\\#";
 
         @Override
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
@@ -214,20 +205,15 @@ public class TorneiosUsersController implements Serializable {
             return controller.getTorneiosUsers(getKey(value));
         }
 
-        entidades.TorneiosUsersPK getKey(String value) {
-            entidades.TorneiosUsersPK key;
-            String values[] = value.split(SEPARATOR_ESCAPED);
-            key = new entidades.TorneiosUsersPK();
-            key.setUser(values[0]);
-            key.setTorneio(Integer.parseInt(values[1]));
+        java.lang.Integer getKey(String value) {
+            java.lang.Integer key;
+            key = Integer.valueOf(value);
             return key;
         }
 
-        String getStringKey(entidades.TorneiosUsersPK value) {
+        String getStringKey(java.lang.Integer value) {
             StringBuilder sb = new StringBuilder();
-            sb.append(value.getUser());
-            sb.append(SEPARATOR);
-            sb.append(value.getTorneio());
+            sb.append(value);
             return sb.toString();
         }
 
@@ -238,7 +224,7 @@ public class TorneiosUsersController implements Serializable {
             }
             if (object instanceof TorneiosUsers) {
                 TorneiosUsers o = (TorneiosUsers) object;
-                return getStringKey(o.getTorneiosUsersPK());
+                return getStringKey(o.getUserTorneioId());
             } else {
                 throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName() + "; expected type: " + TorneiosUsers.class.getName());
             }

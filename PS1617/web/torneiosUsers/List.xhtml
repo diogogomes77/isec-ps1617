@@ -30,15 +30,21 @@
                         </h:column>
                         <h:column>
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListTorneiosUsersTitle_torneios}"/>
+                                <h:outputText value="#{bundle.ListTorneiosUsersTitle_userTorneioId}"/>
                             </f:facet>
-                            <h:outputText value="#{item.torneios}"/>
+                            <h:outputText value="#{item.userTorneioId}"/>
                         </h:column>
                         <h:column>
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListTorneiosUsersTitle_users}"/>
+                                <h:outputText value="#{bundle.ListTorneiosUsersTitle_torneio}"/>
                             </f:facet>
-                            <h:outputText value="#{item.users}"/>
+                            <h:outputText value="#{item.torneio}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListTorneiosUsersTitle_username}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.username}"/>
                         </h:column>
                         <h:column>
                             <f:facet name="header">

@@ -19,10 +19,12 @@
                     <h:outputText value="#{torneiosUsersController.selected.data}" title="#{bundle.ViewTorneiosUsersTitle_data}">
                         <f:convertDateTime pattern="MM/dd/yyyy" />
                     </h:outputText>
-                    <h:outputText value="#{bundle.ViewTorneiosUsersLabel_torneios}"/>
-                    <h:outputText value="#{torneiosUsersController.selected.torneios}" title="#{bundle.ViewTorneiosUsersTitle_torneios}"/>
-                    <h:outputText value="#{bundle.ViewTorneiosUsersLabel_users}"/>
-                    <h:outputText value="#{torneiosUsersController.selected.users}" title="#{bundle.ViewTorneiosUsersTitle_users}"/>
+                    <h:outputText value="#{bundle.ViewTorneiosUsersLabel_userTorneioId}"/>
+                    <h:outputText value="#{torneiosUsersController.selected.userTorneioId}" title="#{bundle.ViewTorneiosUsersTitle_userTorneioId}"/>
+                    <h:outputText value="#{bundle.ViewTorneiosUsersLabel_torneio}"/>
+                    <h:outputText value="#{torneiosUsersController.selected.torneio}" title="#{bundle.ViewTorneiosUsersTitle_torneio}"/>
+                    <h:outputText value="#{bundle.ViewTorneiosUsersLabel_username}"/>
+                    <h:outputText value="#{torneiosUsersController.selected.username}" title="#{bundle.ViewTorneiosUsersTitle_username}"/>
                 </h:panelGrid>
                 <br />
                 <h:commandLink action="#{torneiosUsersController.destroyAndView}" value="#{bundle.ViewTorneiosUsersDestroyLink}"/>

@@ -19,12 +19,14 @@
                     <h:inputText id="data" value="#{torneiosUsersController.selected.data}" title="#{bundle.EditTorneiosUsersTitle_data}" >
                         <f:convertDateTime pattern="MM/dd/yyyy" />
                     </h:inputText>
-                    <h:outputLabel value="#{bundle.EditTorneiosUsersLabel_torneios}" for="torneios" />
-                    <h:selectOneMenu id="torneios" value="#{torneiosUsersController.selected.torneios}" title="#{bundle.EditTorneiosUsersTitle_torneios}" required="true" requiredMessage="#{bundle.EditTorneiosUsersRequiredMessage_torneios}">
+                    <h:outputLabel value="#{bundle.EditTorneiosUsersLabel_userTorneioId}" for="userTorneioId" />
+                    <h:inputText id="userTorneioId" value="#{torneiosUsersController.selected.userTorneioId}" title="#{bundle.EditTorneiosUsersTitle_userTorneioId}" required="true" requiredMessage="#{bundle.EditTorneiosUsersRequiredMessage_userTorneioId}"/>
+                    <h:outputLabel value="#{bundle.EditTorneiosUsersLabel_torneio}" for="torneio" />
+                    <h:selectOneMenu id="torneio" value="#{torneiosUsersController.selected.torneio}" title="#{bundle.EditTorneiosUsersTitle_torneio}" >
                         <f:selectItems value="#{torneiosController.itemsAvailableSelectOne}"/>
                     </h:selectOneMenu>
-                    <h:outputLabel value="#{bundle.EditTorneiosUsersLabel_users}" for="users" />
-                    <h:selectOneMenu id="users" value="#{torneiosUsersController.selected.users}" title="#{bundle.EditTorneiosUsersTitle_users}" required="true" requiredMessage="#{bundle.EditTorneiosUsersRequiredMessage_users}">
+                    <h:outputLabel value="#{bundle.EditTorneiosUsersLabel_username}" for="username" />
+                    <h:selectOneMenu id="username" value="#{torneiosUsersController.selected.username}" title="#{bundle.EditTorneiosUsersTitle_username}" >
                         <f:selectItems value="#{usersController.itemsAvailableSelectOne}"/>
                     </h:selectOneMenu>
                 </h:panelGrid>
