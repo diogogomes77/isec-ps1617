@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.EditTorneiosTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundle.EditTorneiosLabel_torneioId}" for="torneioId" />
+                    <h:inputText id="torneioId" value="#{torneiosController.selected.torneioId}" title="#{bundle.EditTorneiosTitle_torneioId}" required="true" requiredMessage="#{bundle.EditTorneiosRequiredMessage_torneioId}"/>
+                    <h:outputLabel value="#{bundle.EditTorneiosLabel_maxJogadores}" for="maxJogadores" />
+                    <h:inputText id="maxJogadores" value="#{torneiosController.selected.maxJogadores}" title="#{bundle.EditTorneiosTitle_maxJogadores}" />
+                    <h:outputLabel value="#{bundle.EditTorneiosLabel_tipoJogo}" for="tipoJogo" />
+                    <h:inputText id="tipoJogo" value="#{torneiosController.selected.tipoJogo}" title="#{bundle.EditTorneiosTitle_tipoJogo}" />
+                    <h:outputLabel value="#{bundle.EditTorneiosLabel_rondaAtual}" for="rondaAtual" />
+                    <h:inputText id="rondaAtual" value="#{torneiosController.selected.rondaAtual}" title="#{bundle.EditTorneiosTitle_rondaAtual}" />
+                    <h:outputLabel value="#{bundle.EditTorneiosLabel_estado}" for="estado" />
+                    <h:inputText id="estado" value="#{torneiosController.selected.estado}" title="#{bundle.EditTorneiosTitle_estado}" />
+                    <h:outputLabel value="#{bundle.EditTorneiosLabel_nada}" for="nada" />
+                    <h:inputText id="nada" value="#{torneiosController.selected.nada}" title="#{bundle.EditTorneiosTitle_nada}" required="true" requiredMessage="#{bundle.EditTorneiosRequiredMessage_nada}"/>
+                    <h:outputLabel value="#{bundle.EditTorneiosLabel_nada2}" for="nada2" />
+                    <h:inputText id="nada2" value="#{torneiosController.selected.nada2}" title="#{bundle.EditTorneiosTitle_nada2}" required="true" requiredMessage="#{bundle.EditTorneiosRequiredMessage_nada2}"/>
+                </h:panelGrid>
+                <h:commandLink action="#{torneiosController.update}" value="#{bundle.EditTorneiosSaveLink}"/>
+                <br />
+                <br />
+                <h:link outcome="View" value="#{bundle.EditTorneiosViewLink}"/>
+                <br />
+                <h:commandLink action="#{torneiosController.prepareList}" value="#{bundle.EditTorneiosShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.EditTorneiosIndexLink}" />
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

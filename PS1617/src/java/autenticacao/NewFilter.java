@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.ArrayList;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -157,7 +158,23 @@ public class NewFilter implements Filter {
                 }
                 if ((ses == null) || ses.getAttribute("username") == null) {
                     System.out.println("-----SES NULL or NO uSERNAME --");
-                    if (!reqURI.contains("/faces/login.xhtml")) {
+                    ArrayList<String> permitidas = new ArrayList<>();
+                    permitidas.add("/faces/login.xhtml");
+                    permitidas.add("/faces/jogadas");
+                    permitidas.add("/faces/jogos");
+                    permitidas.add("/faces/torneios");
+                    permitidas.add("/faces/torneiosJogos");
+                    permitidas.add("/faces/torneiosUsers");
+                    permitidas.add("/faces/jogos");
+                    permitidas.add("/faces/users");
+                    boolean podeVer=false;
+                    for (String permitida : permitidas){
+                        if (reqURI.contains(permitida)){
+                            podeVer=true;
+                            break;
+                        }
+                    }
+                    if (!podeVer) {
                         System.out.println("-----URI no VISITANTE --");
                        // TODO comendar para testes 
                          res.sendRedirect(req.getContextPath() + "/faces/login.xhtml");

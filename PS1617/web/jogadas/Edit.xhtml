@@ -15,12 +15,12 @@
             </h:panelGroup>
             <h:form>
                 <h:panelGrid columns="2">
-                    <h:outputLabel value="#{bundle.EditJogadasLabel_posX}" for="posX" />
-                    <h:inputText id="posX" value="#{jogadasController.selected.posX}" title="#{bundle.EditJogadasTitle_posX}" />
+                    <h:outputLabel value="#{bundle.EditJogadasLabel_pos_x}" for="pos_x" />
+                    <h:inputText id="pos_x" value="#{jogadasController.selected.pos_x}" title="#{bundle.EditJogadasTitle_pos_x}" />
                     <h:outputLabel value="#{bundle.EditJogadasLabel_jogadaId}" for="jogadaId" />
                     <h:inputText id="jogadaId" value="#{jogadasController.selected.jogadaId}" title="#{bundle.EditJogadasTitle_jogadaId}" required="true" requiredMessage="#{bundle.EditJogadasRequiredMessage_jogadaId}"/>
-                    <h:outputLabel value="#{bundle.EditJogadasLabel_posY}" for="posY" />
-                    <h:inputText id="posY" value="#{jogadasController.selected.posY}" title="#{bundle.EditJogadasTitle_posY}" />
+                    <h:outputLabel value="#{bundle.EditJogadasLabel_pos_y}" for="pos_y" />
+                    <h:inputText id="pos_y" value="#{jogadasController.selected.pos_y}" title="#{bundle.EditJogadasTitle_pos_y}" />
                     <h:outputLabel value="#{bundle.EditJogadasLabel_jogoId}" for="jogoId" />
                     <h:selectOneMenu id="jogoId" value="#{jogadasController.selected.jogoId}" title="#{bundle.EditJogadasTitle_jogoId}" >
                         <f:selectItems value="#{jogosController.itemsAvailableSelectOne}"/>

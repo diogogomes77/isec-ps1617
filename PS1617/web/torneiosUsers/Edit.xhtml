@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.EditTorneiosUsersTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundle.EditTorneiosUsersLabel_data}" for="data" />
+                    <h:inputText id="data" value="#{torneiosUsersController.selected.data}" title="#{bundle.EditTorneiosUsersTitle_data}" >
+                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                    </h:inputText>
+                    <h:outputLabel value="#{bundle.EditTorneiosUsersLabel_torneios}" for="torneios" />
+                    <h:selectOneMenu id="torneios" value="#{torneiosUsersController.selected.torneios}" title="#{bundle.EditTorneiosUsersTitle_torneios}" required="true" requiredMessage="#{bundle.EditTorneiosUsersRequiredMessage_torneios}">
+                        <f:selectItems value="#{torneiosController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                    <h:outputLabel value="#{bundle.EditTorneiosUsersLabel_users}" for="users" />
+                    <h:selectOneMenu id="users" value="#{torneiosUsersController.selected.users}" title="#{bundle.EditTorneiosUsersTitle_users}" required="true" requiredMessage="#{bundle.EditTorneiosUsersRequiredMessage_users}">
+                        <f:selectItems value="#{usersController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                </h:panelGrid>
+                <h:commandLink action="#{torneiosUsersController.update}" value="#{bundle.EditTorneiosUsersSaveLink}"/>
+                <br />
+                <br />
+                <h:link outcome="View" value="#{bundle.EditTorneiosUsersViewLink}"/>
+                <br />
+                <h:commandLink action="#{torneiosUsersController.prepareList}" value="#{bundle.EditTorneiosUsersShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.EditTorneiosUsersIndexLink}" />
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

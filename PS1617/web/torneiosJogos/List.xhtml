@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ListTorneiosJogosTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:form styleClass="jsfcrud_list_form">
+                <h:panelGroup id="messagePanel" layout="block">
+                    <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+                </h:panelGroup>
+                <h:outputText escape="false" value="#{bundle.ListTorneiosJogosEmpty}" rendered="#{torneiosJogosController.items.rowCount == 0}"/>
+                <h:panelGroup rendered="#{torneiosJogosController.items.rowCount > 0}">
+                    <h:outputText value="#{torneiosJogosController.pagination.pageFirstItem + 1}..#{torneiosJogosController.pagination.pageLastItem + 1}/#{torneiosJogosController.pagination.itemsCount}"/>&nbsp;
+                    <h:commandLink action="#{torneiosJogosController.previous}" value="#{bundle.Previous} #{torneiosJogosController.pagination.pageSize}" rendered="#{torneiosJogosController.pagination.hasPreviousPage}"/>&nbsp;
+                    <h:commandLink action="#{torneiosJogosController.next}" value="#{bundle.Next} #{torneiosJogosController.pagination.pageSize}" rendered="#{torneiosJogosController.pagination.hasNextPage}"/>&nbsp;
+                    <h:dataTable value="#{torneiosJogosController.items}" var="item" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" style="border:solid 1px">
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListTorneiosJogosTitle_jogoTorneioId}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.jogoTorneioId}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListTorneiosJogosTitle_ronda}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.ronda}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListTorneiosJogosTitle_jogo}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.jogo}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListTorneiosJogosTitle_torneio}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.torneio}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="&nbsp;"/>
+                            </f:facet>
+                            <h:commandLink action="#{torneiosJogosController.prepareView}" value="#{bundle.ListTorneiosJogosViewLink}"/>
+                            <h:outputText value=" "/>
+                            <h:commandLink action="#{torneiosJogosController.prepareEdit}" value="#{bundle.ListTorneiosJogosEditLink}"/>
+                            <h:outputText value=" "/>
+                            <h:commandLink action="#{torneiosJogosController.destroy}" value="#{bundle.ListTorneiosJogosDestroyLink}"/>
+                        </h:column>
+                    </h:dataTable>
+                </h:panelGroup>
+                <br />
+                <h:commandLink action="#{torneiosJogosController.prepareCreate}" value="#{bundle.ListTorneiosJogosCreateLink}"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.ListTorneiosJogosIndexLink}"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

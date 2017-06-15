@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ListTorneiosTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:form styleClass="jsfcrud_list_form">
+                <h:panelGroup id="messagePanel" layout="block">
+                    <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+                </h:panelGroup>
+                <h:outputText escape="false" value="#{bundle.ListTorneiosEmpty}" rendered="#{torneiosController.items.rowCount == 0}"/>
+                <h:panelGroup rendered="#{torneiosController.items.rowCount > 0}">
+                    <h:outputText value="#{torneiosController.pagination.pageFirstItem + 1}..#{torneiosController.pagination.pageLastItem + 1}/#{torneiosController.pagination.itemsCount}"/>&nbsp;
+                    <h:commandLink action="#{torneiosController.previous}" value="#{bundle.Previous} #{torneiosController.pagination.pageSize}" rendered="#{torneiosController.pagination.hasPreviousPage}"/>&nbsp;
+                    <h:commandLink action="#{torneiosController.next}" value="#{bundle.Next} #{torneiosController.pagination.pageSize}" rendered="#{torneiosController.pagination.hasNextPage}"/>&nbsp;
+                    <h:dataTable value="#{torneiosController.items}" var="item" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" style="border:solid 1px">
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListTorneiosTitle_torneioId}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.torneioId}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListTorneiosTitle_maxJogadores}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.maxJogadores}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListTorneiosTitle_tipoJogo}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.tipoJogo}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListTorneiosTitle_rondaAtual}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.rondaAtual}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListTorneiosTitle_estado}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.estado}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListTorneiosTitle_nada}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.nada}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListTorneiosTitle_nada2}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.nada2}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="&nbsp;"/>
+                            </f:facet>
+                            <h:commandLink action="#{torneiosController.prepareView}" value="#{bundle.ListTorneiosViewLink}"/>
+                            <h:outputText value=" "/>
+                            <h:commandLink action="#{torneiosController.prepareEdit}" value="#{bundle.ListTorneiosEditLink}"/>
+                            <h:outputText value=" "/>
+                            <h:commandLink action="#{torneiosController.destroy}" value="#{bundle.ListTorneiosDestroyLink}"/>
+                        </h:column>
+                    </h:dataTable>
+                </h:panelGroup>
+                <br />
+                <h:commandLink action="#{torneiosController.prepareCreate}" value="#{bundle.ListTorneiosCreateLink}"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.ListTorneiosIndexLink}"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>
