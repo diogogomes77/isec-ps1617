@@ -1,6 +1,7 @@
 package logica;
 
 import autenticacao.Util;
+import entidades.Jogadas;
 import entidades.Jogos;
 import entidades.Users;
 import java.util.ArrayList;
@@ -19,7 +20,8 @@ public class Logica {
     private facades.UsersFacade ejbFacadeUsers;
     @EJB
     private facades.JogosFacade ejbFacadeJogos;
-    
+    @EJB
+    private facades.JogadasFacade ejbFacadeJogadas;
     
     private static int jogosId;
     //private ArrayList<Users> users;
@@ -328,7 +330,13 @@ public class Logica {
        }
        return false;
    }
-
+    
+    public Jogadas fazJogada(Users user, int posX, int posY, InterfaceJogo jogo){
+        Jogadas nova = new Jogadas(user, posX, posY, jogo);
+        ejbFacadeJogadas.createJogada(nova);
+        return nova;
+    }
+   
    /* public boolean termina(Users username, int pos, int JogoId) {
         InterfaceJogo jogo = ejbFacadeJogos.find(JogoId);
             if (jogo!=null) {

@@ -29,4 +29,8 @@ public class JogadasFacade extends AbstractFacade<Jogadas> {
         super(Jogadas.class);
     }
     
+    public void  createJogada(Jogadas entity) {
+        getEntityManager().persist(entity);
+        getEntityManager().flush();
+    }
 }

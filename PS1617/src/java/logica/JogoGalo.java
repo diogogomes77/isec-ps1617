@@ -15,16 +15,20 @@ import org.primefaces.context.RequestContext;
 @DiscriminatorValue("JOGO_GALO")
 public class JogoGalo extends JogoLogica implements InterfaceJogo{
  
+
     public JogoGalo(Users criador) {
        super(criador);
     }
-    public JogoGalo() {
-       
+    
+    public JogoGalo(){
+        
     }
+   
+
         
     @Override
-    public int verificaFim(InterfaceJogo jogo, Users username){
-        List<Jogadas> jog = jogo.getJogadasList();        
+    public int verificaFim(InterfaceJogo jogo, Users username){    
+        List<Jogadas> jog = jogo.getJogadasList();
         int [] jj = new int [10];
         for(int i = 0; i < 10; i++){
             jj[i] = -1;

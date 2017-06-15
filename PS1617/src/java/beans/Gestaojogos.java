@@ -45,6 +45,7 @@ public class Gestaojogos implements Serializable {
     private facades.UsersFacade ejbFacadeUsers;
     @EJB
     private facades.JogosFacade ejbFacadeJogos;
+   
     
     public Gestaojogos() {
         // this.username = sessao.getUsername();
@@ -130,8 +131,7 @@ public class Gestaojogos implements Serializable {
        System.out.println("-----GestaoJogos--jogar id--"+id);
        if (jogo!=null){
            System.out.println("-----GestaoJogos--jogo encontrado id--" + jogo.getJogoId() );
-            return jogo.returnTabuleiro();
-            
+            return jogo.returnTabuleiro();     
        }
         System.out.println("-----GestaoJogos--jogo nao encontrado id--"  );
        return "/area_privada/gestaojogos";
@@ -216,17 +216,14 @@ public class Gestaojogos implements Serializable {
         return found[0];
     }
     
-    public void joga(int pos){
-        if(lo.podeJogar(username, pos, jogo.getJogoId())){   
-            
-                
-                    System.out.println("------JOGA id--------" + jogo.getJogoId()+"---------");
-                    jogo.adicionaJogada(new Jogadas(user, pos, 0));
-                   // System.out.println(j.getJogadasList().get(0).getUsername().getUsername());
-                  
-                
-            
-        }
+public void joga(int pos){
+        if(lo.podeJogar(username, pos, jogo.getJogoId())){                             
+                   System.out.println("------JOGA id--------" + jogo.getJogoId()+"---------");
+                   Jogadas jog = lo.fazJogada(user, pos, 0, jogo);
+                   List <Jogadas> jogadas = jogo.getJogadasList();                   
+                   jogadas.add(jog);
+                   jogo.setJogadasList(jogadas);
+       }
         else{
             RequestContext r = RequestContext.getCurrentInstance();
             r.execute("PF('dlg').show();");

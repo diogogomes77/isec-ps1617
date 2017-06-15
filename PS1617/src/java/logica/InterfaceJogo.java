@@ -18,7 +18,7 @@ import javax.xml.bind.annotation.XmlTransient;
 public interface InterfaceJogo {
     
     Users getCriador();
-   Users getParticipante();
+    Users getParticipante();
     void adicionaJogada(Jogadas j);
     List<Jogadas> getJogadasList();
     Integer getJogoId();

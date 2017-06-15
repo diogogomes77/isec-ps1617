@@ -19,6 +19,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
+import logica.InterfaceJogo;
 
 /**
  *
@@ -53,10 +54,11 @@ public class Jogadas implements Serializable {
 
     public Jogadas() {
     }
-    public Jogadas(Users username, int posX, int posY) {
+    public Jogadas(Users username, int posX, int posY, InterfaceJogo j) {
         this.username = username;
         this.pos_x = posX;
         this.pos_y = posY;
+        this.jogoId = (Jogos) j;
     }
     public Jogadas(Integer jogadaId) {
         this.jogadaId = jogadaId;
