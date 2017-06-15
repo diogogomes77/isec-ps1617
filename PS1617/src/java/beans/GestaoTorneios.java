@@ -4,6 +4,7 @@ package beans;
 import autenticacao.Util;
 import entidades.Jogos;
 import entidades.Torneios;
+import entidades.TorneiosJogos;
 import entidades.TorneiosUsers;
 import entidades.Users;
 import javax.enterprise.context.SessionScoped;
@@ -31,6 +32,8 @@ public class GestaoTorneios implements Serializable {
     private UsersFacade usersFacade;
     @EJB
     private TorneiosUsersFacade torneiosUsersFacade;
+    @EJB
+    private TorneiosJogosFacade torneiosJogosFacade;
     @EJB
     Sessao sessao;
     
@@ -73,6 +76,21 @@ public class GestaoTorneios implements Serializable {
             return "/area_privada/gestaojogos";
     }
 
+    public String addJogo(Jogos jogo){
+        // 3 = torneio para testes que existe na BD
+        this.torneio = torneiosFacade.find(3);
+        if (torneio!=null){
+            TorneiosJogos tj =  new TorneiosJogos();
+            tj.setJogo(jogo);
+            torneiosJogosFacade.create(tj);
+            List<TorneiosJogos> jogosTorneio = torneio.getTorneiosJogosList();
+            jogosTorneio.add(tj);
+            torneio.setTorneiosJogosList(jogosTorneio);
+            torneiosFacade.edit(torneio);
+        }
+        
+        return "/area_privada/gestaojogos";
+    }
     public String entrar(Torneios torneio) {
         if (user!=null){
              System.out.println("-----USER="+user.getUsername());
