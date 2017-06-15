@@ -25,10 +25,8 @@
                     <h:inputText id="rondaAtual" value="#{torneiosController.selected.rondaAtual}" title="#{bundle.EditTorneiosTitle_rondaAtual}" />
                     <h:outputLabel value="#{bundle.EditTorneiosLabel_estado}" for="estado" />
                     <h:inputText id="estado" value="#{torneiosController.selected.estado}" title="#{bundle.EditTorneiosTitle_estado}" />
-                    <h:outputLabel value="#{bundle.EditTorneiosLabel_nada}" for="nada" />
-                    <h:inputText id="nada" value="#{torneiosController.selected.nada}" title="#{bundle.EditTorneiosTitle_nada}" required="true" requiredMessage="#{bundle.EditTorneiosRequiredMessage_nada}"/>
-                    <h:outputLabel value="#{bundle.EditTorneiosLabel_nada2}" for="nada2" />
-                    <h:inputText id="nada2" value="#{torneiosController.selected.nada2}" title="#{bundle.EditTorneiosTitle_nada2}" required="true" requiredMessage="#{bundle.EditTorneiosRequiredMessage_nada2}"/>
+                    <h:outputLabel value="#{bundle.EditTorneiosLabel_tipo}" for="tipo" />
+                    <h:inputText id="tipo" value="#{torneiosController.selected.tipo}" title="#{bundle.EditTorneiosTitle_tipo}" />
                 </h:panelGrid>
                 <h:commandLink action="#{torneiosController.update}" value="#{bundle.EditTorneiosSaveLink}"/>
                 <br />

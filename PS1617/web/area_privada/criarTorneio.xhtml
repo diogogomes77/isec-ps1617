@@ -18,21 +18,21 @@
             <ui:define name="content">
                 <h:form>
                     <h:outputText value="Jogo a Jogar:" /><br/>
-                    <h:selectOneMenu value="#{gestaoTorneio.jogo}">
-                        <f:selectItem itemValue = "Jogo do Galo" itemLabel = "jg" /> 
-                        <f:selectItem itemValue = "Quatro em Linha" itemLabel = "ql" />
+                    <h:selectOneMenu value="#{gestaoTorneios.torneio.tipoJogo}">
+                        <f:selectItem itemValue = "JOGO_GALO" itemLabel = "Jogo do Galo" /> 
+                        <f:selectItem itemValue = "JOGO_QUATRO_EM_LINHA" itemLabel = "Quatro em Linha" />
                     </h:selectOneMenu><br/><br/>
                     
                     <h:outputText value="Numero de Jogadores:" /><br/>
-                    <h:inputText id="numJog" value="#{gestaoTorneio.num}" /><br/><br/>
+                    <h:inputText id="numJog" value="#{gestaoTorneios.torneio.maxJogadores}" /><br/><br/>
                     
                     <h:outputText value="Tipo de Torneio:" /><br/>
-                    <h:selectOneMenu value="#{gestaoTorneio.tipo}">
-                        <f:selectItem itemValue = "Eliminacao" itemLabel = "eliminacao" /> 
-                        <f:selectItem itemValue = "Round-Robin" itemLabel = "round" />
+                    <h:selectOneMenu value="#{gestaoTorneios.torneio.tipo}">
+                        <f:selectItem itemValue = "ELIMINACAO" itemLabel = "Eliminacao" /> 
+                        <f:selectItem itemValue = "ROUND_ROBIN" itemLabel = "Round-Robin" />
                     </h:selectOneMenu><br/><br/>
                     
-                    <h:commandButton value="Confirmar" action="#{gestaoTorneio.criar()}"/>
+                    <h:commandButton value="Confirmar" action="#{gestaoTorneios.criar()}"/>
                     <br/><br/>
                     
                     <h:commandButton value="Voltar" action="gestaojogos"/>

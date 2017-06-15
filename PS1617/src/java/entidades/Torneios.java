@@ -36,12 +36,12 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Torneios.findByTipoJogo", query = "SELECT t FROM Torneios t WHERE t.tipoJogo = :tipoJogo"),
     @NamedQuery(name = "Torneios.findByRondaAtual", query = "SELECT t FROM Torneios t WHERE t.rondaAtual = :rondaAtual"),
     @NamedQuery(name = "Torneios.findByEstado", query = "SELECT t FROM Torneios t WHERE t.estado = :estado"),
-    @NamedQuery(name = "Torneios.findByNada", query = "SELECT t FROM Torneios t WHERE t.nada = :nada"),
-    @NamedQuery(name = "Torneios.findByNada2", query = "SELECT t FROM Torneios t WHERE t.nada2 = :nada2")})
+    @NamedQuery(name = "Torneios.findByTipo", query = "SELECT t FROM Torneios t WHERE t.tipo = :tipo")})
 public class Torneios implements Serializable {
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "torneios")
-    private List<TorneiosUsers> torneiosUsersList;
+    @Size(max = 2147483647)
+    @Column(name = "tipo")
+    private String tipo;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -58,12 +58,8 @@ public class Torneios implements Serializable {
     private Integer rondaAtual;
     @Column(name = "estado")
     private Integer estado;
-    @Basic(optional = false)
-    @Column(name = "nada")
-    private int nada;
-    @Basic(optional = false)
-    @Column(name = "nada2")
-    private int nada2;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "torneios")
+    private List<TorneiosUsers> torneiosUsersList;
     @OneToMany(mappedBy = "torneio")
     private List<TorneiosJogos> torneiosJogosList;
 
@@ -72,12 +68,6 @@ public class Torneios implements Serializable {
 
     public Torneios(Integer torneioId) {
         this.torneioId = torneioId;
-    }
-
-    public Torneios(Integer torneioId, int nada, int nada2) {
-        this.torneioId = torneioId;
-        this.nada = nada;
-        this.nada2 = nada2;
     }
 
     public Integer getTorneioId() {
@@ -120,20 +110,14 @@ public class Torneios implements Serializable {
         this.estado = estado;
     }
 
-    public int getNada() {
-        return nada;
+
+    @XmlTransient
+    public List<TorneiosUsers> getTorneiosUsersList() {
+        return torneiosUsersList;
     }
 
-    public void setNada(int nada) {
-        this.nada = nada;
-    }
-
-    public int getNada2() {
-        return nada2;
-    }
-
-    public void setNada2(int nada2) {
-        this.nada2 = nada2;
+    public void setTorneiosUsersList(List<TorneiosUsers> torneiosUsersList) {
+        this.torneiosUsersList = torneiosUsersList;
     }
 
     @XmlTransient
@@ -170,13 +154,12 @@ public class Torneios implements Serializable {
         return "entidades.Torneios[ torneioId=" + torneioId + " ]";
     }
 
-    @XmlTransient
-    public List<TorneiosUsers> getTorneiosUsersList() {
-        return torneiosUsersList;
+    public String getTipo() {
+        return tipo;
     }
 
-    public void setTorneiosUsersList(List<TorneiosUsers> torneiosUsersList) {
-        this.torneiosUsersList = torneiosUsersList;
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
     }
     
 }
