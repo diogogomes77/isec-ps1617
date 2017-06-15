@@ -42,8 +42,10 @@
                                          value="" action="#{gestaojogos.joga(8)}"/>
                         <p:commandButton id="btn9" style="width: 150px; height: 150px; font-size: xx-large" 
                                          value="" action="#{gestaojogos.joga(9)}"/>
-                    </h:panelGrid>                    
-                    <p:poll interval="2" update="table" listener="#{gestaojogos.atualiza()}" />
+                    </h:panelGrid> 
+                    <h:panelGrid columns="1" id="ID_polling" rendered="#{gestaoSessao.estaLogado()==true}">
+                        <p:poll interval="2" update="table" listener="#{gestaojogos.atualiza()}" />
+                    </h:panelGrid>
                     <br/>
                     
                     <p:dialog id="dialog" widgetVar="dlg" header="Espere pela sua vez !" width="200px" height="50px">  

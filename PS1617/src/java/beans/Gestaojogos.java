@@ -186,7 +186,10 @@ public class Gestaojogos implements Serializable {
         HttpSession session = Util.getSession();
         this.username = (String) session.getAttribute("username");
         this.session = session;
-        this.user = ejbFacadeUsers.find(username);
+
+            this.user = ejbFacadeUsers.find(username);
+        
+        
         if (user!=null)
         System.out.println("---- Gestao jogos iniciada "+user.getUsername());
         else 
@@ -229,17 +232,18 @@ public void joga(int pos){
             r.execute("PF('dlg').show();");
         }
     }
-    
+
     public void atualiza(){  
-        List <Jogadas> jog = null;
+        
+        List <Jogadas> listaJogadas = null;
         boolean criador = false;
         
-        jog = jogo.getJogadasList();
-         if (jogo.getCriador().equals(user))
-                 criador=true;
-
-        
-        for(Jogadas j : jog){
+        listaJogadas = jogo.getJogadasList();
+       
+        if (jogo.getCriador().equals(user))
+            criador=true;
+        int i=0;
+        for(Jogadas j : listaJogadas){
             String id = "btn" + j.getPos_x();
             CommandButton btn = (CommandButton) findComponent(id);
             btn.setDisabled(true);
@@ -251,7 +255,9 @@ public void joga(int pos){
             else{
                 btn.setValue("O");
             }
+            i++;
         }
+         System.out.println("---n jogadas ="+i);
         
      /*   int fim = jogo.verificaFim(jogo, user);
        
@@ -268,5 +274,6 @@ public void joga(int pos){
             r.execute("PF('dlgEmpate').show();");
         }
         */
+    
     }
 }

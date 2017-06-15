@@ -71,7 +71,14 @@ private boolean usernameCheck = true;
     public String bemvindo(){
         return sessao.getUsername();
     }
-    
+    public boolean estaLogado(){
+        if (username == null ) {
+            System.out.println("___NAO esta logado______"+username);
+            return false;
+        }
+         System.out.println("___esta logado______"+username);
+        return true; 
+    }
     public String login(){
         if(!username.equals("") && !password.equals("")){
             System.out.println("-----Tenta reconhecer login --");
