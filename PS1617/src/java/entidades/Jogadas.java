@@ -32,6 +32,7 @@ import logica.InterfaceJogo;
     @NamedQuery(name = "Jogadas.findAll", query = "SELECT j FROM Jogadas j")
     , @NamedQuery(name = "Jogadas.findByPos_x", query = "SELECT j FROM Jogadas j WHERE j.pos_x = :pos_x")
     , @NamedQuery(name = "Jogadas.findByJogadaId", query = "SELECT j FROM Jogadas j WHERE j.jogadaId = :jogadaId")
+    , @NamedQuery(name = "Jogadas.findByJogoId", query = "SELECT j FROM Jogadas j WHERE j.jogoId = :jogoId")
     , @NamedQuery(name = "Jogadas.findByPos_y", query = "SELECT j FROM Jogadas j WHERE j.pos_y = :pos_y")})
 public class Jogadas implements Serializable {
 

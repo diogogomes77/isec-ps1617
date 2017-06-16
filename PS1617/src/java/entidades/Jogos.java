@@ -31,14 +31,13 @@ import static logica.EnumEstado.*;
 import logica.EnumTipoJogo;
 import logica.InterfaceJogo;
 
-
 /**
  *
  * @author diogo
  */
 @Entity
 @Inheritance
-@DiscriminatorColumn(name="Tipo")
+@DiscriminatorColumn(name = "Tipo")
 @Table(name = "jogos")
 //@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @XmlRootElement
@@ -49,7 +48,7 @@ import logica.InterfaceJogo;
     , @NamedQuery(name = "Jogos.findByTabuleiro", query = "SELECT j FROM Jogos j WHERE j.tabuleiro = :tabuleiro")
     , @NamedQuery(name = "Jogos.findByTurno", query = "SELECT j FROM Jogos j WHERE j.turno = :turno")
     , @NamedQuery(name = "Jogos.findByTipo", query = "SELECT j FROM Jogos j WHERE j.tipo = :tipo")})
-public class Jogos implements Serializable , InterfaceJogo{
+public class Jogos implements Serializable, InterfaceJogo {
 
     private static final long serialVersionUID = 1L;
     /*
@@ -61,7 +60,7 @@ public class Jogos implements Serializable , InterfaceJogo{
                     generator="jogos_seq")
     @Column(name = "jogo_id", updatable=false)
     
-    */
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
@@ -93,22 +92,23 @@ public class Jogos implements Serializable , InterfaceJogo{
     public Jogos() {
     }
 
-    public Jogos(Users criador,EnumTipoJogo tipo) {
-        this.criador=criador;
-        this.tipo=tipo.toString();
-        this.estado=INICIADO.getValue();
+    public Jogos(Users criador, EnumTipoJogo tipo) {
+        this.criador = criador;
+        this.tipo = tipo.toString();
+        this.estado = INICIADO.getValue();
         this.turno = criador.getUsername();
         // this.estado=1;
-         System.out.println("---NEW JOGOS---estado="+INICIADO.getValue());
+        System.out.println("---NEW JOGOS---estado=" + INICIADO.getValue());
     }
 
     public Jogos(Users criador) {
-        this.criador=criador;
-        
-        this.estado=INICIADO.getValue();
+        this.criador = criador;
+
+        this.estado = INICIADO.getValue();
         // this.estado=1;
-         System.out.println("---NEW JOGOS---estado="+INICIADO.getValue());
+        System.out.println("---NEW JOGOS---estado=" + INICIADO.getValue());
     }
+
     public Jogos(Integer jogoId) {
         this.jogoId = jogoId;
     }
@@ -118,40 +118,49 @@ public class Jogos implements Serializable , InterfaceJogo{
         return jogoId;
     }
 
+    @Override
     public void setJogoId(Integer jogoId) {
         this.jogoId = jogoId;
     }
 
+    @Override
     public Integer getEstado() {
         // 0 = em espera
         // 1 = concluido
         return estado;
     }
 
+    @Override
     public void setEstado(Integer estado) {
         this.estado = estado;
     }
 
+    @Override
     public String getTabuleiro() {
         return tabuleiro;
     }
 
+    @Override
     public void setTabuleiro(String tabuleiro) {
         this.tabuleiro = tabuleiro;
     }
 
+    @Override
     public String getTurno() {
         return turno;
     }
 
+    @Override
     public void setTurno(String turno) {
         this.turno = turno;
     }
 
+    @Override
     public String getTipo() {
         return tipo;
     }
 
+    @Override
     public void setTipo(String tipo) {
         this.tipo = tipo;
     }
@@ -162,6 +171,7 @@ public class Jogos implements Serializable , InterfaceJogo{
         return jogadasList;
     }
 
+    @Override
     public void setJogadasList(List<Jogadas> jogadasList) {
         this.jogadasList = jogadasList;
     }
@@ -171,6 +181,7 @@ public class Jogos implements Serializable , InterfaceJogo{
         return criador;
     }
 
+    @Override
     public void setCriador(Users criador) {
         this.criador = criador;
     }
@@ -185,10 +196,12 @@ public class Jogos implements Serializable , InterfaceJogo{
         this.participante = participante;
     }
 
+    @Override
     public Users getVencedor() {
         return vencedor;
     }
 
+    @Override
     public void setVencedor(Users vencedor) {
         this.vencedor = vencedor;
     }
@@ -213,20 +226,18 @@ public class Jogos implements Serializable , InterfaceJogo{
         return true;
     }
 
-
-        //Função para condizer com o método que o pedro fez de fazer jogada vai ser remvida no futuro
+    //Função para condizer com o método que o pedro fez de fazer jogada vai ser remvida no futuro
     //public abstract boolean terminaTemp(String username,int i);
-    
     @Override
     public void adicionaJogada(Jogadas jogada) {
         this.jogadasList.add(jogada);
     }
-    
-   // public int getNumeroJogadas_() {
-   //     return this.jogadasList.size();
-   // }
+
+    // public int getNumeroJogadas_() {
+    //     return this.jogadasList.size();
+    // }
     @Override
-    public String toString(){
+    public String toString() {
         String tipo;
         if ("JOGO_GALO".equals(getTipo())) {
             tipo = "Jogo do Galo";
@@ -236,53 +247,62 @@ public class Jogos implements Serializable , InterfaceJogo{
 
         String result = "[" + tipo + "]";
 
-        if (participante==null) result += " Iniciado por "+criador.getUsername();
-        else result += " " + criador+" vs "+participante;
+        if (participante == null) {
+            result += " Iniciado por " + criador.getUsername();
+        } else {
+            result += " " + criador + " vs " + participante;
+        }
         return result;
     }
-   
-    public String toString_debug(){
+
+    public String toString_debug() {
         String result;
-        result ="ID="+jogoId.toString()+" Estado="+estado.toString()+" ";
-        if (participante==null) result += "Iniciado por "+criador.getUsername();
-        else result += criador+" vs "+participante;
+        result = "ID=" + jogoId.toString() + " Estado=" + estado.toString() + " ";
+        if (participante == null) {
+            result += "Iniciado por " + criador.getUsername();
+        } else {
+            result += criador + " vs " + participante;
+        }
         return result;
     }
-    
+
     //@Override
     public String toString_() {
         return "entidades.Jogos[ jogoId=" + jogoId + " ]";
     }
-    
-  //  @Transient
-  //  protected boolean emEspera;
-  //  @Transient
-  //  protected boolean concluido;
- //Variaveis para este jogo em especifico
+
+    //  @Transient
+    //  protected boolean emEspera;
+    //  @Transient
+    //  protected boolean concluido;
+    //Variaveis para este jogo em especifico
     @Transient
     protected String comando;
+
     @Override
     public boolean isEmEspera() {
-        return (0==estado);
+        return (0 == estado);
     }
 
     @Override
     public void setEmEspera(Boolean emEspera) {
-        if (emEspera==true)
+        if (emEspera == true) {
             this.estado = ESPERA.getValue();
-        this.estado=-1;
+        }
+        this.estado = -1;
     }
 
     @Override
     public boolean isConcluido() {
-        return (1==estado);
+        return (1 == estado);
     }
 
     @Override
     public void setConcluido(boolean concluido) {
-        if (concluido==true)
+        if (concluido == true) {
             this.estado = CONCLUIDO.getValue();
-        
+        }
+
     }
 
     @Override
@@ -316,7 +336,7 @@ public class Jogos implements Serializable , InterfaceJogo{
         }
     }
 
-@Override
+    @Override
     public boolean terminaJogo() {
         switch (comando) {
             case "Ganhar":
@@ -345,7 +365,7 @@ public class Jogos implements Serializable , InterfaceJogo{
         }
     }
 
- @Override
+    @Override
     public boolean terminaTemp(Users username, int i) {
         switch (i) {
             //Jogador Atual Perde
@@ -374,9 +394,9 @@ public class Jogos implements Serializable , InterfaceJogo{
         }
         return false;
     }
-    
+
     @Override
-    public String returnTabuleiro(){
+    public String returnTabuleiro() {
         return "/area_privada/gestaojogos";
     }
 }

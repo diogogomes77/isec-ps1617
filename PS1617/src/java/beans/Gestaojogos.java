@@ -18,6 +18,7 @@ import javax.faces.component.visit.VisitCallback;
 import javax.faces.component.visit.VisitContext;
 import javax.faces.component.visit.VisitResult;
 import javax.faces.context.FacesContext;
+import javax.persistence.TypedQuery;
 import javax.servlet.http.HttpSession;
 import logica.JogoLogica;
 import logica.Logica;
@@ -45,7 +46,8 @@ public class Gestaojogos implements Serializable {
     private facades.UsersFacade ejbFacadeUsers;
     @EJB
     private facades.JogosFacade ejbFacadeJogos;
-   
+    @EJB
+    private facades.JogadasFacade ejbFacadeJogadas;
     
     public Gestaojogos() {
         // this.username = sessao.getUsername();
@@ -219,7 +221,7 @@ public class Gestaojogos implements Serializable {
         return found[0];
     }
     
-public void joga(int pos){
+    public void joga(int pos){
         if(lo.podeJogar(username, pos, jogo.getJogoId())){                             
                    System.out.println("------JOGA id--------" + jogo.getJogoId()+"---------");
                    Jogadas jog = lo.fazJogada(user, pos, 0, jogo);
@@ -237,8 +239,11 @@ public void joga(int pos){
         
         List <Jogadas> listaJogadas = null;
         boolean criador = false;
-        
-        listaJogadas = jogo.getJogadasList();
+         TypedQuery<Jogadas> query =
+        ejbFacadeJogadas.getEntityManager().createNamedQuery("Jogadas.findByJogoId", Jogadas.class)
+                .setParameter("jogoId",jogo);
+        listaJogadas = query.getResultList();
+        // listaJogadas = jogo.getJogadasList();
        
         if (jogo.getCriador().equals(user))
             criador=true;
