@@ -40,11 +40,21 @@ public class GestaoTorneios implements Serializable {
     private Users user;
     
     private Torneios torneio;
+    
+    private String mensagem;
    
     public GestaoTorneios() {
         
     }
 
+    public String getMensagem() {
+        return mensagem;
+    }
+
+    public void setMensagem(String mensagem) {
+        this.mensagem = mensagem;
+    }
+    
     public Torneios getTorneio() {
         return torneio;
     }
@@ -65,10 +75,18 @@ public class GestaoTorneios implements Serializable {
         this.torneio = torneio;
     }
 
-
     public String criar(){
-       return create(torneio);
-       
+        if((torneio.getTipo().equals("ELIMINACAO") && torneio.getMaxJogadores()>2 &&  (torneio.getMaxJogadores() & (torneio.getMaxJogadores() - 1)) == 0) 
+                || (torneio.equals("ROUND_ROBIN") && torneio.getMaxJogadores()>2)){
+            torneio.setRondaAtual(1);
+            mensagem = "";
+            return create(torneio);
+        }
+        if(torneio.getTipo().equals("ELIMINACAO"))
+            mensagem = "Torneios por Eliminacao necessitam ter pelo menos 3 jogadores e ser potencia de 2";
+        else
+            mensagem = "Torneios Round-Robin necessitam ter pelo menos 3 jogadores";;
+        return null;
     }
     
     private String create(Torneios torneio) {
@@ -94,17 +112,17 @@ public class GestaoTorneios implements Serializable {
     public String entrar(Torneios torneio) {
         if (user!=null){
              System.out.println("-----USER="+user.getUsername());
-        // adiciona user ao torneio
-        TorneiosUsers tu = new TorneiosUsers();
-       // tu.setUserTorneioId(123);
-        tu.setTorneio(torneio);
-        tu.setUsername(user);
-       // tu.setData(new Date());
-        torneiosUsersFacade.create(tu);
-        List<TorneiosUsers> usersTorneio = torneio.getTorneiosUsersList();
-        usersTorneio.add(tu);
-        torneio.setTorneiosUsersList(usersTorneio);
-        torneiosFacade.edit(torneio);
+            // adiciona user ao torneio
+            TorneiosUsers tu = new TorneiosUsers();
+            // tu.setUserTorneioId(123);
+            tu.setTorneio(torneio);
+            tu.setUsername(user);
+            // tu.setData(new Date());
+            torneiosUsersFacade.create(tu);
+            List<TorneiosUsers> usersTorneio = torneio.getTorneiosUsersList();
+            usersTorneio.add(tu);
+            torneio.setTorneiosUsersList(usersTorneio);
+            torneiosFacade.edit(torneio);
         } else{
             System.out.println("----NO-USER...");
         }
@@ -113,7 +131,17 @@ public class GestaoTorneios implements Serializable {
     }
     public boolean possoEntrar(Torneios torneio) {
         // TODO verificar se  user ainda nao esta no torneio
-        return true;
+        if (user!=null){
+            System.out.println("-----USER="+user.getUsername());
+            List<TorneiosUsers> tus = torneio.getTorneiosUsersList();
+            for (TorneiosUsers tu : tus) {
+                if(user.getUsername().equals(tu.getUsername().getUsername())){
+                    return false;
+                }
+            }
+            return true;
+        }
+        return false;
     }
     public boolean possoVer(Torneios torneio) {
         // TODO verifica se user pode ver torneio

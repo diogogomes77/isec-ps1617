@@ -32,7 +32,8 @@
                         <f:selectItem itemValue = "ROUND_ROBIN" itemLabel = "Round-Robin" />
                     </h:selectOneMenu><br/><br/>
                     
-                    <h:commandButton value="Confirmar" action="#{gestaoTorneios.criar()}"/>
+                    <h:commandButton value="Confirmar" action="#{gestaoTorneios.criar()}"/><br/>
+                    <h:outputText value="#{gestaoTorneios.mensagem}" />
                     <br/><br/>
                     
                     <h:commandButton value="Voltar" action="gestaojogos"/>
