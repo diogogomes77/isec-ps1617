@@ -239,21 +239,21 @@ public class Gestaojogos implements Serializable {
         
         List <Jogadas> listaJogadas = null;
         boolean criador = false;
-         TypedQuery<Jogadas> query =
+        TypedQuery<Jogadas> query =
         ejbFacadeJogadas.getEntityManager().createNamedQuery("Jogadas.findByJogoId", Jogadas.class)
                 .setParameter("jogoId",jogo);
         listaJogadas = query.getResultList();
         // listaJogadas = jogo.getJogadasList();
        
-        if (jogo.getCriador().equals(user))
+        if (jogo.getCriador().getUsername().equals(user.getUsername()))
             criador=true;
         int i=0;
-        for(Jogadas j : listaJogadas){
-            String id = "btn" + j.getPos_x();
+        for(Jogadas jogada : listaJogadas){
+            String id = "btn" + jogada.getPos_x();
             CommandButton btn = (CommandButton) findComponent(id);
             btn.setDisabled(true);
-            boolean serCriador = j.getUsername().equals(user.getUsername()) && criador;
-            boolean serParticipante = !(j.getUsername().equals(user.getUsername())) && !criador;
+            boolean serCriador = jogada.getUsername().getUsername().equals(user.getUsername()) && criador;
+            boolean serParticipante = !(jogada.getUsername().getUsername().equals(user.getUsername())) && !criador;
             if(serCriador || serParticipante){
                 btn.setValue("X");
             }
@@ -264,7 +264,7 @@ public class Gestaojogos implements Serializable {
         }
          System.out.println("---n jogadas ="+i);
         
-     /*   int fim = jogo.verificaFim(jogo, user);
+        int fim = jogo.verificaFim(jogo, user, listaJogadas);
        
         if(fim == 0){
             RequestContext r = RequestContext.getCurrentInstance();
@@ -278,7 +278,6 @@ public class Gestaojogos implements Serializable {
             RequestContext r = RequestContext.getCurrentInstance();
             r.execute("PF('dlgEmpate').show();");
         }
-        */
     
     }
 }

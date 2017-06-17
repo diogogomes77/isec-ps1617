@@ -62,7 +62,7 @@ public interface InterfaceJogo {
 
     public boolean equals(Object object) ;
     
-   // public int verificaFim(InterfaceJogo jogo, Users username);
+    public int verificaFim(InterfaceJogo jogo, Users username, List<Jogadas> listaJogadas);
     
     public String returnTabuleiro();
     

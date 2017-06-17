@@ -50,8 +50,8 @@ public class JogoQuatroEmLinha extends JogoLogica  {
     }
     
     @Override
-    public int verificaFim(InterfaceJogo jogo, Users username) {
-        List<Jogadas> jogadas = jogo.getJogadasList();        
+    public int verificaFim(InterfaceJogo jogo, Users username, List<Jogadas> listaJogadas) {
+        List<Jogadas> jogadas = listaJogadas;        
         int [] jj = new int [42];
         for(int i = 0; i < 42; i++){
             jj[i] = -1;
@@ -138,4 +138,5 @@ public class JogoQuatroEmLinha extends JogoLogica  {
     public String returnTabuleiro(){
         return "area_privada/jogoemlinha";
     }
+
  }

@@ -399,4 +399,11 @@ public class Jogos implements Serializable, InterfaceJogo {
     public String returnTabuleiro() {
         return "/area_privada/gestaojogos";
     }
+
+    @Override
+    public int verificaFim(InterfaceJogo jogo, Users username, List<Jogadas> listaJogadas) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+
 }

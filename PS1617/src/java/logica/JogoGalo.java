@@ -27,18 +27,17 @@ public class JogoGalo extends JogoLogica implements InterfaceJogo{
 
         
     @Override
-    public int verificaFim(InterfaceJogo jogo, Users username){    
-        List<Jogadas> jog = jogo.getJogadasList();
+    public int verificaFim(InterfaceJogo jogo, Users username, List<Jogadas> listaJogadas){    
         int [] jj = new int [10];
         for(int i = 0; i < 10; i++){
             jj[i] = -1;
         }
-        for(Jogadas j : jog)
-            if(j.getUsername().equals(username)){
-                jj[j.getPos_x()] = 1;
+        for(Jogadas jogadas : listaJogadas)
+            if(jogadas.getUsername().equals(username)){
+                jj[jogadas.getPos_x()] = 1;
             }
             else{
-                jj[j.getPos_x()] = 2;
+                jj[jogadas.getPos_x()] = 2;
             }
          if((jj[1] == 1 && jj[2] == 1 && jj[3] == 1)||(jj[4] == 1 && jj[5] == 1 && jj[6] == 1)||(jj[7] == 1 && jj[8] == 1 && jj[9] == 1)
                 ||(jj[1] == 1 && jj[4] == 1 && jj[7] == 1)||(jj[2] == 1 && jj[5] == 1 && jj[8] == 1)||(jj[3] == 1 && jj[6] == 1 && jj[9] == 1)
@@ -54,7 +53,7 @@ public class JogoGalo extends JogoLogica implements InterfaceJogo{
             return 1;
         }
         
-        if(jog.size() > 8){
+        if(listaJogadas.size() > 8){
             return 2;
         }
         return -1;
@@ -63,4 +62,6 @@ public class JogoGalo extends JogoLogica implements InterfaceJogo{
     public String returnTabuleiro(){
         return "/area_privada/jogo";
     }
+
+
 }

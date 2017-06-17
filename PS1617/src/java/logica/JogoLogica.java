@@ -8,6 +8,7 @@ package logica;
 import entidades.Jogadas;
 import entidades.Jogos;
 import entidades.Users;
+import java.util.List;
 import javax.persistence.MappedSuperclass;
 
 /**
@@ -24,5 +25,5 @@ protected JogoLogica() {
        
     }
 
-    public abstract int verificaFim(InterfaceJogo jogo, Users username);
+    public abstract int verificaFim(InterfaceJogo jogo, Users username, List<Jogadas> listaJogadas);
 }
