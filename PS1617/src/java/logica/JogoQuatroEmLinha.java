@@ -38,7 +38,7 @@ public class JogoQuatroEmLinha extends JogoLogica implements InterfaceJogo  {
        
         int posAVerificar = jogada.getPos_x();
         while (true) {
-           posAVerificar += 6;
+           posAVerificar += getWidth();
            if (posAVerificar > 41) break;
            
            if (jj[posAVerificar] == -1){
@@ -51,13 +51,12 @@ public class JogoQuatroEmLinha extends JogoLogica implements InterfaceJogo  {
     
     @Override
     public int verificaFim(InterfaceJogo jogo, Users username, List<Jogadas> listaJogadas) {
-        List<Jogadas> jogadas = listaJogadas;        
         int [] jj = new int [42];
         for(int i = 0; i < 42; i++){
             jj[i] = -1;
         }
         
-        for(Jogadas j : jogadas) {
+        for(Jogadas j : listaJogadas) {
             if(j.getUsername().equals(username)){
                 jj[j.getPos_x()] = 1;
             }
@@ -66,10 +65,10 @@ public class JogoQuatroEmLinha extends JogoLogica implements InterfaceJogo  {
             }
         }
         
-        int [][]tabuleiro = new int[6][7];
+        int [][]tabuleiro = new int[getHeight()][getWidth()];
         int contador = 0;
-        for(int i=0;i<6;i++) {
-              for(int j=0;j<7;j++) {
+        for(int i=0; i<getHeight(); i++) {
+              for(int j=0; j<getWidth(); j++) {
                 tabuleiro[i][j] = jj[contador];
                 contador++;
             }
@@ -84,7 +83,7 @@ public class JogoQuatroEmLinha extends JogoLogica implements InterfaceJogo  {
             return 1;
         }
         
-        if(jogadas.size() > 41){
+        if(listaJogadas.size() > 41){
             return 2;
         }
         return -1;    
