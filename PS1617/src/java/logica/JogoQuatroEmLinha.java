@@ -12,7 +12,7 @@ import javax.persistence.Table;
 
 @Entity
 @DiscriminatorValue("JOGO_QUATRO_EM_LINHA")
-public class JogoQuatroEmLinha extends JogoLogica  {
+public class JogoQuatroEmLinha extends JogoLogica implements InterfaceJogo  {
     
     public JogoQuatroEmLinha(Users criador) {
         super(criador);
@@ -134,9 +134,9 @@ public class JogoQuatroEmLinha extends JogoLogica  {
     
         return false;
     }
+    
     @Override
     public String returnTabuleiro(){
-        return "area_privada/jogoemlinha";
+        return "/area_privada/jogoemlinha";
     }
-
  }
