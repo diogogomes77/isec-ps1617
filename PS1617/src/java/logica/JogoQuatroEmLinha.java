@@ -23,7 +23,7 @@ public class JogoQuatroEmLinha extends JogoLogica implements InterfaceJogo  {
     }
     
     public JogoQuatroEmLinha() {}
-
+    
     @Override
     public void adicionaJogada(Jogadas jogada) {
         int [] jj = new int [42];
@@ -69,10 +69,10 @@ public class JogoQuatroEmLinha extends JogoLogica implements InterfaceJogo  {
             }
         }
         
-        int [][]tabuleiro = new int[getHeight()][getWidth()];
+        int [][]tabuleiro = new int[getWidth()][getHeight()];
         int contador = 0;
-        for(int i=0; i<getHeight(); i++) {
-              for(int j=0; j<getWidth(); j++) {
+        for(int i=0; i<getWidth(); i++) {
+              for(int j=0; j<getHeight(); j++) {
                 tabuleiro[i][j] = jj[contador];
                 contador++;
             }
