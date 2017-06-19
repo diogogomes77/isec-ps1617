@@ -447,6 +447,7 @@ public class Logica {
     
     public Jogadas fazJogada(Users user, int posX, int posY, InterfaceJogo jogo){
         Jogadas nova = new Jogadas(user, posX, posY, jogo);
+        jogo.atualizaJogada(nova);
         ejbFacadeJogadas.createJogada(nova);
         return nova;
     }

@@ -67,5 +67,10 @@ public class JogoGalo extends JogoLogica implements InterfaceJogo{
         return "/area_privada/jogo";
     }
 
+    @Override
+    public void atualizaJogada(Jogadas novaJogada) {
+        // Do nothing.
+    }
+
 
 }

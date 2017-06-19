@@ -25,14 +25,14 @@ public class JogoQuatroEmLinha extends JogoLogica implements InterfaceJogo  {
     public JogoQuatroEmLinha() {}
     
     @Override
-    public void adicionaJogada(Jogadas jogada) {
+    public void atualizaJogada(Jogadas novaJogada) {
         int [] jj = new int [42];
         for(int i = 0; i < 42; i++){
             jj[i] = -1;
         }
 
         for(Jogadas j : getJogadasList()) {
-            if(j.getUsername().equals(jogada.getUsername())){
+            if(j.getUsername().equals(novaJogada.getUsername())){
                 jj[j.getPos_x()] = 1;
             }
             else{
@@ -40,17 +40,15 @@ public class JogoQuatroEmLinha extends JogoLogica implements InterfaceJogo  {
             }
         }
        
-        int posAVerificar = jogada.getPos_x();
+        int posAVerificar = novaJogada.getPos_x();
         while (true) {
            posAVerificar += getWidth();
            if (posAVerificar > 41) break;
            
            if (jj[posAVerificar] == -1){
-               jogada.setPos_x(posAVerificar);
+               novaJogada.setPos_x(posAVerificar);
            }
         }
-        
-        super.adicionaJogada(jogada);
     }
     
     @Override

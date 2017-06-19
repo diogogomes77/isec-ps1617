@@ -416,5 +416,10 @@ public class Jogos implements Serializable, InterfaceJogo {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    @Override
+    public void atualizaJogada(Jogadas novaJogada) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 
 }
