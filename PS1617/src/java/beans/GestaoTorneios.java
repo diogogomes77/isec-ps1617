@@ -285,7 +285,7 @@ public class GestaoTorneios implements Serializable {
             }
             //Prepara o array para a próxima ronda
             Users[][] aux = new Users[size][2];
-            aux[0][0] = u[0][0];
+            aux[1][0] = u[0][1];
             for(int n2=1;n2<size-1;n2++){
                 aux[n2+1][0] = u[n2][0];
             }
@@ -293,7 +293,6 @@ public class GestaoTorneios implements Serializable {
             for(int n2=size-1; n2>0; n2--){
                 aux[n2-1][1] = u[n2][1];
             }
-            aux[0][1]=u[1][0];
             
             for(int n2 = 0;n2<size;n2++){
                 for(int n3=0;n3<2;n3++)

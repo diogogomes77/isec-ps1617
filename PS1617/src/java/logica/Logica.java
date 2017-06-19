@@ -68,6 +68,29 @@ public class Logica {
         }
     }
     
+    @Schedule(second = "30")
+    public void acabaToreneio(){
+        boolean pass;
+        TypedQuery<Torneios> query =
+        torneiosFacade.getEntityManager().createNamedQuery("Torneios.findByEstado", Torneios.class)
+                .setParameter("estado",2);
+        List<Torneios> torneios = query.getResultList();
+        for(Torneios t : torneios){
+            pass=false;
+            List<TorneiosJogos> tornJogs = t.getTorneiosJogosList();
+            for(TorneiosJogos tj : tornJogs){
+                if(tj.getJogo().getVencedor()==null){
+                    pass = true;
+                    break;
+                }
+            }
+            if(pass==false){
+                t.setEstado(EnumEstado.CONCLUIDO.getValue());
+                torneiosFacade.edit(t);
+            }
+        }
+    }
+    
     public void createOutrasRondasEliminacao(Torneios torneio){
         Users c=null;
         Users p=null;
