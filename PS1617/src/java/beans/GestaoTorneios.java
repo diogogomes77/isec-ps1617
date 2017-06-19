@@ -12,14 +12,19 @@ import java.io.Serializable;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import facades.*;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import javax.annotation.PostConstruct;
+import javax.ejb.Schedule;
 import javax.jms.Session;
 import javax.persistence.TypedQuery;
 import javax.servlet.http.HttpSession;
 import logica.EnumEstado;
 import static logica.EnumEstado.INICIADO;
+import logica.EnumTipoJogo;
+import logica.Logica;
 import logica.Sessao;
 
 @ManagedBean
@@ -36,6 +41,8 @@ public class GestaoTorneios implements Serializable {
     private TorneiosJogosFacade torneiosJogosFacade;
     @EJB
     Sessao sessao;
+    @EJB
+    Logica lo;
     
     private Users user;
     
@@ -71,13 +78,29 @@ public class GestaoTorneios implements Serializable {
         return query.getResultList();
         
     }
+    
+    public List<Jogos> getAllJogosTorneiosByEstado(int estado){
+        List<Jogos> js = new ArrayList<>();
+        TypedQuery<Torneios> query =
+        torneiosFacade.getEntityManager().createNamedQuery("Torneios.findByEstado", Torneios.class)
+                .setParameter("estado",estado);
+        List<Torneios> torneios = query.getResultList();
+        for(Torneios t : torneios){
+            List<TorneiosJogos> jogosTorneio = t.getTorneiosJogosList();
+            for(TorneiosJogos tj : jogosTorneio){
+                js.add(tj.getJogo());
+            }
+        }
+        return js;
+    }
+    
     public void setTorneio(Torneios torneio) {
         this.torneio = torneio;
     }
 
     public String criar(){
         if((torneio.getTipo().equals("ELIMINACAO") && torneio.getMaxJogadores()>2 &&  (torneio.getMaxJogadores() & (torneio.getMaxJogadores() - 1)) == 0) 
-                || (torneio.equals("ROUND_ROBIN") && torneio.getMaxJogadores()>2)){
+                || (torneio.getTipo().equals("ROUND_ROBIN") && torneio.getMaxJogadores()>2)){
             torneio.setRondaAtual(1);
             mensagem = "";
             return create(torneio);
@@ -85,7 +108,7 @@ public class GestaoTorneios implements Serializable {
         if(torneio.getTipo().equals("ELIMINACAO"))
             mensagem = "Torneios por Eliminacao necessitam ter pelo menos 3 jogadores e ser potencia de 2";
         else
-            mensagem = "Torneios Round-Robin necessitam ter pelo menos 3 jogadores";;
+            mensagem = "Torneios Round-Robin necessitam ter pelo menos 3 jogadores";
         return null;
     }
     
@@ -123,6 +146,13 @@ public class GestaoTorneios implements Serializable {
             usersTorneio.add(tu);
             torneio.setTorneiosUsersList(usersTorneio);
             torneiosFacade.edit(torneio);
+            if(usersTorneio.size()>=torneio.getMaxJogadores()){
+                if(torneio.getTipo().equals("ELIMINACAO"))
+                    createPrimeiraRondaEliminacao(torneio);
+                else
+                    createRoundRobin(torneio);
+                torneio.setEstado(EnumEstado.DECORRER.getValue());
+            }
         } else{
             System.out.println("----NO-USER...");
         }
@@ -169,6 +199,154 @@ public class GestaoTorneios implements Serializable {
         
         return "/area_privada/gestaojogos";
     }
+    
+    public void createPrimeiraRondaEliminacao(Torneios torneio){
+        Users c=null;
+        Users p=null;
+        List<TorneiosUsers> tus = torneio.getTorneiosUsersList();
+        for (TorneiosUsers tu : tus) {
+            if(c==null){
+                c=tu.getUsername();
+            }
+            else{
+                p = tu.getUsername();
+                //Create torney game
+                int jId = lo.iniciarJogo(c, p,torneio.getTipoJogo());
+                Jogos jogo = lo.getJogosClass(jId);
+                TorneiosJogos tj =  new TorneiosJogos();
+                tj.setJogo(jogo);
+                tj.setTorneio(torneio);
+                tj.setRonda(torneio.getRondaAtual());
+                torneiosJogosFacade.create(tj);
+                List<TorneiosJogos> jogosTorneio = torneio.getTorneiosJogosList();
+                jogosTorneio.add(tj);
+                torneio.setTorneiosJogosList(jogosTorneio);
+                torneiosFacade.edit(torneio);
+                c = p = null;
+            }
+        }
+        //Increase number of actual round
+        torneio.setRondaAtual(torneio.getRondaAtual() + 1);
+        torneiosFacade.edit(torneio);
+    }
+    
+    public void createOutrasRondasEliminacao(Torneios torneio){
+        Users c=null;
+        Users p=null;
+        List<TorneiosJogos> tjs = torneio.getTorneiosJogosList();
+        for (TorneiosJogos tje : tjs) {
+            if(torneio.getRondaAtual() == tje.getRonda()){
+                if(c==null){
+                    c=tje.getJogo().getVencedor();
+                }
+                else{
+                    p=tje.getJogo().getVencedor();
+                    //Create game
+                    int jId = lo.iniciarJogo(c, p,torneio.getTipoJogo());
+                    Jogos jogo = lo.getJogosClass(jId);
+                    TorneiosJogos tj =  new TorneiosJogos();
+                    tj.setJogo(jogo);
+                    tj.setTorneio(torneio);
+                    tj.setRonda(torneio.getRondaAtual());
+                    torneiosJogosFacade.create(tj);
+                    List<TorneiosJogos> jogosTorneio = torneio.getTorneiosJogosList();
+                    jogosTorneio.add(tj);
+                    torneio.setTorneiosJogosList(jogosTorneio);
+                    torneiosFacade.edit(torneio);
+                    c = p = null;
+                }
+            }
+        }
+        //Increase number of actual round
+        torneio.setRondaAtual(torneio.getRondaAtual() + 1);
+        torneiosFacade.edit(torneio);
+    }
+    
+    public void createRoundRobin(Torneios torneio){
+        Users u[][];
+        int size;
+        
+        List<TorneiosUsers> tus = torneio.getTorneiosUsersList();
+        if(tus.size()%2==0)
+            size = tus.size()/2;
+        else
+            size = (tus.size()+1)/2;
+        
+        u = new Users[size][2];
+        
+        //Insere os jogadores inscritos no torneio no array
+        int i = 0, j = size - 1;
+        for (TorneiosUsers tu : tus) {
+            while(i < size){
+                u[i][0] = tu.getUsername();
+                i++;
+            }
+            if(i>=size){
+                while(j > size){
+                    u[j][1] = tu.getUsername();
+                    j--;
+                }
+            }
+        }
+        if(tus.size()%2!=0)
+            u[0][1] = null;
+        
+        //Cria rondas
+        for(int n1=0;n1<tus.size();n1++){
+            //Cria jogos para esta ronda
+            for(int n2=0;n2<size;n2++){
+                if(u[n2][0] != null && u[n2][1] != null){
+                    //Create game
+                    int jId = lo.iniciarJogo(u[n2][0], u[n2][1],torneio.getTipoJogo());
+                    Jogos jogo = lo.getJogosClass(jId);
+                    TorneiosJogos tj =  new TorneiosJogos();
+                    tj.setJogo(jogo);
+                    tj.setTorneio(torneio);
+                    tj.setRonda(n1+1);
+                    torneiosJogosFacade.create(tj);
+                    List<TorneiosJogos> jogosTorneio = torneio.getTorneiosJogosList();
+                    jogosTorneio.add(tj);
+                    torneio.setTorneiosJogosList(jogosTorneio);
+                    torneiosFacade.edit(torneio);
+                }
+            }
+            //Prepara o array para a próxima ronda
+            Users[][] aux = new Users[size][2];
+            aux[0][0] = u[0][0];
+            for(int n2=1;n2<size-1;n2++){
+                aux[n2+1][0] = u[n2][0];
+            }
+            aux[size-1][1] = u[size-1][0];
+            for(int n2=size-1; n2>0; n2--){
+                aux[n2-1][1] = u[n2][1];
+            }
+            aux[0][1]=u[1][0];
+            
+            for(int n2 = 0;n2<size;n2++){
+                for(int n3=0;n3<2;n3++)
+                    u[n2][n3] = aux[n2][n3];
+            }
+        }
+    }
+    
+    public boolean possoJogar(Torneios torneio){
+        
+        if(user!=null){
+            List<TorneiosJogos> jogosTorneio = torneio.getTorneiosJogosList();
+            for(TorneiosJogos tj : jogosTorneio){
+                if((tj.getJogo().getCriador().getUsername().equals(user.getUsername()) || tj.getJogo().getParticipante().getUsername().equals(user.getUsername())) && tj.getTorneio().getRondaAtual()-1 == tj.getRonda()){
+                    return true;
+                }
+            }
+        } 
+        return false;
+    }
+    
+    public void jogar(Torneios torneio){
+        
+        
+    }
+    
     
     @PostConstruct
     public void init() {

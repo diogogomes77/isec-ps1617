@@ -21,6 +21,10 @@ public abstract class JogoLogica extends Jogos implements InterfaceJogo {
     protected JogoLogica(Users criador) {
         super(criador);
     }
+    
+    protected JogoLogica(Users criador, Users participante) {
+        super(criador, participante);
+    }
 protected JogoLogica() {
        
     }

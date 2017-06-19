@@ -131,6 +131,22 @@ public class Logica {
         return j.getJogoId();
         //return j.getJogoId();
     }
+    
+    //Funcao para torneios para criar jogos automaticos entre dois jogadores
+    public int iniciarJogo(Users criador, Users participante, String tipoJogo) {
+        InterfaceJogo j;
+        
+        switch (tipoJogo) {
+            case "JOGO_GALO":
+               j = ejbFacadeJogos.createJogo(new JogoGalo(criador,participante));
+               break;
+            case "JOGO_QUATRO_EM_LINHA":
+            default:
+                j = ejbFacadeJogos.createJogo(new JogoQuatroEmLinha(criador,participante));
+        }
+       
+        return j.getJogoId();
+    }
 
     public void juntarJogo(int idJogo, Users participante) {
         InterfaceJogo jogo = ejbFacadeJogos.find(idJogo);
@@ -151,6 +167,16 @@ public class Logica {
                 
                 return jogo;
            }
+        
+        return null;
+    }
+    
+    public Jogos getJogosClass(int id) {
+        Jogos jogo = ejbFacadeJogos.find(id);
+        
+        if (jogo!= null) {        
+            return jogo;
+        }
         
         return null;
     }
@@ -373,5 +399,4 @@ public class Logica {
         
         return false;
     }
-
 }

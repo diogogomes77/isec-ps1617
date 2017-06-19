@@ -18,6 +18,10 @@ public class JogoQuatroEmLinha extends JogoLogica implements InterfaceJogo  {
         super(criador);
     }
     
+    public JogoQuatroEmLinha(Users criador, Users participante) {
+        super(criador,participante);
+    }
+    
     public JogoQuatroEmLinha() {}
 
     @Override

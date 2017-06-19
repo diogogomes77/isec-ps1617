@@ -105,6 +105,17 @@ public class Jogos implements Serializable, InterfaceJogo {
         this.criador = criador;
 
         this.estado = INICIADO.getValue();
+        this.turno = criador.getUsername();
+        // this.estado=1;
+        System.out.println("---NEW JOGOS---estado=" + INICIADO.getValue());
+    }
+    
+    public Jogos(Users criador, Users participante) {
+        this.criador = criador;
+        this.participante = participante;
+
+        this.estado = INICIADO.getValue();
+        this.turno = criador.getUsername();
         // this.estado=1;
         System.out.println("---NEW JOGOS---estado=" + INICIADO.getValue());
     }

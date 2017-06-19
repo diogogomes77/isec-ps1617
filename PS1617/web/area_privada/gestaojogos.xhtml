@@ -59,9 +59,9 @@
                         <h1>#{item} <h:commandButton value="Entrar" action="#{gestaoTorneios.entrar(item)}" rendered="${gestaoTorneios.possoEntrar(item)==true}"/></h1>
                     </ui:repeat>
                     
-                    <h:outputText value="Torneios a decorrer" rendered="${not empty gestaoTorneios.getAllTorneiosByEstado(2)}"/><br/>
-                    <ui:repeat var="item" value="#{gestaoTorneios.getAllTorneiosByEstado(2)}"> 
-                        <h1>#{item} <h:commandButton value="ver" action="#{gestaoTorneios.ver(item)}" rendered="${gestaoTorneios.possoVer(item)==true}"/></h1>
+                    <h:outputText value="Jogar jogos do torneio" rendered="${not empty gestaoTorneios.getAllJogosTorneiosByEstado(2)}"/><br/>
+                    <ui:repeat var="item" value="#{gestaoTorneios.getAllJogosTorneiosByEstado(2)}"> 
+                        <h1>#{item} <h:commandButton value="Jogar" action="#{gestaoTorneios.jogar(item)}" rendered="${gestaoTorneios.possoJogar(item)==true}"/></h1>
                     </ui:repeat>
 
                     <h:outputText value="Jogos do Torneios a decorrer"/>

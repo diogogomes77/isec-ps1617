@@ -20,6 +20,10 @@ public class JogoGalo extends JogoLogica implements InterfaceJogo{
        super(criador);
     }
     
+    public JogoGalo(Users criador, Users participante) {
+       super(criador,participante);
+    }
+    
     public JogoGalo(){
         
     }
