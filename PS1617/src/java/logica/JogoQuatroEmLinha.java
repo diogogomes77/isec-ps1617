@@ -76,11 +76,11 @@ public class JogoQuatroEmLinha extends JogoLogica implements InterfaceJogo  {
             }
         }
                 
-        if(areFourConnected(tabuleiro, 0)){
+        if(areFourConnected(tabuleiro, 1)){
             jogo.setConcluido(true);
             return 0;
         }
-        if(areFourConnected(tabuleiro, 1)){
+        if(areFourConnected(tabuleiro, 2)){
             jogo.setConcluido(true);
             return 1;
         }
