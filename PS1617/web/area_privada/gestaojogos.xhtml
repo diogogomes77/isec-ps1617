@@ -61,11 +61,8 @@
                     
                     <h:outputText value="Jogar jogos do torneio" rendered="${not empty gestaoTorneios.getAllJogosTorneiosByEstado(2)}"/><br/>
                     <ui:repeat var="item" value="#{gestaoTorneios.getAllJogosTorneiosByEstado(2)}"> 
-                        <h1>#{item} <h:commandButton value="Jogar" action="#{gestaoTorneios.jogar(item)}" rendered="${gestaoTorneios.possoJogar(item)==true}"/></h1>
+                        <h1>#{item} <h:commandButton value="Jogar" action="#{gestaojogos.jogar(item.jogoId)}" rendered="${gestaojogos.possoJogar(item.jogoId)==true}"/></h1>
                     </ui:repeat>
-
-                    <h:outputText value="Jogos do Torneios a decorrer"/>
-
                 </h:form>
                 <br/>
                 <br/>

@@ -1,12 +1,18 @@
 package logica;
 
 import autenticacao.Util;
+import beans.GestaoTorneios;
 import entidades.Jogadas;
 import entidades.Jogos;
+import entidades.Torneios;
+import entidades.TorneiosJogos;
 import entidades.Users;
+import facades.TorneiosFacade;
+import facades.TorneiosJogosFacade;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
+import javax.ejb.Schedule;
 import javax.ejb.Singleton;
 import javax.persistence.EntityTransaction;
 import javax.persistence.TypedQuery;
@@ -22,6 +28,10 @@ public class Logica {
     private facades.JogosFacade ejbFacadeJogos;
     @EJB
     private facades.JogadasFacade ejbFacadeJogadas;
+    @EJB
+    private TorneiosFacade torneiosFacade;
+    @EJB
+    private TorneiosJogosFacade torneiosJogosFacade;
     
     private static int jogosId;
     //private ArrayList<Users> users;
@@ -32,6 +42,61 @@ public class Logica {
 
     }
   
+    @Schedule(second = "30")
+    public void avancaRonda(){
+        boolean pass;
+        TypedQuery<Torneios> query =
+        torneiosFacade.getEntityManager().createNamedQuery("Torneios.findByEstado", Torneios.class)
+                .setParameter("estado",2);
+        List<Torneios> torneios = query.getResultList();
+        for(Torneios t : torneios){
+            pass=false;
+            List<TorneiosJogos> tornJogs = t.getTorneiosJogosList();
+            for(TorneiosJogos tj : tornJogs){
+                if(tj.getJogo().getVencedor()==null){
+                    pass = true;
+                    break;
+                }
+            }
+            if(pass==false){
+                t.setRondaAtual(t.getRondaAtual()+1);
+                torneiosFacade.edit(t);
+                if(t.getTipo().equals("ELIMINACAO")){
+                    createOutrasRondasEliminacao(t);
+                }
+            }
+        }
+    }
+    
+    public void createOutrasRondasEliminacao(Torneios torneio){
+        Users c=null;
+        Users p=null;
+        List<TorneiosJogos> tjs = torneio.getTorneiosJogosList();
+        for (TorneiosJogos tje : tjs) {
+            if(torneio.getRondaAtual() == tje.getRonda()){
+                if(c==null){
+                    c=tje.getJogo().getVencedor();
+                }
+                else{
+                    p=tje.getJogo().getVencedor();
+                    //Create game
+                    int jId = iniciarJogo(c, p,torneio.getTipoJogo());
+                    Jogos jogo = getJogosClass(jId);
+                    TorneiosJogos tj =  new TorneiosJogos();
+                    tj.setJogo(jogo);
+                    tj.setTorneio(torneio);
+                    tj.setRonda(torneio.getRondaAtual());
+                    torneiosJogosFacade.create(tj);
+                    List<TorneiosJogos> jogosTorneio = torneio.getTorneiosJogosList();
+                    jogosTorneio.add(tj);
+                    torneio.setTorneiosJogosList(jogosTorneio);
+                    torneiosFacade.edit(torneio);
+                    c = p = null;
+                }
+            }
+        }
+    }
+    
     public boolean existeUsername(String username){
         System.out.println("----existeUsername--"+username);
         Users u = (Users) ejbFacadeUsers.find(username);

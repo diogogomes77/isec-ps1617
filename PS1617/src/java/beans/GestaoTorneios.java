@@ -88,7 +88,8 @@ public class GestaoTorneios implements Serializable {
         for(Torneios t : torneios){
             List<TorneiosJogos> jogosTorneio = t.getTorneiosJogosList();
             for(TorneiosJogos tj : jogosTorneio){
-                js.add(tj.getJogo());
+                if(tj.getTorneio().getRondaAtual()==tj.getRonda())
+                    js.add(tj.getJogo());
             }
         }
         return js;
@@ -151,7 +152,8 @@ public class GestaoTorneios implements Serializable {
                     createPrimeiraRondaEliminacao(torneio);
                 else
                     createRoundRobin(torneio);
-                torneio.setEstado(EnumEstado.DECORRER.getValue());
+                torneio.setEstado(2);
+                torneiosFacade.edit(torneio);
             }
         } else{
             System.out.println("----NO-USER...");
@@ -226,51 +228,23 @@ public class GestaoTorneios implements Serializable {
             }
         }
         //Increase number of actual round
-        torneio.setRondaAtual(torneio.getRondaAtual() + 1);
-        torneiosFacade.edit(torneio);
-    }
-    
-    public void createOutrasRondasEliminacao(Torneios torneio){
-        Users c=null;
-        Users p=null;
-        List<TorneiosJogos> tjs = torneio.getTorneiosJogosList();
-        for (TorneiosJogos tje : tjs) {
-            if(torneio.getRondaAtual() == tje.getRonda()){
-                if(c==null){
-                    c=tje.getJogo().getVencedor();
-                }
-                else{
-                    p=tje.getJogo().getVencedor();
-                    //Create game
-                    int jId = lo.iniciarJogo(c, p,torneio.getTipoJogo());
-                    Jogos jogo = lo.getJogosClass(jId);
-                    TorneiosJogos tj =  new TorneiosJogos();
-                    tj.setJogo(jogo);
-                    tj.setTorneio(torneio);
-                    tj.setRonda(torneio.getRondaAtual());
-                    torneiosJogosFacade.create(tj);
-                    List<TorneiosJogos> jogosTorneio = torneio.getTorneiosJogosList();
-                    jogosTorneio.add(tj);
-                    torneio.setTorneiosJogosList(jogosTorneio);
-                    torneiosFacade.edit(torneio);
-                    c = p = null;
-                }
-            }
-        }
-        //Increase number of actual round
-        torneio.setRondaAtual(torneio.getRondaAtual() + 1);
-        torneiosFacade.edit(torneio);
+//        torneio.setRondaAtual(torneio.getRondaAtual() + 1);
+//        torneiosFacade.edit(torneio);
     }
     
     public void createRoundRobin(Torneios torneio){
         Users u[][];
-        int size;
+        int size, rondas;
         
         List<TorneiosUsers> tus = torneio.getTorneiosUsersList();
-        if(tus.size()%2==0)
+        if(tus.size()%2==0){
+            rondas = tus.size()-1;
             size = tus.size()/2;
-        else
+        }
+        else{
+            rondas = tus.size();
             size = (tus.size()+1)/2;
+        }
         
         u = new Users[size][2];
         
@@ -288,11 +262,12 @@ public class GestaoTorneios implements Serializable {
                 }
             }
         }
+        
         if(tus.size()%2!=0)
             u[0][1] = null;
         
         //Cria rondas
-        for(int n1=0;n1<tus.size();n1++){
+        for(int n1=0;n1<rondas;n1++){
             //Cria jogos para esta ronda
             for(int n2=0;n2<size;n2++){
                 if(u[n2][0] != null && u[n2][1] != null){
@@ -328,25 +303,6 @@ public class GestaoTorneios implements Serializable {
             }
         }
     }
-    
-    public boolean possoJogar(Torneios torneio){
-        
-        if(user!=null){
-            List<TorneiosJogos> jogosTorneio = torneio.getTorneiosJogosList();
-            for(TorneiosJogos tj : jogosTorneio){
-                if((tj.getJogo().getCriador().getUsername().equals(user.getUsername()) || tj.getJogo().getParticipante().getUsername().equals(user.getUsername())) && tj.getTorneio().getRondaAtual()-1 == tj.getRonda()){
-                    return true;
-                }
-            }
-        } 
-        return false;
-    }
-    
-    public void jogar(Torneios torneio){
-        
-        
-    }
-    
     
     @PostConstruct
     public void init() {
