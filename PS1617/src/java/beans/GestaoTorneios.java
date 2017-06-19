@@ -251,15 +251,13 @@ public class GestaoTorneios implements Serializable {
         //Insere os jogadores inscritos no torneio no array
         int i = 0, j = size - 1;
         for (TorneiosUsers tu : tus) {
-            while(i < size){
+            if(i>=size && j >= 0){
+                u[j][1] = tu.getUsername();
+                j--;
+            }
+            if(i < size){
                 u[i][0] = tu.getUsername();
                 i++;
-            }
-            if(i>=size){
-                while(j > size){
-                    u[j][1] = tu.getUsername();
-                    j--;
-                }
             }
         }
         
