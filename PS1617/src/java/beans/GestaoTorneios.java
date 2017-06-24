@@ -270,12 +270,13 @@ public class GestaoTorneios implements Serializable {
             for(int n2=0;n2<size;n2++){
                 if(u[n2][0] != null && u[n2][1] != null){
                     //Create game
+                    int r = n1+1;
                     int jId = lo.iniciarJogo(u[n2][0], u[n2][1],torneio.getTipoJogo());
                     Jogos jogo = lo.getJogosClass(jId);
                     TorneiosJogos tj =  new TorneiosJogos();
                     tj.setJogo(jogo);
                     tj.setTorneio(torneio);
-                    tj.setRonda(n1+1);
+                    tj.setRonda(r);
                     torneiosJogosFacade.create(tj);
                     List<TorneiosJogos> jogosTorneio = torneio.getTorneiosJogosList();
                     jogosTorneio.add(tj);
