@@ -144,12 +144,12 @@ public class Gestaojogos implements Serializable {
         }*/
     }
     
-    public List<Jogos> listarJogosIniciados() {
-        return lo.getJogosIniciados();
+    public List<Jogos> listarJogosIniciados(String jogo) {
+        return lo.getJogosIniciados(jogo);
     }
 
-    public List<Jogos> listarJogosDecorrer() {
-        return lo.getJogosDecorrer();
+    public List<Jogos> listarJogosDecorrer(String jogo) {
+        return lo.getJogosDecorrer(jogo);
     }
     
     public String fazJogada(String jogada) {

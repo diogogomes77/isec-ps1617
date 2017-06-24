@@ -269,7 +269,7 @@ public class Logica {
         return null;
     }
 
-    public List<Jogos> getJogosIniciados() {
+    public List<Jogos> getJogosIniciados(String jogo) {
         // TODO query por jogos em espera
         Integer estado = INICIADO.getValue();
         TypedQuery<Jogos> query =
@@ -285,10 +285,17 @@ public class Logica {
        //         jogosEmEspera.add(jogo);
        //     }
        // }
-        return jogosIniciados;
+       //return jogosIniciados;
+       
+        List<Jogos> js = new ArrayList<>();
+        for(Jogos j: jogosIniciados){
+            if(j.getTipo().equals(jogo))
+                js.add(j);
+        }
+        return js;
     }
 
-    public List<Jogos> getJogosDecorrer() {
+    public List<Jogos> getJogosDecorrer(String jogo) {
         // TODO query por jogos a decorrer
         List<Jogos> todosJogos = ejbFacadeJogos.findAll();
         Integer estado = DECORRER.getValue();
@@ -302,7 +309,13 @@ public class Logica {
         //        jogosDecorrer.add(jogo);
         //    }
        // }
-        return jogosDecorrer;
+        //return jogosDecorrer;
+        List<Jogos> js = new ArrayList<>();
+        for(Jogos j: jogosDecorrer){
+            if(j.getTipo().equals(jogo))
+                js.add(j);
+        }
+        return js;
     }
 
     public boolean fazJogada(int idJogo, Users por, String jogada) {
