@@ -41,7 +41,7 @@ public class NewFilter implements Filter {
     private void doBeforeProcessing(ServletRequest request, ServletResponse response)
             throws IOException, ServletException {
         if (debug) {
-            log("NewFilter:DoBeforeProcessing");
+            //log("NewFilter:DoBeforeProcessing");
         }
 
         // Write code here to process the request and/or response before
@@ -69,7 +69,7 @@ public class NewFilter implements Filter {
     private void doAfterProcessing(ServletRequest request, ServletResponse response)
             throws IOException, ServletException {
         if (debug) {
-            log("NewFilter:DoAfterProcessing");
+            //log("NewFilter:DoAfterProcessing");
         }
 
         // Write code here to process the request and/or response after
@@ -106,7 +106,7 @@ public class NewFilter implements Filter {
             throws IOException, ServletException {
         
         if (debug) {
-            log("NewFilter:doFilter()");
+            //log("NewFilter:doFilter()");
         }
         
         doBeforeProcessing(request, response);
@@ -236,7 +236,7 @@ public class NewFilter implements Filter {
         this.filterConfig = filterConfig;
         if (filterConfig != null) {
             if (debug) {                
-                log("NewFilter:Initializing filter");
+              //  log("NewFilter:Initializing filter");
             }
         }
     }

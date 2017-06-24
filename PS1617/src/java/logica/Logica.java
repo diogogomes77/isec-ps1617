@@ -10,6 +10,7 @@ import entidades.Users;
 import facades.TorneiosFacade;
 import facades.TorneiosJogosFacade;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Schedule;
@@ -33,13 +34,14 @@ public class Logica {
     @EJB
     private TorneiosJogosFacade torneiosJogosFacade;
     
+    private HashMap<Users,HttpSession> sessoes; 
     private static int jogosId;
     //private ArrayList<Users> users;
     //private ArrayList<JogoInterface> jogos;
 
   
     public Logica() {
-
+        sessoes= new HashMap<>(); 
     }
   
     @Schedule(second = "30")
@@ -128,67 +130,40 @@ public class Logica {
         return false;
     }
     public Users verificaLogin(String username, String password) {
-        // TODO usar facade
         Users u = (Users) ejbFacadeUsers.find(username);
         if (u!=null){
             System.out.println("----verificalogin---"+u.getUsername());
              if (password.equals(u.getPassword())){
                  System.out.println("----password---"+u.getPassword());
-                 if (u.isAtivo()) {
-                        //Caso o utilizador já exista e tenha uma sessão ativa
-                        // terminar outras sessoes do user
-                          
-                          if (u.getSession()!=null){
-                              u.getSession().invalidate();
-                          }
-                            HttpSession session = Util.getSession();
-                            u.setSession(session);
-                      
-                    } else {
-                        //Caso o utilizador já exista e não tenha ainda uma sessão ativa
-                        u.setAtivo(true);
-                       
-                    }
+                 HttpSession session = Util.getSession();
+                 if (sessoes.get(u)!=null){
+                     sessoes.get(u).invalidate();
+                 }
+                 sessoes.put(u, session);
+                 u.setAtivo(true);
+                 u.setSession(session);
+                 ejbFacadeUsers.edit(u);                   
+
                  return u;
              } else {
                     return null;
                 }
              
         }
-        
-   /*     for (Users user : users) {
-            if (username.equals(user.getUsername())) {
-                if (password.equals(user.getPassword())) {
-                    if (user.isAtivo()) {
-
-                          HttpSession session = Util.getSession();
-                            user.getSession().invalidate();
-                            user.setSession(session);
-                      
-                    } else {
-                       
-                        user.setAtivo(true);
-                       
-                    }
-                    return user;
-                } else {
-                    return null;
-                }
-            }
-        }*/
+       
 
         //Caso o utilizador ainda não exista
         return null;
     }
 
-    /*public void logout(String username) {
-        for (User user : users) {
-            if (username.equals(user.getUsername())) {
-                user.setAtivo(false);
-                return;
+    public void logout(String username) {
+        Users u = (Users) ejbFacadeUsers.find(username);
+        if (u!=null){
+                u.setAtivo(false);
+                 ejbFacadeUsers.edit(u);
+               sessoes.remove(u);
             }
-        }
-    }*/
+    }
 
     public int iniciarJogo(Users criador, EnumTipoJogo tipoJogo) {
         InterfaceJogo j;

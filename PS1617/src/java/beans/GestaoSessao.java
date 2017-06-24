@@ -109,6 +109,7 @@ private boolean usernameCheck = true;
 
     
     public String logout(){
+        logica.logout(username);
         sessao.logout();
         return "/login?faces-redirect=true";
     }
