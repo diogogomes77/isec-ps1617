@@ -37,7 +37,7 @@ import logica.InterfaceJogo;
  */
 @Entity
 @Inheritance
-@DiscriminatorColumn(name = "Tipo")
+@DiscriminatorColumn(name = "tipo")
 @Table(name = "jogos")
 //@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @XmlRootElement
@@ -47,6 +47,7 @@ import logica.InterfaceJogo;
     , @NamedQuery(name = "Jogos.findByEstado", query = "SELECT j FROM Jogos j WHERE j.estado = :estado")
     , @NamedQuery(name = "Jogos.findByTabuleiro", query = "SELECT j FROM Jogos j WHERE j.tabuleiro = :tabuleiro")
     , @NamedQuery(name = "Jogos.findByTurno", query = "SELECT j FROM Jogos j WHERE j.turno = :turno")
+    , @NamedQuery(name = "Jogos.findByTipoEstado", query = "SELECT j FROM Jogos j WHERE j.tipo = :tipo AND j.estado = :estado")
     , @NamedQuery(name = "Jogos.findByTipo", query = "SELECT j FROM Jogos j WHERE j.tipo = :tipo")})
 public class Jogos implements Serializable, InterfaceJogo {
 
