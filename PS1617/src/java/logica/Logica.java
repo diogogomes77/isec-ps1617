@@ -261,13 +261,16 @@ public class Logica {
        //     }
        // }
        //return jogosIniciados;
-       
-        List<Jogos> js = new ArrayList<>();
+       if (jogosIniciados!=null){
+            List<Jogos> js = new ArrayList<>();
         for(Jogos j: jogosIniciados){
             if(j.getTipo().equals(jogo))
                 js.add(j);
         }
         return js;
+       }else
+           return null;
+       
     }
 
     public List<Jogos> getJogosDecorrer(String jogo) {
@@ -285,12 +288,18 @@ public class Logica {
         //    }
        // }
         //return jogosDecorrer;
-        List<Jogos> js = new ArrayList<>();
+        
+        if (jogosDecorrer!=null){
+            List<Jogos> js = new ArrayList<>();
         for(Jogos j: jogosDecorrer){
             if(j.getTipo().equals(jogo))
                 js.add(j);
         }
         return js;
+       }else
+           return null;
+        
+      
     }
 
     public boolean fazJogada(int idJogo, Users por, String jogada) {
