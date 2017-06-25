@@ -16,20 +16,20 @@
             </ui:define>
             <ui:define name="content">
                 <h:form>
-                    <h:outputText value="Velha Password"/><br/>
+                    <h:outputText value="Velha Password:"/><br/>
                     <h:inputSecret id="password_velha" value="#{gestaoAlterar.repassword}"/>
                     <br/><br/>
-                    <h:outputText value="Nova Password"/><br/>
+                    <h:outputText value="Nova Password:"/><br/>
                     <h:inputSecret id="password_nova" value="#{gestaoAlterar.password}"/><br/>
                     <h:outputText value="#{gestaoAlterar.mensagem}" /><br/><br/>
                     
-                    <h:outputText value="Novo Email"/><br/>
-                    <h:inputText id="email_novo" value="#{gestaoAlterar.email}"/>
-                    <br/><br/><br/>
+                    <h:outputText value="Novo Email:"/><br/>
+                    <h:inputText id="email_novo" value="#{gestaoAlterar.email}"/><br/>
+                    <h:outputText value="#{gestaoAlterar.mensagemEmail}" /><br/><br/>
                     
-                    <h:outputText value="Nova Morada"/><br/>
-                    <h:inputText id="morada_nova" value="#{gestaoAlterar.morada}"/>
-                    <br/><br/><br/>
+                    <h:outputText value="Nova Morada:"/><br/>
+                    <h:inputText id="morada_nova" value="#{gestaoAlterar.morada}"/><br/>
+                    <h:outputText value="#{gestaoAlterar.mensagemMorada}" /><br/><br/>
                     
                     <h:commandButton value="Confirmar" action="#{gestaoAlterar.alterar()}"/>
                     <br/>

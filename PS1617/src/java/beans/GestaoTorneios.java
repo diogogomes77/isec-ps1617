@@ -298,8 +298,8 @@ public class GestaoTorneios implements Serializable {
             for(int n2 = 0;n2<size;n2++){
                 for(int n3=0;n3<2;n3++)
                     u[n2][n3] = aux[n2][n3];
+                }
             }
-        }
     }
     
     @PostConstruct
