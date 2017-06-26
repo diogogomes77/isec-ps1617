@@ -22,8 +22,9 @@
                 </h:form>
             </ui:define>
             <ui:define name="content">
-                <h:form>
-                    <h:panelGrid id="table" columns="3" bodyrows="3" width="450px"   border="1"> 
+                <h:form style="background-color: white">
+                    <div align="center">
+                        <h:panelGrid id="table" columns="3" bodyrows="3" width="450px"   border="1" bgcolor="white"> 
                         <p:commandButton id="btn1" style="width: 150px; height: 150px; font-size: xx-large" 
                                          value="" action="#{gestaojogos.joga(1)}"/>
                         <p:commandButton id="btn2" style="width: 150px; height: 150px; font-size: xx-large" 
@@ -43,6 +44,7 @@
                         <p:commandButton id="btn9" style="width: 150px; height: 150px; font-size: xx-large" 
                                          value="" action="#{gestaojogos.joga(9)}"/>
                     </h:panelGrid> 
+                    </div>
                     <h:panelGrid columns="1" id="ID_polling" rendered="#{gestaoSessao.estaLogado()==true}">
                         <p:poll interval="2" update="table" listener="#{gestaojogos.atualiza()}" />
                     </h:panelGrid>
