@@ -14,7 +14,7 @@
     <h:body>
 
         <div id="top">
-             <h:outputText value="Plataforma de Jogos Online V0.1"/><br/>
+             <h:outputText value="Plataforma de Jogos Online V1.0"/><br/>
             <ui:insert name="top"></ui:insert>
         </div>
         <div>
@@ -33,6 +33,9 @@
         <div id="bottom">
             <ui:insert name="bottom">
             </ui:insert>
+           
+        <br />
+
                     <h:outputText value="Jogadores ativos" rendered="${not empty gestaoSessao.listaAtivos()}"/>
                     <ui:repeat var="item" value="#{gestaoSessao.listaAtivos()}"> <h1>#{item}</h1> </ui:repeat>  
                     <br/>

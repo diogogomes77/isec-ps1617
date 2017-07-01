@@ -25,6 +25,8 @@
         <div id="bottom">
             <ui:insert name="bottom">
             </ui:insert>
+             <h:button value="Pagina inicial" outcome="/area_privada/gestaojogos" />
+            <br/>
                     <h:outputText value="Jogadores ativos" rendered="${not empty gestaoSessao.listaAtivos()}"/>
                     <ui:repeat var="item" value="#{gestaoSessao.listaAtivos()}"> <h1>#{item}</h1> </ui:repeat>  
                     <br/>
