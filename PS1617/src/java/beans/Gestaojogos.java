@@ -20,6 +20,7 @@ import javax.faces.component.visit.VisitResult;
 import javax.faces.context.FacesContext;
 import javax.persistence.TypedQuery;
 import javax.servlet.http.HttpSession;
+import logica.EnumEstado;
 import logica.JogoLogica;
 import logica.Logica;
 import logica.Sessao;
@@ -265,7 +266,10 @@ public class Gestaojogos implements Serializable {
          System.out.println("---n jogadas ="+i);
         
         int fim = jogo.verificaFim(jogo, user, listaJogadas);
-       
+       if (fim!=-1){
+           jogo.setEstado(EnumEstado.CONCLUIDO.getValue());
+           ejbFacadeJogos.edit((Jogos)jogo);
+       }
         if(fim == 0){
             RequestContext r = RequestContext.getCurrentInstance();
             r.execute("PF('dlgGanhar').show();");

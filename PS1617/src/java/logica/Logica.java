@@ -249,7 +249,8 @@ public class Logica {
                // = ejbFacadeJogos.getEntityManager().createNamedQuery("Jogos.findByEstado", Jogos.class)
                //         .setParameter("estado", estado);
                = ejbFacadeJogos.getEntityManager().createNamedQuery("Jogos.findByTipoEstado", Jogos.class)
-                        .setParameter("estado", estado).setParameter("tipo", jogo);
+                        .setParameter("estado", estado)
+                       .setParameter("tipo", jogo);
         List<Jogos> jogosIniciados = query.getResultList();
 return jogosIniciados;
         // ArrayList<JogoInterface> jogosEmEspera = new ArrayList<>();
