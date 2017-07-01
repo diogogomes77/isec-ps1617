@@ -257,8 +257,8 @@ public class Jogos implements Serializable, InterfaceJogo {
             tipo = "Quatro em Linha";
         }
 
-        String result = "[" + tipo + "]";
-
+        //String result = "[" + tipo + "]";
+        String result ="";
         if (participante == null) {
             result += " Iniciado por " + criador.getUsername();
         } else {
