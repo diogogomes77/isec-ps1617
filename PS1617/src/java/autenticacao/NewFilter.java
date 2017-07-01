@@ -167,6 +167,7 @@ public class NewFilter implements Filter {
                     permitidas.add("/faces/torneiosUsers");
                     permitidas.add("/faces/jogos");
                     permitidas.add("/faces/users");
+                    permitidas.add("/resources/imagem.png");
                     boolean podeVer=false;
                     for (String permitida : permitidas){
                         if (reqURI.contains(permitida)){
