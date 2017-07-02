@@ -109,9 +109,15 @@
                                              value="" action="#{gestaojogos.joga(40)}"/>
                             <p:commandButton id="btn41" style="width: 75px; height: 75px; font-size: xx-large" 
                                              value="" action="#{gestaojogos.joga(41)}"/>
-                        </h:panelGrid>                    
-                        <p:poll interval="2" update="table" listener="#{gestaojogos.atualiza()}" /> <!-- atualiza a tabela de 2 em 2 segundos -->
+                        </h:panelGrid>
+                        
+                        <h:panelGrid columns="1" id="ID_polling" rendered="#{gestaoSessao.estaLogado()==true}">
+                            <p:poll interval="2" update="table" listener="#{gestaojogos.atualiza()}" />
+                        </h:panelGrid>
                         <br/>
+
+                        <h:button value="Página inicial" outcome="/area_privada/gestaojogos"/>
+                        <br/><br/>
 
                         <p:dialog id="dialog" widgetVar="dlg" header="Espere pela sua vez !" width="200px" height="50px">  
                             <h:outputText value="Não é a sua vez de jogar !"/>

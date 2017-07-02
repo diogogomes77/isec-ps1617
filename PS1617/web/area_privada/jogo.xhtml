@@ -22,60 +22,62 @@
                 </h:form>
             </ui:define>
             <ui:define name="content">
-                <h:form style="background-color: whitesmoke">
-                    <div align="center">
+                <div align="center" style="background-color: whitesmoke">
+                    <h:form>
                         <h:panelGrid id="table" columns="3" bodyrows="3" width="450px"   border="1" bgcolor="white"> 
-                        <p:commandButton id="btn1" style="width: 150px; height: 150px; font-size: xx-large" 
-                                         value="" action="#{gestaojogos.joga(1)}"/>
-                        <p:commandButton id="btn2" style="width: 150px; height: 150px; font-size: xx-large" 
-                                         value="" action="#{gestaojogos.joga(2)}"/>
-                        <p:commandButton id="btn3" style="width: 150px; height: 150px; font-size: xx-large" 
-                                         value="" action="#{gestaojogos.joga(3)}"/>
-                        <p:commandButton id="btn4" style="width: 150px; height: 150px; font-size: xx-large" 
-                                         value="" action="#{gestaojogos.joga(4)}"/>
-                        <p:commandButton id="btn5" style="width: 150px; height: 150px; font-size: xx-large" 
-                                         value="" action="#{gestaojogos.joga(5)}"/>
-                        <p:commandButton id="btn6" style="width: 150px; height: 150px; font-size: xx-large" 
-                                         value="" action="#{gestaojogos.joga(6)}"/>
-                        <p:commandButton id="btn7" style="width: 150px; height: 150px; font-size: xx-large" 
-                                         value="" action="#{gestaojogos.joga(7)}"/>
-                        <p:commandButton id="btn8" style="width: 150px; height: 150px; font-size: xx-large" 
-                                         value="" action="#{gestaojogos.joga(8)}"/>
-                        <p:commandButton id="btn9" style="width: 150px; height: 150px; font-size: xx-large" 
-                                         value="" action="#{gestaojogos.joga(9)}"/>
-                    </h:panelGrid> 
-                    </div>
-                    <h:panelGrid columns="1" id="ID_polling" rendered="#{gestaoSessao.estaLogado()==true}">
-                        <p:poll interval="2" update="table" listener="#{gestaojogos.atualiza()}" />
-                    </h:panelGrid>
-                    <br/>
+                            <p:commandButton id="btn1" style="width: 150px; height: 150px; font-size: xx-large" 
+                                             value="" action="#{gestaojogos.joga(1)}"/>
+                            <p:commandButton id="btn2" style="width: 150px; height: 150px; font-size: xx-large" 
+                                             value="" action="#{gestaojogos.joga(2)}"/>
+                            <p:commandButton id="btn3" style="width: 150px; height: 150px; font-size: xx-large" 
+                                             value="" action="#{gestaojogos.joga(3)}"/>
+                            <p:commandButton id="btn4" style="width: 150px; height: 150px; font-size: xx-large" 
+                                             value="" action="#{gestaojogos.joga(4)}"/>
+                            <p:commandButton id="btn5" style="width: 150px; height: 150px; font-size: xx-large" 
+                                             value="" action="#{gestaojogos.joga(5)}"/>
+                            <p:commandButton id="btn6" style="width: 150px; height: 150px; font-size: xx-large" 
+                                             value="" action="#{gestaojogos.joga(6)}"/>
+                            <p:commandButton id="btn7" style="width: 150px; height: 150px; font-size: xx-large" 
+                                             value="" action="#{gestaojogos.joga(7)}"/>
+                            <p:commandButton id="btn8" style="width: 150px; height: 150px; font-size: xx-large" 
+                                             value="" action="#{gestaojogos.joga(8)}"/>
+                            <p:commandButton id="btn9" style="width: 150px; height: 150px; font-size: xx-large" 
+                                             value="" action="#{gestaojogos.joga(9)}"/>
+                        </h:panelGrid> 
+                        <h:panelGrid columns="1" id="ID_polling" rendered="#{gestaoSessao.estaLogado()==true}">
+                            <p:poll interval="2" update="table" listener="#{gestaojogos.atualiza()}" />
+                        </h:panelGrid>
+                        <br/>
                     
-                    <p:dialog id="dialog" widgetVar="dlg" header="Espere pela sua vez !" width="200px" height="50px">  
-                        <h:outputText value="Não é a sua vez de jogar !"/>
+                        <h:button value="Página inicial" outcome="/area_privada/gestaojogos"/>
                         <br/><br/>
-                        &nbsp;&nbsp;&nbsp;&nbsp;
-                        <h:commandButton value="OK" onclick="PF('dlg').hide()" />
-                    </p:dialog>
-                    <p:dialog id="dialogGanhar" widgetVar="dlgGanhar" header="O jogo terminou" width="200px" height="50px">  
-                        <h:outputText value="Venceu o jogo !!!!"/>
-                        <br/><br/>
-                        &nbsp;&nbsp;&nbsp;&nbsp;
-                        <h:button value="Voltar" outcome="/area_privada/gestaojogos" />
-                    </p:dialog>
-                    <p:dialog id="dialogPerder" widgetVar="dlgPerder" header="O jogo terminou" width="200px" height="50px" onHide="">  
-                        <h:outputText value="Perdeu o jogo...."/>
-                        <br/><br/>
-                        &nbsp;&nbsp;&nbsp;&nbsp;
-                        <h:button value="Voltar" outcome="/area_privada/gestaojogos" />
-                    </p:dialog>
-                    <p:dialog id="dialogEmpate" widgetVar="dlgEmpate" header="O jogo terminou" width="200px" height="50px" onHide="">  
-                        <h:outputText value="O jogo terminou empatado."/>
-                        <br/><br/>
-                        &nbsp;&nbsp;&nbsp;&nbsp;
-                        <h:button value="Voltar" outcome="/area_privada/gestaojogos" />
-                    </p:dialog>
-                </h:form>
-               
+                    
+                        <p:dialog id="dialog" widgetVar="dlg" header="Espere pela sua vez !" width="200px" height="50px">  
+                            <h:outputText value="Não é a sua vez de jogar !"/>
+                            <br/><br/>
+                            &nbsp;&nbsp;&nbsp;&nbsp;
+                            <h:commandButton value="OK" onclick="PF('dlg').hide()" />
+                        </p:dialog>
+                        <p:dialog id="dialogGanhar" widgetVar="dlgGanhar" header="O jogo terminou" width="200px" height="50px">  
+                            <h:outputText value="Venceu o jogo !!!!"/>
+                            <br/><br/>
+                            &nbsp;&nbsp;&nbsp;&nbsp;
+                            <h:button value="Voltar" outcome="/area_privada/gestaojogos" />
+                        </p:dialog>
+                        <p:dialog id="dialogPerder" widgetVar="dlgPerder" header="O jogo terminou" width="200px" height="50px" onHide="">  
+                            <h:outputText value="Perdeu o jogo...."/>
+                            <br/><br/>
+                            &nbsp;&nbsp;&nbsp;&nbsp;
+                            <h:button value="Voltar" outcome="/area_privada/gestaojogos" />
+                        </p:dialog>
+                        <p:dialog id="dialogEmpate" widgetVar="dlgEmpate" header="O jogo terminou" width="200px" height="50px" onHide="">  
+                            <h:outputText value="O jogo terminou empatado."/>
+                            <br/><br/>
+                            &nbsp;&nbsp;&nbsp;&nbsp;
+                            <h:button value="Voltar" outcome="/area_privada/gestaojogos" />
+                        </p:dialog>
+                    </h:form>
+                </div>
             </ui:define>
             <ui:define name="right">
                 <h:form>

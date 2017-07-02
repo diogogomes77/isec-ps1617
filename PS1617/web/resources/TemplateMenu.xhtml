@@ -25,11 +25,9 @@
         <div id="bottom">
             <ui:insert name="bottom">
             </ui:insert>
-             <h:button value="Pagina inicial" outcome="/area_privada/gestaojogos" />
+            <h:outputText value="Jogadores ativos" rendered="${not empty gestaoSessao.listaAtivos()}"/>
+            <ui:repeat var="item" value="#{gestaoSessao.listaAtivos()}"> <h1>#{item}</h1> </ui:repeat>  
             <br/>
-                    <h:outputText value="Jogadores ativos" rendered="${not empty gestaoSessao.listaAtivos()}"/>
-                    <ui:repeat var="item" value="#{gestaoSessao.listaAtivos()}"> <h1>#{item}</h1> </ui:repeat>  
-                    <br/>
         </div>
         <div id="sig">
                     <h:outputText value="ISEC - MEIS1617 - Projeto de Software"/><br/>
