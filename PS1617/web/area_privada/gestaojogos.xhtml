@@ -52,12 +52,12 @@
                         <h1>#{item} <h:commandButton value="Juntar ao jogo" action="#{gestaojogos.juntarJogo(item.jogoId)}" rendered="${gestaojogos.possoJuntar(item.jogoId)==true}"/></h1>
                     </ui:repeat>
 
-                    <h:outputText value="Jogos a decorrer" rendered="${not empty gestaojogos.listarJogosDecorrer('JOGO_GALO')}"/>
+                    <h:outputText value="Jogos a decorrer - Jogo do Galo" rendered="${not empty gestaojogos.listarJogosDecorrer('JOGO_GALO')}"/>
                     <ui:repeat var="item" value="#{gestaojogos.listarJogosDecorrer('JOGO_GALO')}"> 
                         <h1>#{item} <h:commandButton value="Jogar" action="#{gestaojogos.jogar(item.jogoId)}" rendered="${gestaojogos.possoJogar(item.jogoId)==true}"/></h1>
                     </ui:repeat>
 
-                    <h:outputText value="Jogos a decorrer" rendered="${not empty gestaojogos.listarJogosDecorrer('JOGO_QUATRO_EM_LINHA')}"/>
+                    <h:outputText value="Jogos a decorrer - Quatro Em Linha" rendered="${not empty gestaojogos.listarJogosDecorrer('JOGO_QUATRO_EM_LINHA')}"/>
                     <ui:repeat var="item" value="#{gestaojogos.listarJogosDecorrer('JOGO_QUATRO_EM_LINHA')}"> 
                         <h1>#{item} <h:commandButton value="Jogar" action="#{gestaojogos.jogar(item.jogoId)}" rendered="${gestaojogos.possoJogar(item.jogoId)==true}"/></h1>
                     </ui:repeat>
