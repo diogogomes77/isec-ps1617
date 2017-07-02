@@ -442,9 +442,9 @@ return jogosIniciados;
         return false;
     }
 
-    public Jogadas fazJogada(Users user, int posX, int posY, InterfaceJogo jogo) {
+    public Jogadas fazJogada(Users user, int posX, int posY, InterfaceJogo jogo, List<Jogadas> listaJogadas) {
         Jogadas nova = new Jogadas(user, posX, posY, jogo);
-        jogo.atualizaJogada(nova);
+        jogo.atualizaJogada(nova, listaJogadas);
         ejbFacadeJogadas.createJogada(nova);
         return nova;
     }

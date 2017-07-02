@@ -418,7 +418,7 @@ public class Jogos implements Serializable, InterfaceJogo {
     }
 
     @Override
-    public void atualizaJogada(Jogadas novaJogada) {
+    public void atualizaJogada(Jogadas novaJogada, List<Jogadas> listaJogadas) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

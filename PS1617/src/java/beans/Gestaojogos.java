@@ -225,7 +225,10 @@ public class Gestaojogos implements Serializable {
     public void joga(int pos){
         if(lo.podeJogar(username, pos, jogo.getJogoId())){                             
                    System.out.println("------JOGA id--------" + jogo.getJogoId()+"---------");
-                   Jogadas jog = lo.fazJogada(user, pos, 0, jogo);
+                   TypedQuery<Jogadas> query = ejbFacadeJogadas.getEntityManager().createNamedQuery("Jogadas.findByJogoId", Jogadas.class)
+                           .setParameter("jogoId",jogo);
+                   List<Jogadas> listaJogadas = query.getResultList();
+                   Jogadas jog = lo.fazJogada(user, pos, 0, jogo, listaJogadas);
                    List <Jogadas> jogadas = jogo.getJogadasList();                   
                    jogadas.add(jog);
                    jogo.setJogadasList(jogadas);

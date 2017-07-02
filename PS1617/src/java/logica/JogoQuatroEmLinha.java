@@ -35,21 +35,22 @@ public class JogoQuatroEmLinha extends JogoLogica implements InterfaceJogo {
     }
     
     @Override
-    public void atualizaJogada(Jogadas novaJogada) {
+    public void atualizaJogada(Jogadas novaJogada, List<Jogadas> listaJogadas) {
         int [] jj = new int [TAMANHO_MATRIZ];
         for(int i = 0; i < TAMANHO_MATRIZ; i++){
             jj[i] = JOGAGOR_NENHUM;
         }
+        
 
-        for(Jogadas j : getJogadasList()) {
+        for(Jogadas j : listaJogadas) {
             if(j.getUsername().equals(novaJogada.getUsername())){
                 jj[j.getPos_x()] = JOGADOR_PROPRIO;
-            }
-            else{
+            
+            } else {
                 jj[j.getPos_x()] = JOGADOR_ADVERSARIO;
             }
         }
-       
+        
         int posAVerificar = novaJogada.getPos_x();
         while (true) {
            posAVerificar += getWidth();

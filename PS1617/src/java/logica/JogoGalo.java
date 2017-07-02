@@ -68,9 +68,7 @@ public class JogoGalo extends JogoLogica implements InterfaceJogo{
     }
 
     @Override
-    public void atualizaJogada(Jogadas novaJogada) {
+    public void atualizaJogada(Jogadas novaJogada, List<Jogadas> listaJogadas) {
         // Do nothing.
     }
-
-
 }

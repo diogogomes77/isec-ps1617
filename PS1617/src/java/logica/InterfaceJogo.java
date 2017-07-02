@@ -66,5 +66,5 @@ public interface InterfaceJogo {
     
     public String returnTabuleiro();
     
-    public void atualizaJogada(Jogadas novaJogada);
+    public void atualizaJogada(Jogadas novaJogada, List<Jogadas> listaJogadas);
 }
